@@ -722,11 +722,12 @@ body {
   cursor: pointer;
 }
 
-/* ===== Top Bar · i18n 切換 + 說明書按鈕 ===== */
+/* ===== Top Bar · i18n 切換 + 森林對話池 + 說明書按鈕 ===== */
 .topbar {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.75rem;
   margin-bottom: 1.5rem;
 }
@@ -768,6 +769,106 @@ body {
 .topbar .tb-btn.help:hover {
   background: var(--claude-orange);
   color: var(--snow);
+}
+/* 森林對話池 入口 · 與說明書同列 */
+.topbar .tb-btn.pool {
+  border-color: var(--iris-c);
+  color: var(--iris-c);
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: 0.05em;
+  font-family: var(--f-zh);
+  font-size: 0.78rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.topbar .tb-btn.pool::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--iris-c);
+  display: inline-block;
+}
+.topbar .tb-btn.pool:hover {
+  background: var(--iris-c);
+  color: var(--snow);
+  border-color: var(--iris-c);
+}
+.topbar .tb-btn.pool:hover::before {
+  background: var(--snow);
+}
+
+/* ===== 右側摘要圓點 · 章節導覽（dot-nav） ===== */
+.dot-nav {
+  position: fixed;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 0.65rem 0.45rem;
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--ash);
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+:root[data-theme="dark"] .dot-nav {
+  background: rgba(255, 255, 255, 0.04);
+}
+.dot-nav a {
+  position: relative;
+  display: block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid var(--ash);
+  transition: all var(--dur) var(--ease);
+  text-decoration: none;
+}
+.dot-nav a:hover {
+  border-color: var(--iris-c);
+  background: var(--iris-c);
+  transform: scale(1.25);
+}
+.dot-nav a.active {
+  border-color: var(--claude-orange);
+  background: var(--claude-orange);
+  transform: scale(1.2);
+}
+.dot-nav a .dot-label {
+  position: absolute;
+  right: calc(100% + 0.65rem);
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  font-family: var(--f-zh);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  color: var(--bone);
+  background: var(--deep);
+  border: 1px solid var(--ash);
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur) var(--ease);
+}
+.dot-nav a:hover .dot-label,
+.dot-nav a.active .dot-label {
+  opacity: 1;
+}
+.dot-nav a.active .dot-label {
+  color: var(--claude-orange);
+  border-color: var(--claude-orange);
+}
+@media (max-width: 880px) {
+  .dot-nav { display: none; }
 }
 
 /* ===== Modal · 說明書 ===== */
@@ -1119,9 +1220,27 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
 </head>
 <body>
 
+<!-- 右側摘要圓點 · 章節快速跳轉 -->
+<nav class="dot-nav" id="dot-nav" aria-label="章節導覽">
+  <a href="#sec-profile" data-section="sec-profile"><span class="dot-label">印記</span></a>
+  <a href="#sec-s1" data-section="sec-s1"><span class="dot-label">一·樹冠</span></a>
+  <a href="#sec-s2" data-section="sec-s2"><span class="dot-label">二·優勢種</span></a>
+  <a href="#sec-s3" data-section="sec-s3"><span class="dot-label">三·林相</span></a>
+  <a href="#sec-s4" data-section="sec-s4"><span class="dot-label">四·林分</span></a>
+  <a href="#sec-s5" data-section="sec-s5"><span class="dot-label">五·葉形</span></a>
+  <a href="#sec-s6" data-section="sec-s6"><span class="dot-label">六·風與根</span></a>
+  <a href="#sec-spore" data-section="sec-spore"><span class="dot-label">孢子</span></a>
+  <a href="#sec-advanced" data-section="sec-advanced"><span class="dot-label">進階</span></a>
+  <a href="#sec-actions" data-section="sec-actions"><span class="dot-label">凝相</span></a>
+  <a href="#ambient-preview" data-section="ambient-preview"><span class="dot-label">氛圍</span></a>
+  <a href="#sec-ref" data-section="sec-ref"><span class="dot-label">四片森林</span></a>
+  <a href="#sec-gallery" data-section="sec-gallery"><span class="dot-label">池魂</span></a>
+  <a href="#sec-dna" data-section="sec-dna"><span class="dot-label">DNA 指紋</span></a>
+</nav>
+
 <div class="container">
 
-  <!-- Top bar · 語言 + 主題 + 說明書 -->
+  <!-- Top bar · 語言 + 主題 + 森林對話池 + 說明書 -->
   <div class="topbar">
     <div class="lang-toggle" role="group" aria-label="language">
       <button type="button" class="tb-btn active" data-lang="zh" id="lang-zh">中</button>
@@ -1131,6 +1250,7 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
       <button type="button" class="tb-btn active" data-theme="light" id="theme-light" title="淺色">Light</button>
       <button type="button" class="tb-btn" data-theme="dark" id="theme-dark" title="深色">Dark</button>
     </div>
+    <a href="pool.html" class="tb-btn pool" id="pool-link" data-i18n="poolBtn" title="森林對話池 · 看訪客的林相 / 把你的林分享出去">森林對話池 · 訪客的種子</a>
     <button type="button" class="tb-btn help" id="help-btn" data-i18n="helpBtn">? 怎麼用</button>
   </div>
 
@@ -1178,6 +1298,16 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
       </div>
 
       <div class="step">
+        <div class="num">+</div>
+        <div>
+          <h3 data-i18n="stepPoolTitle">森林對話池 <em>· 把你的林留下，或看別人的</em></h3>
+          <p data-i18n="stepPoolBody">頂端有「<strong>森林對話池</strong>」入口。那是訪客留下種子的地方——一片林教另一片林怎麼長。</p>
+          <p data-i18n="stepPoolMech"><strong>分享機制</strong>：凝相之後若你願意，按「分享到森林對話」把這次的選擇與 DNA（光、土壤、品牌名、字型、六軸選擇）匿名送進去。<strong>純自願</strong> · 不送 prompt 文字、不送個資。</p>
+          <p data-i18n="stepPoolWhy"><strong>為何分享</strong>：骨架是公開的，你帶來的光是不可複製的。<strong>看別人的林</strong>是學一招走自己的路；<strong>留下你的林</strong>是讓下一個園丁站在你的肩上。機器抓不走你的 DNA。</p>
+        </div>
+      </div>
+
+      <div class="step">
         <div class="num">?</div>
         <div>
           <h3 data-i18n="stepFAQTitle">還有什麼要知道？</h3>
@@ -1216,7 +1346,7 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
   </header>
 
   <!-- 你帶來的陽光與土（使用者元素 · 你是主角）-->
-  <div class="profile">
+  <div class="profile" id="sec-profile">
     <div class="head">
       <div class="ttl" data-i18n="profileTtl">Design DNA <em>· color · font · brand</em></div>
       <div class="presets">
@@ -1255,7 +1385,7 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
   <form id="gen-form">
 
     <!-- 一 · 樹冠 -->
-    <section class="dim">
+    <section class="dim" id="sec-s1">
       <div class="label"><span class="no">一</span><span class="title" data-i18n="s1Title">樹冠 <em>陽光要照向哪裡？</em></span></div>
       <p class="hint" data-i18n="s1Hint">決定整片林的輪廓</p>
       <div class="opts" data-axis="intent">
@@ -1294,7 +1424,7 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
     </section>
 
     <!-- 二 · 優勢種 -->
-    <section class="dim">
+    <section class="dim" id="sec-s2">
       <div class="label"><span class="no">二</span><span class="title" data-i18n="s2Title">優勢種 <em>誰撐起這座林？</em></span></div>
       <p class="hint" data-i18n="s2Hint">畫面的重心</p>
       <div class="opts" data-axis="subject">
@@ -1328,7 +1458,7 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
     </section>
 
     <!-- 三 · 林相 -->
-    <section class="dim">
+    <section class="dim" id="sec-s3">
       <div class="label"><span class="no">三</span><span class="title" data-i18n="s3Title">林相 <em>這是什麼樣的森林？</em></span></div>
       <p class="hint" data-i18n="s3Hint">選一種為主林，再挑另一種當伴生——混林是靈魂</p>
       <div class="opts" data-axis="style_primary">
@@ -1362,7 +1492,7 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
     </section>
 
     <!-- 四 · 林分 -->
-    <section class="dim">
+    <section class="dim" id="sec-s4">
       <div class="label"><span class="no">四</span><span class="title" data-i18n="s4Title">林分 <em>樹怎麼分佈？</em></span></div>
       <p class="hint" data-i18n="s4Hint">空間的秩序</p>
       <div class="opts" data-axis="layout">
@@ -1396,7 +1526,7 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
     </section>
 
     <!-- 五 · 葉形 -->
-    <section class="dim">
+    <section class="dim" id="sec-s5">
       <div class="label"><span class="no">五</span><span class="title" data-i18n="s5Title">葉形 <em>用什麼葉片呼吸？</em></span></div>
       <p class="hint" data-i18n="s5Hint">文字的姿態；雙語另選</p>
       <div class="opts" data-axis="typography">
@@ -1419,7 +1549,7 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
     </section>
 
     <!-- 六 · 風與根 -->
-    <section class="dim">
+    <section class="dim" id="sec-s6">
       <div class="label"><span class="no">六</span><span class="title" data-i18n="s6Title">風與根 <em>這片林在動嗎？</em></span></div>
       <p class="hint" data-i18n="s6Hint">看得見的是風，看不見的是根</p>
       <div class="opts" data-axis="physics">
@@ -1440,7 +1570,7 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
     </section>
 
     <!-- 孢子 · 風吹進來的意外（選 0-3）-->
-    <section class="dim">
+    <section class="dim" id="sec-spore">
       <div class="label"><span class="no">+</span><span class="title" data-i18n="sporeTitle">孢子 <em>讓風吹進幾粒意外（選 0-3）</em></span></div>
       <p class="hint" data-i18n="sporeHint">進階 · 從風帶來的種子池裡挑 · 讓森林生出你沒預設的姿態</p>
       <div class="opts seeds" data-axis="fire_seeds">
@@ -1460,7 +1590,7 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
   </form>
 
   <!-- 進階模式（預設收起 · 新手看不見 · 設計師展開）-->
-  <section class="advanced">
+  <section class="advanced" id="sec-advanced">
     <button type="button" class="advanced-toggle" id="adv-toggle" aria-expanded="false">
       <span class="icon">▸</span>
       <span class="text">進階設計師模式</span>
@@ -1525,7 +1655,7 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
   </section>
 
   <!-- Action bar (sticky) -->
-  <div class="actions">
+  <div class="actions" id="sec-actions">
     <div class="counter"><span data-i18n="counterLabel">可能的林相</span> <strong id="space-count">—</strong> · <span data-i18n="currentLabel">當前</span> <strong id="current">—</strong></div>
     <button class="btn" id="btn-gen" data-i18n="btnSow">凝相</button>
     <button class="btn ghost" id="btn-rand" data-i18n="btnWind">風吹一回</button>
@@ -1574,7 +1704,7 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
   </section>
 
   <!-- 四片森林（四站氛圍觀察） -->
-  <section class="ref">
+  <section class="ref" id="sec-ref">
     <h3>四片被觀察過的森林</h3>
     <p>讀懂她們藏在哪裡，然後走自己的路。</p>
     <table>
@@ -1624,7 +1754,7 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
   </section>
 
   <!-- 深池 · Gallery 19 個精緻範例 + 細胞式收藏 -->
-  <section class="gallery">
+  <section class="gallery" id="sec-gallery">
     <h3 data-i18n="galleryTtl">池魂 · Deep Pool</h3>
     <p class="intro" data-i18n="galleryIntro">
       這不只是模板庫——是<strong>系統精挑</strong>的視覺精品。每個都觸及一個物理視覺現象：干涉、暫留、色差、馬赫帶、全像、焦散、chiaroscuro、anamorphic⋯⋯
@@ -1644,7 +1774,7 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
   </section>
 
   <!-- DNA 教學 · Claude Design prompt 語言指紋 -->
-  <section class="dna">
+  <section class="dna" id="sec-dna">
     <h3 data-i18n="dnaTtl">Prompt DNA 指紋 · 1-9 樣本萃取</h3>
     <p class="intro" data-i18n="dnaIntro">
       讀懂 Claude Design 官方 prompt 用什麼語彙觸發 AI 詮釋。八個維度，每個有例子。想自己寫 prompt 的時候，從這裡借一招。
@@ -1654,7 +1784,7 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
 
   <div class="abyss">
     <span data-i18n="abyssLine">林已成形，風仍在寫</span>
-    <span data-i18n="abyssSig">— superlost · 林相 · 2026 —</span>
+    <span data-i18n="abyssSig">— 林相 · ∞ —</span>
   </div>
 
 </div>
@@ -2747,8 +2877,13 @@ const I18N = {
   zh: {
     // Top bar + Modal
     helpBtn: '? 怎麼用',
+    poolBtn: '森林對話池 · 訪客的種子',
     helpTitle: '四步，做出你的網頁',
     helpSub: 'Four steps · your first website',
+    stepPoolTitle: '森林對話池 <em>· 把你的林留下，或看別人的</em>',
+    stepPoolBody: '頂端有「<strong>森林對話池</strong>」入口。那是訪客留下種子的地方——一片林教另一片林怎麼長。',
+    stepPoolMech: '<strong>分享機制</strong>：凝相之後若你願意，按「分享到森林對話」把這次的選擇與 DNA（光、土壤、品牌名、字型、六軸選擇）匿名送進去。<strong>純自願</strong> · 不送 prompt 文字、不送個資。',
+    stepPoolWhy: '<strong>為何分享</strong>：骨架是公開的，你帶來的光是不可複製的。<strong>看別人的林</strong>是學一招走自己的路；<strong>留下你的林</strong>是讓下一個園丁站在你的肩上。機器抓不走你的 DNA。',
     step1Title: '帶你自己的東西進來',
     step1Body: '上面「<strong>你的印記</strong>」是你輸入<strong>品牌名、主色、字型</strong>的地方。不會填？點「看 Maxi 範例」看別人怎麼填，再改成你的。',
     step1Tip: '像選鞋子——先試穿別人的，再挑你自己想要的。',
@@ -2818,12 +2953,17 @@ const I18N = {
     dnaIntro: '讀懂 Claude Design 官方 prompt 用什麼語彙觸發 AI 詮釋。八個維度，每個有例子。想自己寫 prompt 的時候，從這裡借一招。',
     // Abyss
     abyssLine: '林已成形，風仍在寫',
-    abyssSig: '— climax forest · 2026 —'
+    abyssSig: '— 林相 · ∞ —'
   },
   en: {
     helpBtn: '? How to use',
+    poolBtn: 'Forest Pool · visitors\' seeds',
     helpTitle: 'Four steps to your first page',
     helpSub: 'Four steps · your first website',
+    stepPoolTitle: 'Forest Pool <em>· leave yours, or read others</em>',
+    stepPoolBody: 'Up top, the "<strong>Forest Pool</strong>" entry. That\'s where visitors leave seeds — one forest teaches another how to grow.',
+    stepPoolMech: '<strong>How sharing works</strong>: after you Form, if you wish, hit "Share to Forest Pool" — your choices and DNA (light, soil, brand name, font, six-axis picks) go in anonymously. <strong>Fully voluntary</strong> · prompt text and personal data stay out.',
+    stepPoolWhy: '<strong>Why share</strong>: the skeleton is open, but the light you bring is uncopyable. <strong>Reading others\' forests</strong> is borrowing a move and walking your own path; <strong>leaving yours</strong> lets the next gardener stand on your shoulder. Machines can\'t lift your DNA.',
     step1Title: 'Bring your own stuff',
     step1Body: 'Up top, "<strong>Your Mark</strong>" is where you type your <strong>brand name, main color, font</strong>. Not sure what to put? Click "See Maxi\'s example" to see how someone else did it, then make it yours.',
     step1Tip: 'Like trying shoes — try someone else\'s first, then pick your own.',
@@ -2893,7 +3033,7 @@ const I18N = {
     dnaIntro: 'Read which vocabulary triggers AI interpretation in Claude Design official prompts. Eight dimensions, one example each. Borrow a move when writing your own.',
     // Abyss
     abyssLine: 'The forest has form · the wind is still writing',
-    abyssSig: '— climax forest · 2026 —'
+    abyssSig: '— climax forest · ∞ —'
   }
 };
 
@@ -2941,6 +3081,61 @@ const I18N = {
     const saved = localStorage.getItem('superlost_lang');
     if (saved === 'en') applyLang('en');
   } catch (e) {}
+})();
+
+/* ============================================================
+   右側摘要圓點 · 章節快速跳轉 + 滾動高亮（scroll-spy）
+============================================================ */
+(function(){
+  const nav = document.getElementById('dot-nav');
+  if (!nav) return;
+  const dots = [...nav.querySelectorAll('a[data-section]')];
+  const sections = dots
+    .map(a => ({ a, el: document.getElementById(a.dataset.section) }))
+    .filter(x => x.el);
+  if (!sections.length) return;
+
+  // 平滑捲動 + offset（避免被 sticky / 視覺中心壓到）
+  dots.forEach(a => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.getElementById(a.dataset.section);
+      if (!target) return;
+      const top = target.getBoundingClientRect().top + window.pageYOffset - 24;
+      window.scrollTo({ top, behavior: 'smooth' });
+    });
+  });
+
+  // IntersectionObserver 高亮當前
+  if ('IntersectionObserver' in window) {
+    const visible = new Map();
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => visible.set(en.target.id, en.intersectionRatio));
+      // 找最大可見比例
+      let activeId = null, maxRatio = 0;
+      visible.forEach((r, id) => { if (r > maxRatio) { maxRatio = r; activeId = id; } });
+      if (!activeId) return;
+      dots.forEach(a => a.classList.toggle('active', a.dataset.section === activeId));
+    }, {
+      // 視窗中段為觸發帶
+      rootMargin: '-30% 0px -50% 0px',
+      threshold: [0, 0.25, 0.5, 0.75, 1]
+    });
+    sections.forEach(s => io.observe(s.el));
+  } else {
+    // fallback: scroll listener
+    const onScroll = () => {
+      const mid = window.innerHeight * 0.35;
+      let active = sections[0].a;
+      sections.forEach(({ a, el }) => {
+        const top = el.getBoundingClientRect().top;
+        if (top - mid <= 0) active = a;
+      });
+      dots.forEach(a => a.classList.toggle('active', a === active));
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
 })();
 
 /* ============================================================

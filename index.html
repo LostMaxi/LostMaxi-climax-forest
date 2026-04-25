@@ -907,8 +907,8 @@ body {
   align-items: center;
   gap: 1.4rem;
   padding: 0 2rem;
-  /* 3× scale + 微幅 dolly-in：2.88 → 3 → 3.06 · 沉浸推進感 */
-  transform: scale(2.88);
+  /* 微幅 dolly-in：0.96 → 1 → 1.02 · 不放大整體（樹/貓頭鷹自身 px 已 3× 於原探頭版）*/
+  transform: scale(0.96);
   transform-origin: center center;
   animation: cfStageBreath 5500ms cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
 }
@@ -1134,25 +1134,9 @@ body {
   100% { opacity: 1; transform: translate(0, 0); }
 }
 @keyframes cfStageBreath {
-  0%   { transform: scale(2.88); }
-  35%  { transform: scale(3); }
-  100% { transform: scale(3.06); }
-}
-@media (max-width: 900px) {
-  .cf-splash-stage { transform: scale(2.16); }
-  @keyframes cfStageBreath {
-    0%   { transform: scale(2.16); }
-    35%  { transform: scale(2.25); }
-    100% { transform: scale(2.30); }
-  }
-}
-@media (max-width: 600px) {
-  .cf-splash-stage { transform: scale(1.6); }
-  @keyframes cfStageBreath {
-    0%   { transform: scale(1.6); }
-    35%  { transform: scale(1.7); }
-    100% { transform: scale(1.74); }
-  }
+  0%   { transform: scale(0.96); }
+  35%  { transform: scale(1); }
+  100% { transform: scale(1.02); }
 }
 @keyframes cfSplashOut { to { opacity: 0; visibility: hidden; } }
 body.splash-locked { overflow: hidden; }

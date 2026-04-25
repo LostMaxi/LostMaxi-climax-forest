@@ -11,6 +11,15 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet" />
 
+<!-- 同 session 已看過 splash 直接跳過 · 避免閃 -->
+<script>
+  try {
+    if (sessionStorage.getItem('cf_splash_seen') === '1') {
+      document.documentElement.classList.add('cf-splash-skip');
+    }
+  } catch (e) {}
+</script>
+
 <style>
 /* ========== 雙主題 · 預設淺色 · 一鍵切換 ========== */
 :root,
@@ -871,6 +880,94 @@ body {
   .dot-nav { display: none; }
 }
 
+/* ===== 開場動畫 · CF Logo Splash（儀式感版本）===== */
+.cf-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--deep);
+  pointer-events: auto;
+  animation: cfSplashOut 700ms cubic-bezier(0.6, 0, 0.4, 1) 1700ms forwards;
+}
+.cf-splash-stage {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  padding: 0 2rem;
+}
+.cf-splash svg {
+  width: 110px;
+  height: 110px;
+  flex-shrink: 0;
+}
+.cf-splash svg rect {
+  fill: transparent;
+  stroke: var(--claude-orange);
+  stroke-width: 1.5;
+  stroke-dasharray: 220;
+  stroke-dashoffset: 220;
+  animation: cfDraw 480ms cubic-bezier(0.6, 0, 0.4, 1) 80ms forwards;
+}
+.cf-splash svg path {
+  stroke: var(--claude-orange);
+  fill: none;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+}
+.cf-splash svg .c-path {
+  animation: cfDraw 460ms cubic-bezier(0.6, 0, 0.4, 1) 380ms forwards;
+}
+.cf-splash svg .f-path {
+  animation: cfDraw 460ms cubic-bezier(0.6, 0, 0.4, 1) 660ms forwards;
+}
+.cf-splash-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: cfFadeUp 520ms cubic-bezier(0.4, 0, 0.2, 1) 940ms forwards;
+}
+.cf-splash-name {
+  font-family: 'Playfair Display', Georgia, 'Noto Serif TC', serif;
+  font-size: clamp(2.4rem, 6vw, 3.8rem);
+  font-weight: 500;
+  color: var(--snow);
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+.cf-splash-pill {
+  font-family: var(--f-en);
+  font-size: 0.82rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--claude-orange);
+  padding: 0.32rem 0.95rem;
+  border: 1px solid var(--claude-orange);
+  border-radius: 999px;
+  align-self: flex-start;
+  opacity: 0;
+  animation: cfFadeUp 420ms cubic-bezier(0.4, 0, 0.2, 1) 1240ms forwards;
+}
+@keyframes cfDraw { to { stroke-dashoffset: 0; } }
+@keyframes cfFadeUp { to { opacity: 1; transform: translateY(0); } }
+@keyframes cfSplashOut { to { opacity: 0; visibility: hidden; } }
+body.splash-locked { overflow: hidden; }
+html.cf-splash-skip .cf-splash { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .cf-splash { display: none; }
+}
+@media (max-width: 600px) {
+  .cf-splash-stage { flex-direction: column; gap: 1rem; text-align: center; }
+  .cf-splash-text { align-items: center; }
+}
+
 /* ===== Modal · 說明書 ===== */
 .modal-backdrop {
   position: fixed;
@@ -1219,6 +1316,21 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
 </style>
 </head>
 <body>
+
+<!-- 開場動畫 · CF Logo Splash（同 session 只播一次） -->
+<div class="cf-splash" id="cf-splash" aria-hidden="true">
+  <div class="cf-splash-stage">
+    <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x="1.5" y="1.5" width="37" height="37" rx="6" />
+      <path class="c-path" d="M 22 11 Q 13 11 13 20 Q 13 29 22 29" />
+      <path class="f-path" d="M 24 11 L 24 29 M 24 11 L 32 11 M 24 20 L 30 20" />
+    </svg>
+    <div class="cf-splash-text">
+      <span class="cf-splash-name">Climax Forest</span>
+      <span class="cf-splash-pill">Research Preview</span>
+    </div>
+  </div>
+</div>
 
 <!-- 右側摘要圓點 · 章節快速跳轉 -->
 <nav class="dot-nav" id="dot-nav" aria-label="章節導覽">
@@ -1790,6 +1902,29 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
 </div>
 
 <script>
+/* ============================================================
+   開場動畫 splash · 鎖 body scroll · 動畫結束清掉 + 寫 sessionStorage
+============================================================ */
+(function(){
+  const splash = document.getElementById('cf-splash');
+  if (!splash) return;
+  if (document.documentElement.classList.contains('cf-splash-skip')) {
+    splash.remove();
+    return;
+  }
+  const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced) {
+    splash.remove();
+    return;
+  }
+  document.body.classList.add('splash-locked');
+  setTimeout(() => {
+    splash.remove();
+    document.body.classList.remove('splash-locked');
+    try { sessionStorage.setItem('cf_splash_seen', '1'); } catch (e) {}
+  }, 2500);
+})();
+
 /* ============================================================
    Superlost Prompt Generator
    讀林相 + 火種 → 組出完整 prompt，自動注入硬約束

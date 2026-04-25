@@ -62,7 +62,7 @@ For slow hands in a fast world · materials have their own voice.
 
 ## 凝相與帶走
 
-1. 開門 climax-forest.vercel.app(待新建後填)
+1. 開門 [lost-maxi-climax-forest.vercel.app](https://lost-maxi-climax-forest.vercel.app)
 2. 回答六維 · 或讓**風吹一回**替你選
 3. 挑(或不挑)孢子
 4. 按「**凝相**」· 林相成形

@@ -840,15 +840,17 @@ body {
   transition: all var(--dur) var(--ease);
   text-decoration: none;
 }
-.dot-nav a:hover {
-  border-color: var(--iris-c);
-  background: var(--iris-c);
-  transform: scale(1.25);
-}
 .dot-nav a.active {
   border-color: var(--claude-orange);
   background: var(--claude-orange);
   transform: scale(1.2);
+  z-index: 2; /* active 在預設層之上 */
+}
+.dot-nav a:hover {
+  border-color: var(--iris-c);
+  background: var(--iris-c);
+  transform: scale(1.25);
+  z-index: 3; /* hover 永遠在 active 之上 · 不受 DOM 順序影響 */
 }
 .dot-nav a .dot-label {
   position: absolute;

@@ -1136,7 +1136,7 @@ header { position: relative; isolation: isolate; }
   opacity: 0.92;
   display: block;
 }
-:root[data-theme="light"] #hero-canvas { opacity: 0.62; }
+:root[data-theme="light"] #hero-canvas { opacity: 0.92; }
 @media (prefers-reduced-motion: reduce) {
   #hero-canvas { display: none; }
 }
@@ -3109,15 +3109,20 @@ const I18N = {
 
         float fog = smoothstep(0.0, 0.85, uv.y);
 
-        vec3 col = mix(u_deep, u_iris, canopy * (1.0 - fog * 0.6));
+        vec3 col;
+        if (u_theme < 0.5) {
+          // LIGHT · cream 底 + iris 林相浮起
+          vec3 cream = vec3(0.957, 0.929, 0.882);
+          vec3 lightCanopy = mix(cream, u_iris * 0.78, 0.78);
+          col = mix(cream, lightCanopy, canopy * (1.0 - fog * 0.35));
+        } else {
+          // DARK · deep 底 + iris 林相
+          col = mix(u_deep, u_iris, canopy * (1.0 - fog * 0.6));
+        }
 
         vec2 center = uv - 0.5;
-        float vig = 1.0 - dot(center, center) * 0.6;
+        float vig = 1.0 - dot(center, center) * 0.45;
         col *= vig;
-
-        if (u_theme < 0.5) {
-          col = mix(col, u_iris * 0.3, 0.35);
-        }
 
         gl_FragColor = vec4(col, 0.92);
       }

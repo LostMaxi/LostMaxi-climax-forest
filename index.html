@@ -1136,7 +1136,7 @@ header { position: relative; isolation: isolate; }
   opacity: 0.92;
   display: block;
 }
-:root[data-theme="light"] #hero-canvas { opacity: 0.62; }
+:root[data-theme="light"] #hero-canvas { opacity: 0.92; }
 @media (prefers-reduced-motion: reduce) {
   #hero-canvas { display: none; }
 }
@@ -1187,7 +1187,7 @@ header { position: relative; isolation: isolate; }
       <div class="step">
         <div class="num">3</div>
         <div>
-          <h3 data-i18n="step3Title">按「播種」</h3>
+          <h3 data-i18n="step3Title">按「凝相」</h3>
           <p data-i18n="step3Body">下面橘色大按鈕，按下去會產出一段<strong>給 Claude Design 看的文字</strong>（prompt）。旁邊也會出現一張抽象氛圍圖，預覽你的選擇感覺對不對。</p>
           <p data-i18n="step3Tip">氣氛不對？改一個選項再按一次。不滿意？按「清空土地」從頭來。</p>
         </div>
@@ -1198,7 +1198,7 @@ header { position: relative; isolation: isolate; }
         <div>
           <h3 data-i18n="step4Title">帶走 → 貼給 Claude Design</h3>
           <p data-i18n="step4Body">按「<strong>帶走</strong>」複製那段文字，然後打開 <strong>Claude Design</strong>（claude.ai/design），貼進去，等它生出網頁 HTML。</p>
-          <p data-i18n="step4Tip">生出的網頁不滿意？回來改選項再播種一次。這是工具，可以重複用。</p>
+          <p data-i18n="step4Tip">生出的網頁不滿意？回來改選項再凝相一次。這是工具，可以重複用。</p>
         </div>
       </div>
 
@@ -1231,7 +1231,7 @@ header { position: relative; isolation: isolate; }
     <canvas id="hero-canvas" aria-hidden="true"></canvas>
     <h1 data-i18n="heroH1">為你預備 <em>一片極相林</em><br/>的骨架</h1>
     <p data-i18n="heroIntro">一把工具。你帶進你的陽光和土壤，我們負責把骨架縫妥。
-      幾個問題，或風吹一回，按下播種，帶走那段文字貼給 Claude Design——
+      幾個問題，或風吹一回，按下凝相，帶走那段文字貼給 Claude Design——
       收你的專屬網頁。自然規律已替你守住瑣事，你決定方向。</p>
     <p style="margin-top: 0.75rem; font-family: var(--f-en); font-size: 0.78rem; letter-spacing: 0.15em; color: var(--claude-orange); text-transform: uppercase;" data-i18n="heroTaglineEn">
       architecture is the skeleton · the vision is yours
@@ -1553,7 +1553,7 @@ header { position: relative; isolation: isolate; }
   <!-- Action bar (sticky) -->
   <div class="actions">
     <div class="counter"><span data-i18n="counterLabel">可能的林相</span> <strong id="space-count">—</strong> · <span data-i18n="currentLabel">當前</span> <strong id="current">—</strong></div>
-    <button class="btn" id="btn-gen" data-i18n="btnSow">播種</button>
+    <button class="btn" id="btn-gen" data-i18n="btnSow">凝相</button>
     <button class="btn ghost" id="btn-rand" data-i18n="btnWind">風吹一回</button>
     <button class="btn ghost" id="btn-reset" data-i18n="btnClear">清空土地</button>
   </div>
@@ -1561,7 +1561,7 @@ header { position: relative; isolation: isolate; }
   <!-- Output -->
   <section class="output" id="output" style="display:none;">
     <div class="hd2">
-      <span data-i18n="outputTtl">種子已落 · 帶走它 → 貼給 Claude Design</span>
+      <span data-i18n="outputTtl">相已成形 · 帶走它 → 貼給 Claude Design</span>
       <span><button class="btn ghost" id="btn-copy" style="padding:0.4rem 0.8rem;font-size:0.72rem;" data-i18n="btnTake">帶走</button><span class="copy-ok" id="copy-ok" data-i18n="copyOk">✓ 已帶走</span></span>
     </div>
     <pre id="prompt-output"></pre>
@@ -2034,7 +2034,7 @@ $('#btn-gen').addEventListener('click', () => {
   const prompt = buildPrompt(d);
   $('#prompt-output').textContent = prompt;
   $('#output').style.display = 'block';
-  refreshAmbient();  // 播種時同步生成氛圍圖
+  refreshAmbient();  // 凝相時同步生成氛圍圖
   $('#output').scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
 
@@ -2485,7 +2485,7 @@ function renderGallery(filter = 'all') {
   const items = getGalleryItems(filter);
   if (items.length === 0) {
     grid.innerHTML = `<div style="grid-column: 1/-1; color: var(--smoke); padding: 2rem; text-align: center; font-family: var(--f-zh);">
-      你的池還是空的。播種後按「+ 收藏到池」就會出現在這裡。
+      你的池還是空的。凝相後按「+ 收藏到池」就會出現在這裡。
     </div>`;
     return;
   }
@@ -2669,7 +2669,7 @@ renderGallery('all');
   exportBtn.addEventListener('click', () => {
     const pool = loadMyPool();
     if (pool.length === 0) {
-      alert('實驗室是空的。播種後按「+ 收藏到池」開始累積你的 prompt。');
+      alert('實驗室是空的。凝相後按「+ 收藏到池」開始累積你的 prompt。');
       return;
     }
     const payload = {
@@ -2770,19 +2770,19 @@ const I18N = {
     step2Title: '回答六個問題',
     step2Body: '往下滑，會看到<strong>六個問題</strong>：樹冠（為了什麼）、優勢種（誰是主角）、林相（哪種氣質）、林分（怎麼排）、葉形（文字怎麼說）、風與根（動不動）。',
     step2Tip: '每題選一個就好。不確定就按「風吹一回」讓系統幫你選。',
-    step3Title: '按「播種」',
+    step3Title: '按「凝相」',
     step3Body: '下面橘色大按鈕，按下去會產出一段<strong>給 Claude Design 看的文字</strong>（prompt）。旁邊也會出現一張抽象氛圍圖，預覽你的選擇感覺對不對。',
     step3Tip: '氣氛不對？改一個選項再按一次。不滿意？按「清空土地」從頭來。',
     step4Title: '帶走 → 貼給 Claude Design',
     step4Body: '按「<strong>帶走</strong>」複製那段文字，然後打開 <strong>Claude Design</strong>（claude.ai/design），貼進去，等它生出網頁 HTML。',
-    step4Tip: '生出的網頁不滿意？回來改選項再播種一次。這是工具，可以重複用。',
+    step4Tip: '生出的網頁不滿意？回來改選項再凝相一次。這是工具，可以重複用。',
     stepFAQTitle: '還有什麼要知道？',
     stepFAQ1: '<strong>進階設計師模式</strong>是給懂一點 prompt 的人玩的——不懂可以完全不理它。',
     stepFAQ2: '<strong>孢子</strong>是選擇性的意外——加 1-3 顆會讓作品有小驚喜。不加也沒關係。',
     stepFAQ3: '這是<strong>工具</strong>，不是成品。你才是設計師。',
     // Hero
     heroH1: '為你預備 <em>一片極相林</em><br/>的骨架',
-    heroIntro: '一把工具。帶進你的陽光和土壤，系統把骨架縫妥。幾個問題，或風吹一回，按下播種，帶走那段文字貼給 Claude Design——收專屬網頁。自然規律已守住瑣事，你決定方向。',
+    heroIntro: '一把工具。帶進你的陽光和土壤，系統把骨架縫妥。幾個問題，或風吹一回，按下凝相，帶走那段文字貼給 Claude Design——收專屬網頁。自然規律已守住瑣事，你決定方向。',
     heroTaglineEn: 'architecture is the skeleton · the vision is yours',
     heroTaglineZh: '在速度飛快的時代 · 為慢手而生 · 材料有它的聲音',
     // Profile
@@ -2813,14 +2813,14 @@ const I18N = {
     sporeTitle: '孢子 <em>讓風吹進幾粒意外（選 0-3）</em>',
     sporeHint: '進階 · 從風帶來的種子池裡挑 · 讓森林生出你沒預設的姿態',
     // Buttons
-    btnSow: '播種',
+    btnSow: '凝相',
     btnWind: '風吹一回',
     btnClear: '清空土地',
     btnTake: '帶走',
     copyOk: '✓ 已帶走',
     counterLabel: '可能的林相',
     currentLabel: '當前',
-    outputTtl: '種子已落 · 帶走它 → 貼給 Claude Design',
+    outputTtl: '相已成形 · 帶走它 → 貼給 Claude Design',
     // Gallery
     galleryTtl: '池魂 · Deep Pool',
     galleryIntro: '這不只是模板庫——是<strong>系統精挑</strong>的視覺精品。每個都觸及一個物理視覺現象：干涉、暫留、色差、馬赫帶、全像、焦散、chiaroscuro、anamorphic⋯⋯ 優雅、豐富、獨具個性。不可互換，不重複。讀懂她們藏在哪裡，然後走自己的路。',
@@ -2845,19 +2845,19 @@ const I18N = {
     step2Title: 'Answer six questions',
     step2Body: 'Scroll down, you\'ll see <strong>six questions</strong>: Canopy (what for), Dominant (who\'s the star), Forest Type (what feel), Stand (how arranged), Leaf Form (how text speaks), Wind & Roots (moves or not).',
     step2Tip: 'Pick one for each. Not sure? Hit "Let the Wind Choose" and let it roll.',
-    step3Title: 'Hit "Sow"',
+    step3Title: 'Hit "Form"',
     step3Body: 'The big orange button below — hit it, and you\'ll get a chunk of <strong>text for Claude Design</strong> (a prompt). A small abstract mood image also appears so you can preview if your choices feel right.',
     step3Tip: 'Feels off? Change one option and hit again. Not happy? Hit "Clear the Land" to start over.',
     step4Title: 'Take it → Paste to Claude Design',
     step4Body: 'Hit "<strong>Take it</strong>" to copy the text, then open <strong>Claude Design</strong> (claude.ai/design), paste, and wait for it to render your webpage HTML.',
-    step4Tip: 'Don\'t like the result? Come back, change options, sow again. This is a tool — reuse it freely.',
+    step4Tip: 'Don\'t like the result? Come back, change options, hit Form again. This is a tool — reuse it freely.',
     stepFAQTitle: 'Anything else?',
     stepFAQ1: '<strong>Advanced Designer Mode</strong> is for folks who know some prompt stuff — feel free to ignore it.',
     stepFAQ2: '<strong>Spores</strong> are optional surprises — add 1-3 to sprinkle happy accidents. Or skip them.',
     stepFAQ3: 'This is a <strong>tool</strong>, not a product. You are the designer.',
     // Hero
     heroH1: "The skeleton of <em>a Climax Forest</em><br/>prepared for design",
-    heroIntro: "A tool. Bring the light and soil — the skeleton is stitched for you. A few questions, or let the wind decide. Hit Sow, take the text, paste to Claude Design — a webpage arrives. Natural rules already handle the fuss; you decide the direction.",
+    heroIntro: "A tool. Bring the light and soil — the skeleton is stitched for you. A few questions, or let the wind decide. Hit Form, take the text, paste to Claude Design — a webpage arrives. Natural rules already handle the fuss; you decide the direction.",
     heroTaglineEn: 'architecture is the skeleton · the vision is yours',
     heroTaglineZh: 'made for slow hands in a fast world · materials have their own voice',
     // Profile
@@ -2888,14 +2888,14 @@ const I18N = {
     sporeTitle: 'Spores <em>let a few accidents blow in (pick 0-3)</em>',
     sporeHint: "Advanced · pick from the seed pool carried by wind · let the forest grow postures you didn't plan",
     // Buttons
-    btnSow: 'Sow',
+    btnSow: 'Form',
     btnWind: 'Let Wind Decide',
     btnClear: 'Clear the Land',
     btnTake: 'Take it',
     copyOk: '✓ Taken',
     counterLabel: 'Possible forests',
     currentLabel: 'Current',
-    outputTtl: 'Seed dropped · take it → paste to Claude Design',
+    outputTtl: 'Form set · take it → paste to Claude Design',
     // Gallery
     galleryTtl: 'Deep Pool · 池魂',
     galleryIntro: "More than a template library — <strong>system-curated</strong> visual specimens. Each touches a physical-optical phenomenon: interference, persistence-of-vision, chromatic aberration, Mach bands, holography, caustics, chiaroscuro, anamorphic distortion. Elegant, rich, singular. Non-interchangeable, non-repeating. Read how they hide it, then walk your own path.",
@@ -2998,7 +2998,7 @@ const I18N = {
     };
     slider.addEventListener('input', () => {
       update();
-      // 即時連動 ambient canvas（若已播種且 canvas 可見）
+      // 即時連動 ambient canvas（若已凝相且 canvas 可見）
       if (document.getElementById('output').style.display !== 'none' ||
           document.getElementById('ambient-canvas')?.getContext('2d')) {
         refreshAmbient();
@@ -3109,15 +3109,20 @@ const I18N = {
 
         float fog = smoothstep(0.0, 0.85, uv.y);
 
-        vec3 col = mix(u_deep, u_iris, canopy * (1.0 - fog * 0.6));
+        vec3 col;
+        if (u_theme < 0.5) {
+          // LIGHT · cream 底 + iris 林相浮起
+          vec3 cream = vec3(0.957, 0.929, 0.882);
+          vec3 lightCanopy = mix(cream, u_iris * 0.78, 0.78);
+          col = mix(cream, lightCanopy, canopy * (1.0 - fog * 0.35));
+        } else {
+          // DARK · deep 底 + iris 林相
+          col = mix(u_deep, u_iris, canopy * (1.0 - fog * 0.6));
+        }
 
         vec2 center = uv - 0.5;
-        float vig = 1.0 - dot(center, center) * 0.6;
+        float vig = 1.0 - dot(center, center) * 0.45;
         col *= vig;
-
-        if (u_theme < 0.5) {
-          col = mix(col, u_iris * 0.3, 0.35);
-        }
 
         gl_FragColor = vec4(col, 0.92);
       }

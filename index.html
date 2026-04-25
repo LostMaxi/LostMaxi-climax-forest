@@ -866,11 +866,21 @@ body {
   border-radius: 4px;
   opacity: 0;
   pointer-events: none;
-  transition: opacity var(--dur) var(--ease);
+  transition: opacity 90ms ease-out;
+  z-index: 1;
 }
-.dot-nav a:hover .dot-label,
+.dot-nav a:hover .dot-label {
+  opacity: 1;
+  z-index: 3;
+}
 .dot-nav a.active .dot-label {
   opacity: 1;
+  z-index: 2;
+}
+/* hover 期間 · active label 退讓 · 只顯示被 hover 的那一個 */
+.dot-nav:hover a.active:not(:hover) .dot-label,
+.dot-nav:has(a:hover) a.active:not(:hover) .dot-label {
+  opacity: 0;
 }
 .dot-nav a.active .dot-label {
   color: var(--claude-orange);

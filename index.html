@@ -899,8 +899,8 @@ body {
   justify-content: center;
   background: var(--deep);
   pointer-events: auto;
-  /* 5.5s 沉浸式 timeline · 收尾 1s 慢溶解、延遲 4.5s 起 */
-  animation: cfSplashOut 1000ms cubic-bezier(0.4, 0, 0.2, 1) 4500ms forwards;
+  /* 5.5s 沉浸式 timeline · E 劇本 · 收尾 500ms 慢溶解、延遲 5s 起（讓貓頭鷹完整降臨後再淡出）*/
+  animation: cfSplashOut 500ms cubic-bezier(0.4, 0, 0.2, 1) 5000ms forwards;
 }
 .cf-splash-stage {
   display: flex;
@@ -948,63 +948,134 @@ body {
   animation: cfDraw 850ms cubic-bezier(0.4, 0, 0.2, 1) 2050ms forwards;
 }
 
-/* ===== 吉祥物 · 樹苗 + 貓頭鷹 ===== */
+/* ===== E 劇本 · 縮時演替（種子 → 樹）+ 貓頭鷹降臨 ===== */
 .cf-mascot {
   position: absolute;
-  width: 26px;
-  height: 18px;
-  overflow: hidden;
   pointer-events: none;
-  /* 容器底緣對齊 rect 頂部 stroke 底（display y ≈ 6px）· top:-12px */
-  top: -12px;
 }
-.cf-mascot svg {
+
+/* --- 樹 · 從 CF 框頂緣往上長到接近 wordmark 高度 --- */
+.cf-mascot-tree {
+  /* cage 底緣對齊 CF 框頂 stroke 底（display y ≈ 6px）· 高 80px 向上延伸 */
+  top: -75px;
+  left: 50%;
+  margin-left: -18px;
+  width: 36px;
+  height: 80px;
+  overflow: visible;
+}
+.cf-mascot-tree svg {
   display: block;
   width: 100%;
   height: 100%;
-  transform: translateY(20px); /* 預設藏在容器下方 */
 }
-/* 樹苗 · 立於 C 上方 · 1700ms 慢慢長出（人類植下的種子）*/
-.cf-mascot-sapling {
-  /* C 中心約 display-x 48px · 容器 26px 寬 · left = 48-13 = 35px */
-  left: 35px;
+/* 種子 · 從 cage 上方掉入 · 播完後消失（被 trunk 接力）*/
+.cf-mascot-tree .cf-seed {
+  fill: var(--claude-orange);
+  opacity: 0;
+  transform: translateY(-30px);
+  animation: cfSeedDrop 450ms cubic-bezier(0.5, 0, 0.6, 1.4) 2400ms forwards;
 }
-.cf-mascot-sapling svg {
-  animation: cfMascotPeek 2000ms cubic-bezier(0.4, 0, 0.2, 1) 1700ms both;
-}
-.cf-mascot-sapling .stem,
-.cf-mascot-sapling .branch {
+/* 主幹 · stroke-dashoffset 由下往上「畫」出 */
+.cf-mascot-tree .cf-trunk {
   stroke: var(--claude-orange);
-  fill: none;
+  stroke-width: 1.4;
   stroke-linecap: round;
-  stroke-linejoin: round;
+  fill: none;
+  stroke-dasharray: 70;
+  stroke-dashoffset: 70;
+  animation: cfTreeTrunk 1100ms cubic-bezier(0.4, 0, 0.2, 1) 2750ms forwards;
 }
-.cf-mascot-sapling .leaf {
+/* 7 葉 · 從 scale(0) 綻放 · 由下而上分批 */
+.cf-mascot-tree .cf-leaf {
   fill: var(--deep);
   stroke: var(--claude-orange);
   stroke-width: 0.8;
+  opacity: 0;
 }
-/* 貓頭鷹 · 立於 F 上方 · 2300ms 後到（林相守望者）*/
+.cf-mascot-tree .leaf-1 {
+  transform-origin: 9px 58px;
+  animation: cfLeafBloom 380ms cubic-bezier(0.4, 0, 0.2, 1) 3050ms forwards;
+}
+.cf-mascot-tree .leaf-2 {
+  transform-origin: 27px 58px;
+  animation: cfLeafBloom 380ms cubic-bezier(0.4, 0, 0.2, 1) 3120ms forwards;
+}
+.cf-mascot-tree .leaf-3 {
+  transform-origin: 8px 40px;
+  animation: cfLeafBloom 380ms cubic-bezier(0.4, 0, 0.2, 1) 3380ms forwards;
+}
+.cf-mascot-tree .leaf-4 {
+  transform-origin: 28px 40px;
+  animation: cfLeafBloom 380ms cubic-bezier(0.4, 0, 0.2, 1) 3450ms forwards;
+}
+.cf-mascot-tree .leaf-5 {
+  transform-origin: 10px 22px;
+  animation: cfLeafBloom 380ms cubic-bezier(0.4, 0, 0.2, 1) 3700ms forwards;
+}
+.cf-mascot-tree .leaf-6 {
+  transform-origin: 26px 22px;
+  animation: cfLeafBloom 380ms cubic-bezier(0.4, 0, 0.2, 1) 3770ms forwards;
+}
+.cf-mascot-tree .leaf-7 {
+  transform-origin: 18px 9px;
+  animation: cfLeafBloom 450ms cubic-bezier(0.4, 0, 0.2, 1) 4000ms forwards;
+}
+
+/* --- 貓頭鷹 · 從畫面右側飛入、降落樹頂 --- */
 .cf-mascot-owl {
-  /* F 中心約 display-x 77px · 容器 26px 寬 · left = 77-13 = 64px */
-  left: 64px;
+  /* 樹頂約在 wrapper-y -66（cage top -75 + leaf-7 中心 9）· 貓頭鷹腳爪在 SVG y 48 對齊樹頂 */
+  top: -114px;
+  left: 50%;
+  margin-left: -18px;
+  width: 36px;
+  height: 52px;
+  overflow: visible;
 }
 .cf-mascot-owl svg {
-  animation: cfMascotPeek 1400ms cubic-bezier(0.4, 0, 0.2, 1) 2300ms both;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform: translate(80px, -16px);
+  animation: cfOwlPerch 850ms cubic-bezier(0.4, 0, 0.2, 1) 4050ms forwards;
 }
-.cf-mascot-owl .ear { fill: var(--claude-orange); }
-.cf-mascot-owl .head {
+/* 貓頭鷹線描樣式（與樹同 · claude-orange + deep cream）*/
+.cf-mascot-owl .owl-ear { fill: var(--claude-orange); }
+.cf-mascot-owl .owl-head,
+.cf-mascot-owl .owl-body {
   fill: var(--deep);
   stroke: var(--claude-orange);
-  stroke-width: 1;
+  stroke-width: 1.1;
+  stroke-linejoin: round;
 }
-.cf-mascot-owl .eye-ring {
+.cf-mascot-owl .owl-disc {
+  fill: none;
+  stroke: var(--claude-orange);
+  stroke-width: 0.5;
+  opacity: 0.55;
+}
+.cf-mascot-owl .owl-eye {
   fill: var(--deep);
   stroke: var(--claude-orange);
   stroke-width: 0.7;
 }
-.cf-mascot-owl .pupil { fill: var(--claude-orange); }
-.cf-mascot-owl .beak { fill: var(--claude-orange); }
+.cf-mascot-owl .owl-pupil { fill: var(--claude-orange); }
+.cf-mascot-owl .owl-glint { fill: var(--deep); opacity: 0.95; }
+.cf-mascot-owl .owl-beak { fill: var(--claude-orange); }
+.cf-mascot-owl .owl-chest,
+.cf-mascot-owl .owl-wing,
+.cf-mascot-owl .owl-feather {
+  fill: none;
+  stroke: var(--claude-orange);
+  stroke-width: 0.7;
+  stroke-linecap: round;
+}
+.cf-mascot-owl .owl-feet line {
+  stroke: var(--claude-orange);
+  stroke-width: 0.7;
+  stroke-linecap: round;
+}
 
 .cf-splash-text {
   display: flex;
@@ -1039,11 +1110,28 @@ body {
 @keyframes cfDraw { to { stroke-dashoffset: 0; } }
 @keyframes cfFadeUp { to { opacity: 1; transform: translateY(0); } }
 @keyframes cfWordmarkSettle { to { letter-spacing: -0.01em; } }
-@keyframes cfMascotPeek {
-  0%   { transform: translateY(20px); }
-  20%  { transform: translateY(0); }
-  78%  { transform: translateY(0); }
-  100% { transform: translateY(20px); }
+/* E 劇本 · 種子掉落（從上方落入 · 播完淡出 · 由 trunk 接力）*/
+@keyframes cfSeedDrop {
+  0%   { opacity: 0; transform: translateY(-30px); }
+  55%  { opacity: 1; transform: translateY(0); }
+  85%  { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(0); }
+}
+/* E 劇本 · 葉片綻放（scale 0 → 1.08 → 1 微 overshoot 帶生命感）*/
+@keyframes cfLeafBloom {
+  0%   { opacity: 0; transform: scale(0); }
+  60%  { opacity: 1; transform: scale(1.08); }
+  100% { opacity: 1; transform: scale(1); }
+}
+/* E 劇本 · 樹幹由下往上描出 */
+@keyframes cfTreeTrunk { to { stroke-dashoffset: 0; } }
+/* E 劇本 · 貓頭鷹從右側飛入 · 帶上下浮動模擬翅膀拍動 */
+@keyframes cfOwlPerch {
+  0%   { opacity: 0; transform: translate(80px, -16px); }
+  20%  { opacity: 0.7; transform: translate(55px, -10px); }
+  45%  { opacity: 1; transform: translate(28px, -6px); }
+  70%  { opacity: 1; transform: translate(10px, -2px); }
+  100% { opacity: 1; transform: translate(0, 0); }
 }
 @keyframes cfStageBreath {
   0%   { transform: scale(2.88); }
@@ -1435,28 +1523,65 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
         <path class="c-path" d="M 22 11 Q 13 11 13 20 Q 13 29 22 29" />
         <path class="f-path" d="M 24 11 L 24 29 M 24 11 L 32 11 M 24 20 L 30 20" />
       </svg>
-      <!-- 小樹苗 · 從 C 上方探頭（人類植下的種子）-->
-      <div class="cf-mascot cf-mascot-sapling" aria-hidden="true">
-        <svg viewBox="0 0 24 18" xmlns="http://www.w3.org/2000/svg">
-          <path class="stem" d="M 12 18 L 12 6" stroke-width="1.2" />
-          <path class="branch" d="M 12 11 Q 9 9 6 7" stroke-width="0.7" />
-          <path class="branch" d="M 12 11 Q 15 9 18 7" stroke-width="0.7" />
-          <ellipse class="leaf" cx="6" cy="7" rx="2.2" ry="3" transform="rotate(-30 6 7)" />
-          <ellipse class="leaf" cx="18" cy="7" rx="2.2" ry="3" transform="rotate(30 18 7)" />
-          <ellipse class="leaf" cx="12" cy="3.5" rx="2" ry="2.8" />
+      <!-- E 劇本：種子 → 樹苗 → 小樹（縮時演替）-->
+      <div class="cf-mascot cf-mascot-tree" aria-hidden="true">
+        <svg viewBox="0 0 36 80" xmlns="http://www.w3.org/2000/svg">
+          <!-- 種子（單獨元素 · 掉落動畫用）-->
+          <circle class="cf-seed" cx="18" cy="78" r="1.6" />
+          <!-- 主幹（stroke-dashoffset 動畫繪出 · 由下而上）-->
+          <line class="cf-trunk" x1="18" y1="80" x2="18" y2="14" />
+          <!-- 7 葉 · 由下而上依序綻放 -->
+          <ellipse class="cf-leaf leaf-1" cx="9" cy="58" rx="3.5" ry="4.5" transform="rotate(-25 9 58)" />
+          <ellipse class="cf-leaf leaf-2" cx="27" cy="58" rx="3.5" ry="4.5" transform="rotate(25 27 58)" />
+          <ellipse class="cf-leaf leaf-3" cx="8" cy="40" rx="4" ry="5" transform="rotate(-30 8 40)" />
+          <ellipse class="cf-leaf leaf-4" cx="28" cy="40" rx="4" ry="5" transform="rotate(30 28 40)" />
+          <ellipse class="cf-leaf leaf-5" cx="10" cy="22" rx="3.5" ry="4.5" transform="rotate(-20 10 22)" />
+          <ellipse class="cf-leaf leaf-6" cx="26" cy="22" rx="3.5" ry="4.5" transform="rotate(20 26 22)" />
+          <ellipse class="cf-leaf leaf-7" cx="18" cy="9" rx="4" ry="5.5" />
         </svg>
       </div>
-      <!-- 貓頭鷹 · 從 F 上方探頭（林相守望者）-->
+      <!-- 貓頭鷹 · 從畫面右側飛入、降落樹頂（線描 · 與樹苗同色系）-->
       <div class="cf-mascot cf-mascot-owl" aria-hidden="true">
-        <svg viewBox="0 0 24 18" xmlns="http://www.w3.org/2000/svg">
-          <path class="ear" d="M 8 7 L 6 1.5 L 11 4 Z" />
-          <path class="ear" d="M 16 7 L 18 1.5 L 13 4 Z" />
-          <ellipse class="head" cx="12" cy="11" rx="6.5" ry="5.5" />
-          <circle class="eye-ring" cx="9.5" cy="11" r="1.7" />
-          <circle class="eye-ring" cx="14.5" cy="11" r="1.7" />
-          <circle class="pupil" cx="9.5" cy="11" r="0.7" />
-          <circle class="pupil" cx="14.5" cy="11" r="0.7" />
-          <path class="beak" d="M 11.5 13 L 12 15 L 12.5 13 Z" />
+        <svg viewBox="0 0 36 52" xmlns="http://www.w3.org/2000/svg">
+          <!-- 長耳簇（外擴尖角 · 取參考圖比例）-->
+          <path class="owl-ear" d="M 6 9 Q 4 1 8 4 L 12 9 Z" />
+          <path class="owl-ear" d="M 30 9 Q 32 1 28 4 L 24 9 Z" />
+          <!-- 圓頭 -->
+          <ellipse class="owl-head" cx="18" cy="14" rx="11" ry="9" />
+          <!-- 面盤（眼周圓 · owl 標誌特徵）-->
+          <ellipse class="owl-disc" cx="13" cy="14" rx="5" ry="5.5" />
+          <ellipse class="owl-disc" cx="23" cy="14" rx="5" ry="5.5" />
+          <!-- 大眼 -->
+          <circle class="owl-eye" cx="13" cy="14" r="2.7" />
+          <circle class="owl-eye" cx="23" cy="14" r="2.7" />
+          <!-- 瞳孔 -->
+          <circle class="owl-pupil" cx="13" cy="14" r="1.3" />
+          <circle class="owl-pupil" cx="23" cy="14" r="1.3" />
+          <!-- 眼神高光 -->
+          <circle class="owl-glint" cx="13.6" cy="13.4" r="0.45" />
+          <circle class="owl-glint" cx="23.6" cy="13.4" r="0.45" />
+          <!-- 三角鈎喙 -->
+          <path class="owl-beak" d="M 16 19 L 18 23 L 20 19 Z" />
+          <!-- 圓身（梨形 · 略寬於頭）-->
+          <ellipse class="owl-body" cx="18" cy="33" rx="11" ry="11" />
+          <!-- 胸 V 形毛紋 -->
+          <path class="owl-chest" d="M 13 26 Q 18 31 23 26" />
+          <!-- 兩側翅膀弧 -->
+          <path class="owl-wing" d="M 8 28 Q 7 34 11 39" />
+          <path class="owl-wing" d="M 28 28 Q 29 34 25 39" />
+          <!-- 胸前小羽紋（U 形微弧 · 三組）-->
+          <path class="owl-feather" d="M 14 32 Q 15 33.4 16 32" />
+          <path class="owl-feather" d="M 17 35 Q 18 36.4 19 35" />
+          <path class="owl-feather" d="M 20 32 Q 21 33.4 22 32" />
+          <!-- 三爪 × 兩腳 -->
+          <g class="owl-feet">
+            <line x1="13" y1="44" x2="13" y2="48" />
+            <line x1="14.5" y1="44" x2="14.5" y2="48.5" />
+            <line x1="16" y1="44" x2="16" y2="48" />
+            <line x1="20" y1="44" x2="20" y2="48" />
+            <line x1="21.5" y1="44" x2="21.5" y2="48.5" />
+            <line x1="23" y1="44" x2="23" y2="48" />
+          </g>
         </svg>
       </div>
     </div>

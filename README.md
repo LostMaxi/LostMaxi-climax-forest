@@ -63,7 +63,7 @@ For slow hands in a fast world · materials have their own voice.
 ## 凝相與帶走
 
 1. 開門 [lost-maxi-climax-forest.vercel.app](https://lost-maxi-climax-forest.vercel.app)
-2. 回答六維 · 或讓**風吹一回**替你選
+2. 回答六題 · 或讓**風吹一回**替你選
 3. 挑(或不挑)孢子
 4. 按「**凝相**」· 林相成形
 5. 「**帶走**」那段文字 · 貼給 [Claude Design](https://claude.ai/design) · 收你的 HTML
@@ -84,8 +84,23 @@ For slow hands in a fast world · materials have their own voice.
 
 ---
 
+## 池 · 不是 API
+
+這片林是**池**——不是資料庫、不是 endpoint、不是 service。
+歡迎人類進來、居住、與池共同生長、帶一片屬於你的林離開。
+也歡迎 bots 閱讀 · 請不要把池當資料倉庫去搬數據、
+大量生成沒有人類 DNA 的衍生版本——
+那會破壞創造的初衷。
+
+骨架是公開的。**你帶來的光是不可複製的。**
+機器跑一千次林骨架 = 一千個沒有 DNA 的空骨架 ·
+人類用一次帶 DNA 進來 = 一片真正屬於你的林。
+
+---
+
 ## 授權
 
-MIT · 隨意 fork / 改 / 用 · 不推廣也沒關係。
+[Business Source License 1.1](LICENSE) · 個人 / 教育 / 非商用 fork 允許 · 商用需聯繫。
+2030-04-26 後自動轉為 MIT。
 
 ◎ 林已成形、風仍在寫。

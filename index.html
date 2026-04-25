@@ -869,22 +869,19 @@ body {
   transition: opacity 90ms ease-out;
   z-index: 1;
 }
+/* hover label · 紫色 · 永遠最上層（蓋住相鄰橘色 active label）*/
 .dot-nav a:hover .dot-label {
   opacity: 1;
+  color: var(--iris-c);
+  border-color: var(--iris-c);
   z-index: 3;
 }
+/* active label · 橘色 · 預設可見、被 hover 蓋住時 z-index 較低 */
 .dot-nav a.active .dot-label {
   opacity: 1;
-  z-index: 2;
-}
-/* hover 期間 · active label 退讓 · 只顯示被 hover 的那一個 */
-.dot-nav:hover a.active:not(:hover) .dot-label,
-.dot-nav:has(a:hover) a.active:not(:hover) .dot-label {
-  opacity: 0;
-}
-.dot-nav a.active .dot-label {
   color: var(--claude-orange);
   border-color: var(--claude-orange);
+  z-index: 2;
 }
 @media (max-width: 880px) {
   .dot-nav { display: none; }

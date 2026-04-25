@@ -1003,31 +1003,39 @@ body {
   stroke-width: 0.8;
   opacity: 0;
 }
+/* 每片葉子用 CSS 變數 --rot 定義放射角度 · 動畫帶 rotate 不會被 scale 吃掉 */
 .cf-mascot-tree .leaf-1 {
+  --rot: -70deg;
   transform-origin: 9px 58px;
   animation: cfLeafBloom 420ms cubic-bezier(0.4, 0, 0.2, 1) 3300ms forwards;
 }
 .cf-mascot-tree .leaf-2 {
+  --rot: 70deg;
   transform-origin: 27px 58px;
   animation: cfLeafBloom 420ms cubic-bezier(0.4, 0, 0.2, 1) 3400ms forwards;
 }
 .cf-mascot-tree .leaf-3 {
+  --rot: -55deg;
   transform-origin: 8px 40px;
   animation: cfLeafBloom 420ms cubic-bezier(0.4, 0, 0.2, 1) 3700ms forwards;
 }
 .cf-mascot-tree .leaf-4 {
+  --rot: 55deg;
   transform-origin: 28px 40px;
   animation: cfLeafBloom 420ms cubic-bezier(0.4, 0, 0.2, 1) 3800ms forwards;
 }
 .cf-mascot-tree .leaf-5 {
+  --rot: -30deg;
   transform-origin: 10px 22px;
   animation: cfLeafBloom 420ms cubic-bezier(0.4, 0, 0.2, 1) 4100ms forwards;
 }
 .cf-mascot-tree .leaf-6 {
+  --rot: 30deg;
   transform-origin: 26px 22px;
   animation: cfLeafBloom 420ms cubic-bezier(0.4, 0, 0.2, 1) 4200ms forwards;
 }
 .cf-mascot-tree .leaf-7 {
+  --rot: 0deg;
   transform-origin: 18px 9px;
   animation: cfLeafBloom 500ms cubic-bezier(0.4, 0, 0.2, 1) 4500ms forwards;
 }
@@ -1142,11 +1150,11 @@ body {
   92%  { opacity: 1; transform: translateY(0); }
   100% { opacity: 0; transform: translateY(0); }
 }
-/* E 劇本 · 葉片綻放（scale 0 → 1.08 → 1 微 overshoot 帶生命感）*/
+/* E 劇本 · 葉片綻放（scale 0 → 1.08 → 1 + 帶 rotate 不被覆蓋）*/
 @keyframes cfLeafBloom {
-  0%   { opacity: 0; transform: scale(0); }
-  60%  { opacity: 1; transform: scale(1.08); }
-  100% { opacity: 1; transform: scale(1); }
+  0%   { opacity: 0; transform: rotate(var(--rot, 0deg)) scale(0); }
+  60%  { opacity: 1; transform: rotate(var(--rot, 0deg)) scale(1.08); }
+  100% { opacity: 1; transform: rotate(var(--rot, 0deg)) scale(1); }
 }
 /* E 劇本 · 樹幹由下往上描出 */
 @keyframes cfTreeTrunk { to { stroke-dashoffset: 0; } }
@@ -1549,14 +1557,13 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
           <line class="cf-trunk" x1="18" y1="80" x2="18" y2="14" />
           <!-- 樹頂橫枝（貓頭鷹的歇腳處）-->
           <line class="cf-perch" x1="9" y1="13" x2="27" y2="13" />
-          <!-- 7 葉 · 杏仁葉形 · 上升放射狀（從樹底為錨往外散）-->
-          <!-- 下層 ±70°（最外擴）· 中層 ±55° · 上層 ±30° · 頂葉 0° -->
-          <path class="cf-leaf leaf-1" d="M 9 51.8 Q 13.8 58 9 64.2 Q 4.2 58 9 51.8 Z" transform="rotate(-70 9 58)" />
-          <path class="cf-leaf leaf-2" d="M 27 51.8 Q 31.8 58 27 64.2 Q 22.2 58 27 51.8 Z" transform="rotate(70 27 58)" />
-          <path class="cf-leaf leaf-3" d="M 8 33.2 Q 13.2 40 8 46.8 Q 2.8 40 8 33.2 Z" transform="rotate(-55 8 40)" />
-          <path class="cf-leaf leaf-4" d="M 28 33.2 Q 33.2 40 28 46.8 Q 22.8 40 28 33.2 Z" transform="rotate(55 28 40)" />
-          <path class="cf-leaf leaf-5" d="M 10 15.8 Q 14.8 22 10 28.2 Q 5.2 22 10 15.8 Z" transform="rotate(-30 10 22)" />
-          <path class="cf-leaf leaf-6" d="M 26 15.8 Q 30.8 22 26 28.2 Q 21.2 22 26 15.8 Z" transform="rotate(30 26 22)" />
+          <!-- 7 葉 · 放射狀（rotation 在 CSS · 避免被 scale 動畫覆蓋）-->
+          <path class="cf-leaf leaf-1" d="M 9 51.8 Q 13.8 58 9 64.2 Q 4.2 58 9 51.8 Z" />
+          <path class="cf-leaf leaf-2" d="M 27 51.8 Q 31.8 58 27 64.2 Q 22.2 58 27 51.8 Z" />
+          <path class="cf-leaf leaf-3" d="M 8 33.2 Q 13.2 40 8 46.8 Q 2.8 40 8 33.2 Z" />
+          <path class="cf-leaf leaf-4" d="M 28 33.2 Q 33.2 40 28 46.8 Q 22.8 40 28 33.2 Z" />
+          <path class="cf-leaf leaf-5" d="M 10 15.8 Q 14.8 22 10 28.2 Q 5.2 22 10 15.8 Z" />
+          <path class="cf-leaf leaf-6" d="M 26 15.8 Q 30.8 22 26 28.2 Q 21.2 22 26 15.8 Z" />
           <path class="cf-leaf leaf-7" d="M 18 1.8 Q 23.5 9 18 16.2 Q 12.5 9 18 1.8 Z" />
         </svg>
       </div>

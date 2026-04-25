@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#8384BD" />
+<title>森林對話池 · Climax Forest Pool</title>
+<meta name="description" content="森林對話池 · 訪客留下的林相 · 看別人帶來的光與骨架。" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet" />
+
+<style>
+:root {
+  --deep:   #F4EDE1;
+  --deep-2: #EDE4D2;
+  --snow:   #1A1A1A;
+  --bone:   #3A3530;
+  --smoke:  #6E6656;
+  --ash:    #C8BEA8;
+  --iris:   #8384BD;
+  --orange: #C2765A;
+  --f-en:   'Inter', sans-serif;
+  --f-zh:   'Noto Sans TC', sans-serif;
+  --f-ser:  'Playfair Display', serif;
+}
+:root[data-theme="dark"] {
+  --deep:   #1A1612;
+  --deep-2: #23201C;
+  --snow:   #FFFFFF;
+  --bone:   #D9D9D6;
+  --smoke:  #818387;
+  --ash:    #4C4E56;
+  --iris:   #8384BD;
+  --orange: #D4896A;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--deep);
+  color: var(--snow);
+  font-family: var(--f-zh), var(--f-en);
+  min-height: 100vh;
+  padding: 3rem 2rem 6rem;
+  line-height: 1.7;
+}
+.wrap { max-width: 960px; margin: 0 auto; }
+.nav { display: flex; gap: 1.2rem; font-size: 0.85rem; color: var(--smoke); margin-bottom: 3rem; }
+.nav a { color: var(--smoke); text-decoration: none; border-bottom: 1px solid transparent; transition: 0.2s; }
+.nav a:hover { color: var(--iris); border-bottom-color: var(--iris); }
+h1 {
+  font-family: var(--f-ser);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 500;
+  font-style: italic;
+  color: var(--snow);
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+h1 em { color: var(--iris); font-style: normal; }
+.intro {
+  color: var(--smoke);
+  margin-bottom: 3rem;
+  max-width: 640px;
+}
+.intro strong { color: var(--bone); }
+.placeholder {
+  border: 1px dashed var(--ash);
+  border-radius: 12px;
+  padding: 3rem 2rem;
+  text-align: center;
+  color: var(--smoke);
+  background: var(--deep-2);
+}
+.placeholder h3 {
+  font-family: var(--f-ser);
+  font-style: italic;
+  font-size: 1.5rem;
+  color: var(--bone);
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+.placeholder p { margin: 0.6rem 0; }
+.placeholder code {
+  display: inline-block;
+  background: var(--deep);
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-family: var(--f-en);
+  font-size: 0.85rem;
+  color: var(--orange);
+}
+footer {
+  margin-top: 5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--ash);
+  color: var(--smoke);
+  font-size: 0.8rem;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav class="nav">
+    <a href="/">首頁</a>
+    <a href="/generator.html">凝相工具</a>
+    <a href="/pool.html" style="color: var(--iris);">森林對話池</a>
+  </nav>
+
+  <h1>森林<em>對話池</em></h1>
+  <p class="intro">
+    訪客留下的林相 · 看別人帶來的光與骨架。<br/>
+    這裡不是模板庫 · 是<strong>願意分享的人類留下的種子</strong>——
+    一片林教另一片林怎麼長。
+  </p>
+
+  <div class="placeholder">
+    <h3>對話池正在生根</h3>
+    <p>後端設定中 · 等 Supabase project 接通後正式上線。</p>
+    <p>設定指引：<code>SETUP_SUPABASE.md</code></p>
+  </div>
+
+  <footer>
+    ◎ Climax Forest · 極相林 ·
+    <a href="/" style="color: var(--smoke);">回首頁</a>
+  </footer>
+</div>
+
+<!-- 之後接 Supabase JS client (placeholder) -->
+<script type="module">
+  // 等 Supabase project 設好替換以下兩個 placeholder:
+  const SUPABASE_URL = 'PLACEHOLDER_SUPABASE_URL';
+  const SUPABASE_ANON_KEY = 'PLACEHOLDER_SUPABASE_ANON_KEY';
+
+  // 真實邏輯下次 session 接:
+  // 1. 載入 supabase-js CDN
+  // 2. 從 forest_shares 拉所有 records (按 created_at desc)
+  // 3. timeline / grid 展示
+  // 4. 每筆顯示: brand_name / colors / 6 axes / prompt / 借鑑啟發按鈕
+  console.info('森林對話池 · 等 Supabase 接通');
+</script>
+
+</body>
+</html>

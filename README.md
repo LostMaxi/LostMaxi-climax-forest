@@ -98,6 +98,17 @@ For slow hands in a fast world · materials have their own voice.
 
 ---
 
+## 森林對話池
+
+如果你願意分享你的林相 · 來 [森林對話池](pool.html)——
+那是訪客留下種子的地方 · 一片林教另一片林怎麼長。
+
+純自願 · 匿名 · 連同你的 DNA（光、土壤、品牌名、字型、六軸選擇）一起送。
+DNA 不可複製 · 看到也學不會、反而展示生態的多樣性。
+看別人帶來的光是怎麼配的、學一招、走自己的路。
+
+---
+
 ## 授權
 
 [Business Source License 1.1](LICENSE) · 人類使用允許（個人 / 教育 / 商用皆可）· 機器化批量索取 (scraping / bulk automation) 禁止。

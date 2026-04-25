@@ -282,7 +282,7 @@ body {
   display: flex;
   gap: 0.75rem;
   padding: 1rem 1.25rem;
-  background: rgba(16, 24, 32, 0.88);
+  background: rgba(16, 24, 32, 0.70);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--ash);
@@ -899,30 +899,39 @@ body {
   justify-content: center;
   background: var(--deep);
   pointer-events: auto;
-  /* 4.5s elegant timeline · 收尾 1s 慢溶解、延遲 3.5s 起 */
-  animation: cfSplashOut 1000ms cubic-bezier(0.4, 0, 0.2, 1) 3500ms forwards;
+  /* 5.5s 沉浸式 timeline · 收尾 1s 慢溶解、延遲 4.5s 起 */
+  animation: cfSplashOut 1000ms cubic-bezier(0.4, 0, 0.2, 1) 4500ms forwards;
 }
 .cf-splash-stage {
   display: flex;
   align-items: center;
   gap: 1.4rem;
   padding: 0 2rem;
+  /* 微幅 dolly-in：0.96 → 1 → 1.02 · 沉浸推進感 */
+  transform: scale(0.96);
+  animation: cfStageBreath 5500ms cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
 }
-.cf-splash svg {
+.cf-splash-logo-wrap {
+  position: relative;
+  flex-shrink: 0;
   width: 110px;
   height: 110px;
-  flex-shrink: 0;
 }
-/* draw 序列：放慢 + 留呼吸間隔 */
-.cf-splash svg rect {
+.cf-splash .cf-logo-svg {
+  width: 110px;
+  height: 110px;
+  display: block;
+}
+/* draw 序列：放慢 + 加長呼吸間隔 */
+.cf-splash .cf-logo-svg rect {
   fill: transparent;
   stroke: var(--claude-orange);
   stroke-width: 1.5;
   stroke-dasharray: 220;
   stroke-dashoffset: 220;
-  animation: cfDraw 750ms cubic-bezier(0.4, 0, 0.2, 1) 250ms forwards;
+  animation: cfDraw 950ms cubic-bezier(0.4, 0, 0.2, 1) 500ms forwards;
 }
-.cf-splash svg path {
+.cf-splash .cf-logo-svg path {
   stroke: var(--claude-orange);
   fill: none;
   stroke-width: 2.2;
@@ -931,19 +940,78 @@ body {
   stroke-dasharray: 100;
   stroke-dashoffset: 100;
 }
-.cf-splash svg .c-path {
-  animation: cfDraw 850ms cubic-bezier(0.4, 0, 0.2, 1) 800ms forwards;
+.cf-splash .cf-logo-svg .c-path {
+  animation: cfDraw 1050ms cubic-bezier(0.4, 0, 0.2, 1) 1300ms forwards;
 }
-.cf-splash svg .f-path {
-  animation: cfDraw 850ms cubic-bezier(0.4, 0, 0.2, 1) 1450ms forwards;
+.cf-splash .cf-logo-svg .f-path {
+  animation: cfDraw 850ms cubic-bezier(0.4, 0, 0.2, 1) 2050ms forwards;
 }
+
+/* ===== 吉祥物 · 樹苗 + 貓頭鷹 ===== */
+.cf-mascot {
+  position: absolute;
+  width: 26px;
+  height: 18px;
+  overflow: hidden;
+  pointer-events: none;
+  /* 容器底緣對齊 rect 頂部 stroke 底（display y ≈ 6px）· top:-12px */
+  top: -12px;
+}
+.cf-mascot svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform: translateY(20px); /* 預設藏在容器下方 */
+}
+/* 樹苗 · 立於 C 上方 · 1700ms 慢慢長出（人類植下的種子）*/
+.cf-mascot-sapling {
+  /* C 中心約 display-x 48px · 容器 26px 寬 · left = 48-13 = 35px */
+  left: 35px;
+}
+.cf-mascot-sapling svg {
+  animation: cfMascotPeek 2000ms cubic-bezier(0.4, 0, 0.2, 1) 1700ms both;
+}
+.cf-mascot-sapling .stem,
+.cf-mascot-sapling .branch {
+  stroke: var(--claude-orange);
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.cf-mascot-sapling .leaf {
+  fill: var(--deep);
+  stroke: var(--claude-orange);
+  stroke-width: 0.8;
+}
+/* 貓頭鷹 · 立於 F 上方 · 2300ms 後到（林相守望者）*/
+.cf-mascot-owl {
+  /* F 中心約 display-x 77px · 容器 26px 寬 · left = 77-13 = 64px */
+  left: 64px;
+}
+.cf-mascot-owl svg {
+  animation: cfMascotPeek 1400ms cubic-bezier(0.4, 0, 0.2, 1) 2300ms both;
+}
+.cf-mascot-owl .ear { fill: var(--claude-orange); }
+.cf-mascot-owl .head {
+  fill: var(--deep);
+  stroke: var(--claude-orange);
+  stroke-width: 1;
+}
+.cf-mascot-owl .eye-ring {
+  fill: var(--deep);
+  stroke: var(--claude-orange);
+  stroke-width: 0.7;
+}
+.cf-mascot-owl .pupil { fill: var(--claude-orange); }
+.cf-mascot-owl .beak { fill: var(--claude-orange); }
+
 .cf-splash-text {
   display: flex;
   flex-direction: column;
   gap: 0.55rem;
   opacity: 0;
-  transform: translateY(16px);
-  animation: cfFadeUp 900ms cubic-bezier(0.4, 0, 0.2, 1) 2050ms forwards;
+  transform: translateY(18px);
+  animation: cfFadeUp 1000ms cubic-bezier(0.4, 0, 0.2, 1) 3700ms forwards;
 }
 .cf-splash-name {
   font-family: 'Playfair Display', Georgia, 'Noto Serif TC', serif;
@@ -951,8 +1019,8 @@ body {
   font-weight: 500;
   color: var(--snow);
   line-height: 1;
-  letter-spacing: 0.04em;
-  animation: cfWordmarkSettle 1100ms cubic-bezier(0.4, 0, 0.2, 1) 2050ms forwards;
+  letter-spacing: 0.05em;
+  animation: cfWordmarkSettle 1300ms cubic-bezier(0.4, 0, 0.2, 1) 3700ms forwards;
 }
 .cf-splash-pill {
   font-family: var(--f-en);
@@ -965,11 +1033,22 @@ body {
   border-radius: 999px;
   align-self: flex-start;
   opacity: 0;
-  animation: cfFadeUp 800ms cubic-bezier(0.4, 0, 0.2, 1) 2700ms forwards;
+  animation: cfFadeUp 800ms cubic-bezier(0.4, 0, 0.2, 1) 4200ms forwards;
 }
 @keyframes cfDraw { to { stroke-dashoffset: 0; } }
 @keyframes cfFadeUp { to { opacity: 1; transform: translateY(0); } }
 @keyframes cfWordmarkSettle { to { letter-spacing: -0.01em; } }
+@keyframes cfMascotPeek {
+  0%   { transform: translateY(20px); }
+  20%  { transform: translateY(0); }
+  78%  { transform: translateY(0); }
+  100% { transform: translateY(20px); }
+}
+@keyframes cfStageBreath {
+  0%   { transform: scale(0.96); }
+  35%  { transform: scale(1); }
+  100% { transform: scale(1.02); }
+}
 @keyframes cfSplashOut { to { opacity: 0; visibility: hidden; } }
 body.splash-locked { overflow: hidden; }
 html.cf-splash-skip .cf-splash { display: none; }
@@ -1330,14 +1409,40 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
 </head>
 <body>
 
-<!-- 開場動畫 · CF Logo Splash（同 session 只播一次） -->
+<!-- 開場動畫 · CF Logo Splash（同 session 只播一次 · 樹苗 + 貓頭鷹敘事 · 5s）-->
 <div class="cf-splash" id="cf-splash" aria-hidden="true">
   <div class="cf-splash-stage">
-    <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <rect x="1.5" y="1.5" width="37" height="37" rx="6" />
-      <path class="c-path" d="M 22 11 Q 13 11 13 20 Q 13 29 22 29" />
-      <path class="f-path" d="M 24 11 L 24 29 M 24 11 L 32 11 M 24 20 L 30 20" />
-    </svg>
+    <div class="cf-splash-logo-wrap">
+      <svg class="cf-logo-svg" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="1.5" y="1.5" width="37" height="37" rx="6" />
+        <path class="c-path" d="M 22 11 Q 13 11 13 20 Q 13 29 22 29" />
+        <path class="f-path" d="M 24 11 L 24 29 M 24 11 L 32 11 M 24 20 L 30 20" />
+      </svg>
+      <!-- 小樹苗 · 從 C 上方探頭（人類植下的種子）-->
+      <div class="cf-mascot cf-mascot-sapling" aria-hidden="true">
+        <svg viewBox="0 0 24 18" xmlns="http://www.w3.org/2000/svg">
+          <path class="stem" d="M 12 18 L 12 6" stroke-width="1.2" />
+          <path class="branch" d="M 12 11 Q 9 9 6 7" stroke-width="0.7" />
+          <path class="branch" d="M 12 11 Q 15 9 18 7" stroke-width="0.7" />
+          <ellipse class="leaf" cx="6" cy="7" rx="2.2" ry="3" transform="rotate(-30 6 7)" />
+          <ellipse class="leaf" cx="18" cy="7" rx="2.2" ry="3" transform="rotate(30 18 7)" />
+          <ellipse class="leaf" cx="12" cy="3.5" rx="2" ry="2.8" />
+        </svg>
+      </div>
+      <!-- 貓頭鷹 · 從 F 上方探頭（林相守望者）-->
+      <div class="cf-mascot cf-mascot-owl" aria-hidden="true">
+        <svg viewBox="0 0 24 18" xmlns="http://www.w3.org/2000/svg">
+          <path class="ear" d="M 8 7 L 6 1.5 L 11 4 Z" />
+          <path class="ear" d="M 16 7 L 18 1.5 L 13 4 Z" />
+          <ellipse class="head" cx="12" cy="11" rx="6.5" ry="5.5" />
+          <circle class="eye-ring" cx="9.5" cy="11" r="1.7" />
+          <circle class="eye-ring" cx="14.5" cy="11" r="1.7" />
+          <circle class="pupil" cx="9.5" cy="11" r="0.7" />
+          <circle class="pupil" cx="14.5" cy="11" r="0.7" />
+          <path class="beak" d="M 11.5 13 L 12 15 L 12.5 13 Z" />
+        </svg>
+      </div>
+    </div>
     <div class="cf-splash-text">
       <span class="cf-splash-name">Climax Forest</span>
       <span class="cf-splash-pill">Research Preview</span>
@@ -1935,7 +2040,7 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
     splash.remove();
     document.body.classList.remove('splash-locked');
     try { sessionStorage.setItem('cf_splash_seen', '1'); } catch (e) {}
-  }, 4600);
+  }, 5600);
 })();
 
 /* ============================================================

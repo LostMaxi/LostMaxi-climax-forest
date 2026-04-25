@@ -6,10 +6,22 @@ Change Date:     2030-04-26
 Change License:  MIT License
 
 Use Grant:
-  Personal, non-commercial use is permitted.
-  Educational use is permitted.
-  Forking and modification for non-commercial purposes is permitted.
-  Commercial use requires a separate agreement with the Licensor.
+  Human use is permitted — personal, educational, professional, even
+  commercial — as long as a human is in the loop, interacting with
+  the forest one piece at a time.
+  Forking and modification for human use is permitted.
+
+Anti-Automation Clause:
+  Mass automated generation is NOT permitted, regardless of
+  commercial status. This includes:
+    · scraping the source code to extract prompt logic for bulk runs
+    · headless browser / Selenium / Playwright bulk pipelines
+    · server-side fetch loops that treat this work as an API endpoint
+    · any non-interactive batch generation that strips the human
+      DNA layer from the loop
+
+  Bots may read the source code (it is open). They may not turn this
+  pool into a data extraction target.
 
 After the Change Date, the Licensed Work will automatically be made
 available under the Change License.

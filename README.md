@@ -100,7 +100,7 @@ For slow hands in a fast world · materials have their own voice.
 
 ## 授權
 
-[Business Source License 1.1](LICENSE) · 個人 / 教育 / 非商用 fork 允許 · 商用需聯繫。
+[Business Source License 1.1](LICENSE) · 人類使用允許（個人 / 教育 / 商用皆可）· 機器化批量索取 (scraping / bulk automation) 禁止。
 2030-04-26 後自動轉為 MIT。
 
 ◎ 林已成形、風仍在寫。

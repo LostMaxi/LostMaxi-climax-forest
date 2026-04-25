@@ -907,8 +907,8 @@ body {
   align-items: center;
   gap: 1.4rem;
   padding: 0 2rem;
-  /* 微幅 dolly-in：0.96 → 1 → 1.02 · 7s 對齊整體 timeline */
-  transform: scale(0.96);
+  /* 戲劇化 dolly：遠景 → push in → 落定 · 沉靜式鏡頭感 */
+  transform: scale(0.85);
   transform-origin: center center;
   animation: cfStageBreath 7000ms cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
 }
@@ -954,14 +954,14 @@ body {
   pointer-events: none;
 }
 
-/* --- 樹 · 從 CF 框頂緣往上長到接近 wordmark 高度 --- */
+/* --- 樹 · 2.2× 放大 · 視覺主角 · cage 80×180 · 從 CF 框頂緣往上長 --- */
 .cf-mascot-tree {
-  /* cage 底緣對齊 CF 框頂 stroke 底（display y ≈ 6px）· 高 80px 向上延伸 */
-  top: -75px;
+  /* cage 底緣對齊 CF 框頂 stroke 底（wrapper y ≈ 5）· 高 180px 向上延伸 */
+  top: -175px;
   left: 50%;
-  margin-left: -18px;
-  width: 36px;
-  height: 80px;
+  margin-left: -40px;
+  width: 80px;
+  height: 180px;
   overflow: visible;
 }
 .cf-mascot-tree svg {
@@ -1032,14 +1032,16 @@ body {
   animation: cfLeafBloom 500ms cubic-bezier(0.4, 0, 0.2, 1) 4500ms forwards;
 }
 
-/* --- 貓頭鷹 · 從畫面右側優雅飛入、降落樹頂橫枝 --- */
+/* --- 貓頭鷹 · 2.2× 放大 + 頭額外 1.2× · cage 80×112 · 飛入降落樹頂橫枝 --- */
 .cf-mascot-owl {
-  /* 樹橫枝 wrapper-y = -75 + 13 = -62 · Q 版貓頭鷹腳爪在 SVG y=43 · cage top = -62 - 43 = -105 */
-  top: -105px;
+  /* tree perch wrapper-y = -175 + 13×(180/80) = -145.75
+     owl feet display y from cage top = (43-(-2)) × (112/50) = 100.8
+     cage top = -145.75 - 100.8 ≈ -246（feet 與 perch 同點）*/
+  top: -246px;
   left: 50%;
-  margin-left: -18px;
-  width: 36px;
-  height: 48px;
+  margin-left: -40px;
+  width: 80px;
+  height: 112px;
   overflow: visible;
 }
 .cf-mascot-owl svg {
@@ -1047,7 +1049,7 @@ body {
   width: 100%;
   height: 100%;
   opacity: 0;
-  transform: translate(150px, -32px);
+  transform: translate(360px, -75px);
   animation: cfOwlPerch 1900ms cubic-bezier(0.33, 0, 0.27, 1) 4900ms forwards;
 }
 /* 貓頭鷹 #5 羽冠莊嚴版 線描樣式 */
@@ -1106,9 +1108,10 @@ body {
   animation: cfFadeUp 1100ms cubic-bezier(0.4, 0, 0.2, 1) 5100ms forwards;
 }
 .cf-splash-name {
+  /* 沉靜式：字小、為 caption 不為 hero · 從 2.4-3.8rem 降到 1.6-2.4rem */
   font-family: 'Playfair Display', Georgia, 'Noto Serif TC', serif;
-  font-size: clamp(2.4rem, 6vw, 3.8rem);
-  font-weight: 500;
+  font-size: clamp(1.6rem, 3.8vw, 2.4rem);
+  font-weight: 400;
   color: var(--snow);
   line-height: 1;
   letter-spacing: 0.05em;
@@ -1116,11 +1119,11 @@ body {
 }
 .cf-splash-pill {
   font-family: var(--f-en);
-  font-size: 0.82rem;
+  font-size: 0.7rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--claude-orange);
-  padding: 0.32rem 0.95rem;
+  padding: 0.26rem 0.78rem;
   border: 1px solid var(--claude-orange);
   border-radius: 999px;
   align-self: flex-start;
@@ -1147,21 +1150,26 @@ body {
 }
 /* E 劇本 · 樹幹由下往上描出 */
 @keyframes cfTreeTrunk { to { stroke-dashoffset: 0; } }
-/* E 劇本 · 貓頭鷹優雅飛入 · 7 段 keyframe 模擬翅膀緩降 + 多段拍動 · 1.9s 總長 */
+/* E 劇本 · 貓頭鷹優雅飛入 · 8 段緩降 keyframe · 飛行距離 2.4× 配合放大 mascot */
 @keyframes cfOwlPerch {
-  0%   { opacity: 0;   transform: translate(150px, -32px); }
-  10%  { opacity: 0.3; transform: translate(132px, -28px); }
-  22%  { opacity: 0.6; transform: translate(108px, -23px); }
-  38%  { opacity: 0.85; transform: translate(78px, -17px); }
-  55%  { opacity: 1;   transform: translate(48px, -11px); }
-  72%  { opacity: 1;   transform: translate(24px, -6px); }
-  88%  { opacity: 1;   transform: translate(6px, -1px); }
+  0%   { opacity: 0;   transform: translate(360px, -75px); }
+  10%  { opacity: 0.3; transform: translate(316px, -65px); }
+  22%  { opacity: 0.6; transform: translate(258px, -54px); }
+  38%  { opacity: 0.85; transform: translate(186px, -40px); }
+  55%  { opacity: 1;   transform: translate(115px, -26px); }
+  72%  { opacity: 1;   transform: translate(58px, -14px); }
+  88%  { opacity: 1;   transform: translate(15px, -3px); }
   100% { opacity: 1;   transform: translate(0, 0); }
 }
+/* 沉靜式鏡頭感：開場遠景 → 種子+生長時 push in → 貓頭鷹降臨 pull back · 全程 7s */
 @keyframes cfStageBreath {
-  0%   { transform: scale(0.96); }
-  35%  { transform: scale(1); }
-  100% { transform: scale(1.02); }
+  0%   { transform: scale(0.85); }   /* 0ms · 遠景 · 距離感 */
+  10%  { transform: scale(0.9); }    /* 700ms · CF 框畫出時、緩慢接近 */
+  35%  { transform: scale(0.98); }   /* 2.45s · 種子掉下時、進入 */
+  55%  { transform: scale(1.05); }   /* 3.85s · 樹生長峰值、最近 */
+  72%  { transform: scale(1.05); }   /* 5.04s · 鏡頭穩住等貓頭鷹 */
+  90%  { transform: scale(1); }      /* 6.3s · 貓頭鷹降臨、pull back 落定 */
+  100% { transform: scale(1); }      /* 7s · 全景靜止 */
 }
 @keyframes cfSplashOut { to { opacity: 0; visibility: hidden; } }
 body.splash-locked { overflow: hidden; }
@@ -1541,44 +1549,44 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
           <line class="cf-trunk" x1="18" y1="80" x2="18" y2="14" />
           <!-- 樹頂橫枝（貓頭鷹的歇腳處）-->
           <line class="cf-perch" x1="9" y1="13" x2="27" y2="13" />
-          <!-- 7 葉 · 由下而上依序綻放 -->
-          <ellipse class="cf-leaf leaf-1" cx="9" cy="58" rx="3.5" ry="4.5" transform="rotate(-25 9 58)" />
-          <ellipse class="cf-leaf leaf-2" cx="27" cy="58" rx="3.5" ry="4.5" transform="rotate(25 27 58)" />
-          <ellipse class="cf-leaf leaf-3" cx="8" cy="40" rx="4" ry="5" transform="rotate(-30 8 40)" />
-          <ellipse class="cf-leaf leaf-4" cx="28" cy="40" rx="4" ry="5" transform="rotate(30 28 40)" />
-          <ellipse class="cf-leaf leaf-5" cx="10" cy="22" rx="3.5" ry="4.5" transform="rotate(-20 10 22)" />
-          <ellipse class="cf-leaf leaf-6" cx="26" cy="22" rx="3.5" ry="4.5" transform="rotate(20 26 22)" />
-          <ellipse class="cf-leaf leaf-7" cx="18" cy="9" rx="4" ry="5.5" />
+          <!-- 7 葉 · 由下而上依序綻放 · 加大讓葉形可辨 -->
+          <ellipse class="cf-leaf leaf-1" cx="9" cy="58" rx="4.8" ry="6.2" transform="rotate(-25 9 58)" />
+          <ellipse class="cf-leaf leaf-2" cx="27" cy="58" rx="4.8" ry="6.2" transform="rotate(25 27 58)" />
+          <ellipse class="cf-leaf leaf-3" cx="8" cy="40" rx="5.2" ry="6.8" transform="rotate(-30 8 40)" />
+          <ellipse class="cf-leaf leaf-4" cx="28" cy="40" rx="5.2" ry="6.8" transform="rotate(30 28 40)" />
+          <ellipse class="cf-leaf leaf-5" cx="10" cy="22" rx="4.8" ry="6.2" transform="rotate(-20 10 22)" />
+          <ellipse class="cf-leaf leaf-6" cx="26" cy="22" rx="4.8" ry="6.2" transform="rotate(20 26 22)" />
+          <ellipse class="cf-leaf leaf-7" cx="18" cy="9" rx="5.5" ry="7.2" />
         </svg>
       </div>
-      <!-- 貓頭鷹 #5 羽冠莊嚴版 · 林相神靈降臨 · 線描 -->
+      <!-- 貓頭鷹 #5 羽冠莊嚴版 · 頭額外 1.2× 放大 · 林相神靈降臨 -->
       <div class="cf-mascot cf-mascot-owl" aria-hidden="true">
-        <svg viewBox="0 0 36 48" xmlns="http://www.w3.org/2000/svg">
-          <!-- 三根 Y 字羽冠（中央 + 左右微傾）取代耳簇 -->
-          <path class="owl-plume" d="M 18 6 L 18 1" />
-          <path class="owl-plume" d="M 18 6 L 14 1.5" />
-          <path class="owl-plume" d="M 18 6 L 22 1.5" />
+        <svg viewBox="0 -2 36 50" xmlns="http://www.w3.org/2000/svg">
+          <!-- 三根 Y 字羽冠（位置同步 1.2× 隨大頭調整）-->
+          <path class="owl-plume" d="M 18 4.4 L 18 -1.4" />
+          <path class="owl-plume" d="M 18 4.4 L 13.2 -1" />
+          <path class="owl-plume" d="M 18 4.4 L 22.8 -1" />
           <!-- 羽冠尖端飾點 -->
-          <circle class="owl-plume-tip" cx="18" cy="1" r="0.6" />
-          <circle class="owl-plume-tip" cx="14" cy="1.5" r="0.5" />
-          <circle class="owl-plume-tip" cx="22" cy="1.5" r="0.5" />
-          <!-- 圓頭 -->
-          <ellipse class="owl-head" cx="18" cy="14" rx="11" ry="9.5" />
-          <!-- 明顯雙臉盤（莊嚴感）-->
-          <ellipse class="owl-disc" cx="13" cy="14" rx="6" ry="6.5" />
-          <ellipse class="owl-disc" cx="23" cy="14" rx="6" ry="6.5" />
-          <!-- 大眼 -->
-          <ellipse class="owl-eye" cx="13" cy="14" rx="2.8" ry="3.2" />
-          <ellipse class="owl-eye" cx="23" cy="14" rx="2.8" ry="3.2" />
-          <!-- 縱向瞳孔（神獸特徵）-->
-          <ellipse class="owl-pupil" cx="13" cy="14" rx="0.7" ry="2.2" />
-          <ellipse class="owl-pupil" cx="23" cy="14" rx="0.7" ry="2.2" />
-          <!-- 眼神高光 -->
-          <circle class="owl-glint" cx="13.5" cy="13" r="0.5" />
-          <circle class="owl-glint" cx="23.5" cy="13" r="0.5" />
-          <!-- 鈎喙（彎度·神獸）-->
-          <path class="owl-beak" d="M 16.5 19 Q 18 22.2 19.5 19 Q 18 21 16.5 19 Z" />
-          <!-- 圓身（莊嚴直立）-->
+          <circle class="owl-plume-tip" cx="18" cy="-1.4" r="0.72" />
+          <circle class="owl-plume-tip" cx="13.2" cy="-1" r="0.6" />
+          <circle class="owl-plume-tip" cx="22.8" cy="-1" r="0.6" />
+          <!-- 大圓頭（1.2× · 頭視覺重量加強）-->
+          <ellipse class="owl-head" cx="18" cy="14" rx="13.2" ry="11.4" />
+          <!-- 雙臉盤（1.2× 同頭比例）-->
+          <ellipse class="owl-disc" cx="12" cy="14" rx="7.2" ry="7.8" />
+          <ellipse class="owl-disc" cx="24" cy="14" rx="7.2" ry="7.8" />
+          <!-- 大眼（1.2×）-->
+          <ellipse class="owl-eye" cx="12" cy="14" rx="3.36" ry="3.84" />
+          <ellipse class="owl-eye" cx="24" cy="14" rx="3.36" ry="3.84" />
+          <!-- 縱向瞳孔（1.2× · 神獸特徵）-->
+          <ellipse class="owl-pupil" cx="12" cy="14" rx="0.84" ry="2.64" />
+          <ellipse class="owl-pupil" cx="24" cy="14" rx="0.84" ry="2.64" />
+          <!-- 眼神高光（1.2×）-->
+          <circle class="owl-glint" cx="12.6" cy="12.8" r="0.6" />
+          <circle class="owl-glint" cx="24.6" cy="12.8" r="0.6" />
+          <!-- 鈎喙（位置 1.2× 下移配合大頭）-->
+          <path class="owl-beak" d="M 16.2 20 Q 18 23.8 19.8 20 Q 18 22.4 16.2 20 Z" />
+          <!-- 圓身（不放大 · 維持比例對比）-->
           <ellipse class="owl-body" cx="18" cy="32" rx="10" ry="9" />
           <!-- 胸 V 紋（中軸感）-->
           <path class="owl-chest" d="M 13 26 Q 18 30 23 26" />

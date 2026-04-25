@@ -3004,5 +3004,82 @@ const I18N = {
 })();
 </script>
 
+<script type="module">
+  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+  const SUPABASE_URL = 'https://jwwxndqqwzkjnccpktya.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_p1Ppq0OcYpNqKyTNVghWnQ_TQP-yZai';
+  const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  const $ = (s) => document.querySelector(s);
+  const btnGen   = $('#btn-gen');
+  const btnShare = $('#btn-share-pool');
+  const promptOut = $('#prompt-output');
+
+  if (btnGen && btnShare && promptOut) {
+    // 凝相後 enable share
+    btnGen.addEventListener('click', () => {
+      setTimeout(() => {
+        const txt = promptOut.textContent || '';
+        if (txt.length >= 50) {
+          btnShare.disabled = false;
+          btnShare.style.opacity = '1';
+          btnShare.style.cursor = 'pointer';
+          btnShare.title = '分享到森林對話池 (匿名 · 連 DNA 一起)';
+        }
+      }, 80);
+    });
+
+    btnShare.addEventListener('click', async () => {
+      const original = btnShare.textContent;
+      btnShare.disabled = true;
+      btnShare.textContent = '分享中…';
+
+      const txt = promptOut.textContent || '';
+      if (txt.length < 50) {
+        btnShare.textContent = '需要先凝相';
+        setTimeout(() => { btnShare.textContent = original; btnShare.disabled = false; }, 2000);
+        return;
+      }
+
+      const sixAxes = {
+        intent:        document.querySelector('[name="intent"]:checked')?.value || null,
+        subject:       document.querySelector('[name="subject"]:checked')?.value || null,
+        style_primary: document.querySelector('[name="style_primary"]:checked')?.value || null,
+        style_perturb: document.querySelector('[name="style_perturb"]:checked')?.value || null,
+        layout:        document.querySelector('[name="layout"]:checked')?.value || null,
+        typography:    document.querySelector('[name="typography"]:checked')?.value || null,
+        bilingual:     document.querySelector('[name="bilingual"]:checked')?.value || null,
+        physics:       document.querySelector('[name="physics"]:checked')?.value || null,
+      };
+      const fireSeeds = Array.from(document.querySelectorAll('[name="seed"]:checked')).map(e => e.value);
+
+      const { error } = await supabase.from('forest_shares').insert({
+        prompt:        txt,
+        brand_name:    $('#p-brand')?.value || null,
+        primary_color: $('#p-color-primary')?.value || null,
+        deep_color:    $('#p-color-deep')?.value || null,
+        font_en:       $('#p-font-en')?.value || null,
+        font_zh:       $('#p-font-zh')?.value || null,
+        six_axes:      sixAxes,
+        fire_seeds:    fireSeeds,
+        share_dna:     true,
+        honeypot:      ''
+      });
+
+      if (error) {
+        btnShare.textContent = '✗ 分享失敗';
+        btnShare.title = error.message;
+        console.error('share error', error);
+        setTimeout(() => { btnShare.textContent = original; btnShare.disabled = false; }, 3000);
+      } else {
+        btnShare.textContent = '✓ 已留下 · 進入對話池';
+        btnShare.style.color = 'var(--claude-orange, #C2765A)';
+        setTimeout(() => window.open('pool.html', '_blank'), 800);
+      }
+    });
+  }
+</script>
+
 </body>
 </html>

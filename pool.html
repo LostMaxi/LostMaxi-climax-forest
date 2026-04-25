@@ -25,16 +25,6 @@
   --f-zh:   'Noto Sans TC', sans-serif;
   --f-ser:  'Playfair Display', serif;
 }
-:root[data-theme="dark"] {
-  --deep:   #1A1612;
-  --deep-2: #23201C;
-  --snow:   #FFFFFF;
-  --bone:   #D9D9D6;
-  --smoke:  #818387;
-  --ash:    #4C4E56;
-  --iris:   #8384BD;
-  --orange: #D4896A;
-}
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
   background: var(--deep);
@@ -44,60 +34,200 @@ body {
   padding: 3rem 2rem 6rem;
   line-height: 1.7;
 }
-.wrap { max-width: 960px; margin: 0 auto; }
-.nav { display: flex; gap: 1.2rem; font-size: 0.85rem; color: var(--smoke); margin-bottom: 3rem; }
+.wrap { max-width: 1100px; margin: 0 auto; }
+.nav { display: flex; gap: 1.4rem; font-size: 0.85rem; color: var(--smoke); margin-bottom: 3rem; }
 .nav a { color: var(--smoke); text-decoration: none; border-bottom: 1px solid transparent; transition: 0.2s; }
 .nav a:hover { color: var(--iris); border-bottom-color: var(--iris); }
+.nav a.active { color: var(--iris); }
+
 h1 {
   font-family: var(--f-ser);
   font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 500;
   font-style: italic;
   color: var(--snow);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.6rem;
   letter-spacing: -0.01em;
 }
 h1 em { color: var(--iris); font-style: normal; }
 .intro {
   color: var(--smoke);
   margin-bottom: 3rem;
-  max-width: 640px;
+  max-width: 680px;
+  font-size: 0.95rem;
 }
 .intro strong { color: var(--bone); }
-.placeholder {
-  border: 1px dashed var(--ash);
-  border-radius: 12px;
-  padding: 3rem 2rem;
-  text-align: center;
+
+.status {
+  font-size: 0.78rem;
   color: var(--smoke);
-  background: var(--deep-2);
+  margin-bottom: 1.4rem;
+  font-family: var(--f-en);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
-.placeholder h3 {
+
+#grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.4rem;
+}
+
+.card {
+  background: var(--deep-2);
+  border: 1px solid var(--ash);
+  border-radius: 14px;
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  transition: 0.2s;
+}
+.card:hover {
+  border-color: var(--iris);
+  transform: translateY(-2px);
+}
+
+.card .head {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px dashed var(--ash);
+}
+.card .swatches {
+  display: flex;
+  gap: 0.3rem;
+}
+.card .swatch {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+.card .brand {
+  font-weight: 500;
+  color: var(--bone);
+  font-size: 0.92rem;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.card .time {
+  font-family: var(--f-en);
+  font-size: 0.7rem;
+  color: var(--smoke);
+  letter-spacing: 0.04em;
+}
+
+.card .axes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  font-size: 0.72rem;
+}
+.card .axis {
+  background: var(--deep);
+  color: var(--smoke);
+  padding: 0.18rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--ash);
+}
+.card .axis strong { color: var(--bone); margin-right: 0.3rem; font-weight: 500; }
+
+.card .seeds {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  font-size: 0.68rem;
+}
+.card .seed {
+  color: var(--orange);
+  font-family: var(--f-en);
+  letter-spacing: 0.03em;
+}
+
+.card .fonts {
+  font-size: 0.72rem;
+  color: var(--smoke);
+}
+
+.card pre {
+  background: var(--deep);
+  border: 1px solid var(--ash);
+  border-radius: 8px;
+  padding: 0.8rem;
+  font-size: 0.74rem;
+  font-family: var(--f-en);
+  color: var(--bone);
+  white-space: pre-wrap;
+  max-height: 240px;
+  overflow: auto;
+  line-height: 1.5;
+}
+.card pre::-webkit-scrollbar { width: 4px; }
+.card pre::-webkit-scrollbar-thumb { background: var(--ash); }
+
+.card .actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+.card .btn {
+  font-family: var(--f-en);
+  font-size: 0.72rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--smoke);
+  border: 1px solid var(--ash);
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: 0.2s;
+}
+.card .btn:hover {
+  border-color: var(--iris);
+  color: var(--iris);
+}
+
+.empty, .loading, .errored {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--smoke);
+  border: 1px dashed var(--ash);
+  border-radius: 14px;
+  font-size: 0.95rem;
+}
+.empty h3, .errored h3 {
   font-family: var(--f-ser);
   font-style: italic;
-  font-size: 1.5rem;
   color: var(--bone);
   margin-bottom: 1rem;
   font-weight: 500;
+  font-size: 1.4rem;
 }
-.placeholder p { margin: 0.6rem 0; }
-.placeholder code {
-  display: inline-block;
-  background: var(--deep);
-  padding: 0.15rem 0.5rem;
-  border-radius: 4px;
+.errored { color: var(--orange); }
+.errored code {
+  display: block;
+  margin-top: 1rem;
   font-family: var(--f-en);
-  font-size: 0.85rem;
-  color: var(--orange);
+  font-size: 0.78rem;
+  background: var(--deep-2);
+  padding: 0.6rem;
+  border-radius: 6px;
+  word-break: break-all;
+  color: var(--smoke);
 }
+
 footer {
   margin-top: 5rem;
   padding-top: 2rem;
   border-top: 1px solid var(--ash);
   color: var(--smoke);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   text-align: center;
 }
+footer a { color: var(--smoke); }
 </style>
 </head>
 <body>
@@ -106,40 +236,158 @@ footer {
   <nav class="nav">
     <a href="/">首頁</a>
     <a href="/generator.html">凝相工具</a>
-    <a href="/pool.html" style="color: var(--iris);">森林對話池</a>
+    <a href="/pool.html" class="active">森林對話池</a>
   </nav>
 
   <h1>森林<em>對話池</em></h1>
   <p class="intro">
     訪客留下的林相 · 看別人帶來的光與骨架。<br/>
-    這裡不是模板庫 · 是<strong>願意分享的人類留下的種子</strong>——
+    <strong>願意分享的人類留下的種子</strong>——
     一片林教另一片林怎麼長。
+    DNA 不可複製 · 看到也學不會 · 反而展示生態的多樣性。
   </p>
 
-  <div class="placeholder">
-    <h3>對話池正在生根</h3>
-    <p>後端設定中 · 等 Supabase project 接通後正式上線。</p>
-    <p>設定指引：<code>SETUP_SUPABASE.md</code></p>
-  </div>
+  <div class="status" id="status">載入中…</div>
+
+  <div id="grid"></div>
 
   <footer>
     ◎ Climax Forest · 極相林 ·
-    <a href="/" style="color: var(--smoke);">回首頁</a>
+    <a href="/">回首頁</a> ·
+    <a href="/generator.html">去凝相一片你的林</a>
   </footer>
 </div>
 
-<!-- 之後接 Supabase JS client (placeholder) -->
 <script type="module">
-  // 等 Supabase project 設好替換以下兩個 placeholder:
-  const SUPABASE_URL = 'PLACEHOLDER_SUPABASE_URL';
-  const SUPABASE_ANON_KEY = 'PLACEHOLDER_SUPABASE_ANON_KEY';
+  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-  // 真實邏輯下次 session 接:
-  // 1. 載入 supabase-js CDN
-  // 2. 從 forest_shares 拉所有 records (按 created_at desc)
-  // 3. timeline / grid 展示
-  // 4. 每筆顯示: brand_name / colors / 6 axes / prompt / 借鑑啟發按鈕
-  console.info('森林對話池 · 等 Supabase 接通');
+  const SUPABASE_URL = 'https://jwwxndqqwzkjnccpktya.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_p1Ppq0OcYpNqKyTNVghWnQ_TQP-yZai';
+  const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  const $ = (s) => document.querySelector(s);
+  const grid = $('#grid');
+  const status = $('#status');
+
+  const escapeHtml = (s) => String(s ?? '')
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+
+  const fmtTime = (ts) => {
+    const d = new Date(ts);
+    const now = new Date();
+    const diffMs = now - d;
+    const diffMin = Math.floor(diffMs / 60000);
+    const diffHr  = Math.floor(diffMs / 3600000);
+    const diffDay = Math.floor(diffMs / 86400000);
+    if (diffMin < 1)   return 'just now';
+    if (diffMin < 60)  return `${diffMin}m ago`;
+    if (diffHr < 24)   return `${diffHr}h ago`;
+    if (diffDay < 30)  return `${diffDay}d ago`;
+    return d.toISOString().slice(0, 10);
+  };
+
+  const renderAxes = (axes) => {
+    if (!axes) return '';
+    const order = ['intent','subject','style_primary','style_perturb','layout','typography','bilingual','physics'];
+    const labels = {
+      intent: '意圖', subject: '主角', style_primary: '林相', style_perturb: '混林',
+      layout: '林分', typography: '葉形', bilingual: '雙語', physics: '風與根'
+    };
+    return order
+      .filter(k => axes[k] && axes[k] !== 'none')
+      .map(k => `<span class="axis"><strong>${labels[k]}</strong>${escapeHtml(axes[k])}</span>`)
+      .join('');
+  };
+
+  const renderSeeds = (seeds) => {
+    if (!seeds || !seeds.length) return '';
+    return `<div class="seeds">${seeds.map(s => `<span class="seed">${escapeHtml(s)}</span>`).join(' · ')}</div>`;
+  };
+
+  const renderCard = (row) => {
+    const swatches = `
+      <div class="swatches">
+        ${row.primary_color ? `<span class="swatch" style="background:${escapeHtml(row.primary_color)}"></span>` : ''}
+        ${row.deep_color    ? `<span class="swatch" style="background:${escapeHtml(row.deep_color)}"></span>`    : ''}
+      </div>
+    `;
+    const fonts = (row.font_en || row.font_zh)
+      ? `<div class="fonts">${escapeHtml(row.font_en || '')} · ${escapeHtml(row.font_zh || '')}</div>`
+      : '';
+    return `
+      <div class="card">
+        <div class="head">
+          ${swatches}
+          <span class="brand">${escapeHtml(row.brand_name || '匿名')}</span>
+          <span class="time">${fmtTime(row.created_at)}</span>
+        </div>
+        <div class="axes">${renderAxes(row.six_axes)}</div>
+        ${renderSeeds(row.fire_seeds)}
+        ${fonts}
+        <pre>${escapeHtml(row.prompt)}</pre>
+        <div class="actions">
+          <button class="btn" data-copy="${row.id}">複製 prompt</button>
+        </div>
+      </div>
+    `;
+  };
+
+  async function load() {
+    try {
+      const { data, error } = await supabase
+        .from('forest_shares')
+        .select('id, prompt, brand_name, primary_color, deep_color, font_en, font_zh, six_axes, fire_seeds, created_at')
+        .order('created_at', { ascending: false })
+        .limit(50);
+
+      if (error) throw error;
+
+      if (!data || data.length === 0) {
+        status.textContent = '';
+        grid.innerHTML = `
+          <div class="empty" style="grid-column: 1 / -1;">
+            <h3>還沒有林相留下</h3>
+            <p>第一個人類進來分享後 · 池子才開始有對話。</p>
+            <p style="margin-top:1rem;"><a href="/generator.html" style="color:var(--iris);">去凝相一片你的林</a></p>
+          </div>
+        `;
+        return;
+      }
+
+      status.textContent = `${data.length} 片林 · 最近的 50 個`;
+      grid.innerHTML = data.map(renderCard).join('');
+
+      // copy buttons
+      grid.querySelectorAll('[data-copy]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-copy');
+          const row = data.find(r => r.id === id);
+          if (!row) return;
+          navigator.clipboard.writeText(row.prompt).then(() => {
+            btn.textContent = '✓ 已複製';
+            btn.style.color = 'var(--iris)';
+            setTimeout(() => {
+              btn.textContent = '複製 prompt';
+              btn.style.color = '';
+            }, 1500);
+          });
+        });
+      });
+    } catch (err) {
+      console.error('pool load error', err);
+      status.textContent = '';
+      grid.innerHTML = `
+        <div class="errored" style="grid-column: 1 / -1;">
+          <h3>對話池暫時無法連線</h3>
+          <p>後端 Supabase 沒回應 · 稍後再試。</p>
+          <code>${escapeHtml(err.message || String(err))}</code>
+        </div>
+      `;
+    }
+  }
+
+  load();
 </script>
 
 </body>

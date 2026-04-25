@@ -11,6 +11,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet" />
 
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+  }
+}
+</script>
+
 <style>
 /* ========== 雙主題 · 預設淺色 · 一鍵切換 ========== */
 :root,
@@ -1115,6 +1123,23 @@ body {
 html[lang="en"] .opt span .zh:not([data-en]),
 html[lang="en"] .zh-only { display: none; }
 html[lang="en"] .opt span { letter-spacing: 0.02em; }
+
+/* ========== Hero WebGL 背景 ========== */
+header { position: relative; isolation: isolate; }
+#hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.92;
+  display: block;
+}
+:root[data-theme="light"] #hero-canvas { opacity: 0.62; }
+@media (prefers-reduced-motion: reduce) {
+  #hero-canvas { display: none; }
+}
 </style>
 </head>
 <body>
@@ -1203,6 +1228,7 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
         <span class="brand-tag">Research Preview</span>
       </div>
     </div>
+    <canvas id="hero-canvas" aria-hidden="true"></canvas>
     <h1 data-i18n="heroH1">為你預備 <em>一片極相林</em><br/>的骨架</h1>
     <p data-i18n="heroIntro">一把工具。你帶進你的陽光和土壤，我們負責把骨架縫妥。
       幾個問題，或風吹一回，按下播種，帶走那段文字貼給 Claude Design——
@@ -2991,6 +3017,158 @@ const I18N = {
     }
   });
 })();
+</script>
+
+<script type="module">
+  import * as THREE from 'three';
+
+  const canvas = document.getElementById('hero-canvas');
+  if (canvas) {
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 10);
+    camera.position.z = 1;
+
+    const hexToVec3 = (hex) => {
+      const h = (hex || '').replace('#', '');
+      if (h.length !== 6) return new THREE.Vector3(0.5, 0.5, 0.5);
+      return new THREE.Vector3(
+        parseInt(h.slice(0, 2), 16) / 255,
+        parseInt(h.slice(2, 4), 16) / 255,
+        parseInt(h.slice(4, 6), 16) / 255
+      );
+    };
+    const getIris = () => hexToVec3(document.getElementById('p-color-primary')?.value || '#8384BD');
+    const getDeep = () => hexToVec3(document.getElementById('p-color-deep')?.value || '#101820');
+
+    const uniforms = {
+      u_time:       { value: 0 },
+      u_resolution: { value: new THREE.Vector2(1, 1) },
+      u_scroll:     { value: 0 },
+      u_iris:       { value: getIris() },
+      u_deep:       { value: getDeep() },
+      u_theme:      { value: document.documentElement.dataset.theme === 'dark' ? 1.0 : 0.0 }
+    };
+
+    const vertexShader = /* glsl */`
+      void main() {
+        gl_Position = vec4(position, 1.0);
+      }
+    `;
+
+    const fragmentShader = /* glsl */`
+      precision highp float;
+      uniform float u_time;
+      uniform vec2 u_resolution;
+      uniform float u_scroll;
+      uniform vec3 u_iris;
+      uniform vec3 u_deep;
+      uniform float u_theme;
+
+      float hash(vec2 p) {
+        return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+      }
+
+      float vnoise(vec2 p) {
+        vec2 i = floor(p);
+        vec2 f = fract(p);
+        vec2 u = f * f * (3.0 - 2.0 * f);
+        return mix(
+          mix(hash(i), hash(i + vec2(1.0, 0.0)), u.x),
+          mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x),
+          u.y
+        );
+      }
+
+      float fbm(vec2 p) {
+        float v = 0.0;
+        float amp = 0.5;
+        for (int i = 0; i < 6; i++) {
+          v += amp * vnoise(p);
+          p = p * 2.0 + vec2(13.7, 7.13);
+          amp *= 0.5;
+        }
+        return v;
+      }
+
+      void main() {
+        vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+        vec2 p = uv * vec2(3.0, 1.6);
+
+        p.x += u_time * 0.015;
+        p.y -= u_time * 0.008;
+
+        float canopy = fbm(p + vec2(0.0, u_scroll * 0.3));
+        float density = smoothstep(0.0, 1.0, 1.2 - uv.y);
+        canopy *= density;
+
+        float breath = sin(u_time * 0.3 + uv.x * 6.0) * 0.04;
+        canopy += breath * density;
+
+        float fog = smoothstep(0.0, 0.85, uv.y);
+
+        vec3 col = mix(u_deep, u_iris, canopy * (1.0 - fog * 0.6));
+
+        vec2 center = uv - 0.5;
+        float vig = 1.0 - dot(center, center) * 0.6;
+        col *= vig;
+
+        if (u_theme < 0.5) {
+          col = mix(col, u_iris * 0.3, 0.35);
+        }
+
+        gl_FragColor = vec4(col, 0.92);
+      }
+    `;
+
+    const geometry = new THREE.PlaneGeometry(2, 2);
+    const material = new THREE.ShaderMaterial({ uniforms, vertexShader, fragmentShader });
+    const mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+
+    const resize = () => {
+      const r = canvas.getBoundingClientRect();
+      const w = Math.max(1, Math.floor(r.width));
+      const h = Math.max(1, Math.floor(r.height));
+      renderer.setSize(w, h, false);
+      uniforms.u_resolution.value.set(w, h);
+    };
+    resize();
+    window.addEventListener('resize', resize);
+
+    window.addEventListener('scroll', () => {
+      uniforms.u_scroll.value = window.scrollY * 0.001;
+    }, { passive: true });
+
+    new MutationObserver(() => {
+      uniforms.u_theme.value = document.documentElement.dataset.theme === 'dark' ? 1.0 : 0.0;
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+    ['p-color-primary', 'p-color-deep'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('input', () => {
+        uniforms.u_iris.value = getIris();
+        uniforms.u_deep.value = getDeep();
+      });
+    });
+
+    let raf;
+    const start = performance.now();
+    const tick = () => {
+      uniforms.u_time.value = (performance.now() - start) / 1000;
+      renderer.render(scene, camera);
+      raf = requestAnimationFrame(tick);
+    };
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) cancelAnimationFrame(raf);
+      else tick();
+    });
+
+    tick();
+  }
 </script>
 
 </body>

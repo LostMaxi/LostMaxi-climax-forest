@@ -915,14 +915,23 @@ body {
 .tour-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.72);
+  /* 半透明 50% + 模糊 · 不全黑、不完全遮住 · 高級優雅 */
+  background: rgba(244, 237, 225, 0.4); /* 用品牌淡米色、半透明 */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   pointer-events: auto;
+}
+:root[data-theme="dark"] .tour-overlay {
+  background: rgba(26, 26, 26, 0.4); /* dark mode · 半透明黑 */
 }
 
 .tour-spotlight {
   position: absolute;
   border-radius: 12px;
-  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.72), 0 0 0 3px var(--iris-tint);
+  /* 紫色邊框標示當前焦點 · 不做圈內清晰（避免 mask 複雜度）*/
+  border: 3px solid var(--iris-tint);
+  box-shadow: 0 0 24px rgba(131, 132, 189, 0.4);
+  background: transparent;
   pointer-events: none;
   transition: top 0.4s cubic-bezier(0.4, 0, 0.2, 1),
               left 0.4s cubic-bezier(0.4, 0, 0.2, 1),
@@ -1688,7 +1697,7 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
     </div>
     <a href="pool.html" class="tb-btn pool" id="pool-link" data-i18n="poolBtn" title="森林對話池 · 看訪客的林相 / 把你的林分享出去">森林對話池 · 訪客的種子</a>
     <!-- ===== TOUR HUD START · 新手白話導覽（不喜歡整段刪除即可） ===== -->
-    <button type="button" class="tb-btn tour-trigger" id="tour-btn" title="新手導覽 · 整頁逐步白話說明">✨ 新手導覽</button>
+    <button type="button" class="tb-btn tour-trigger" id="tour-btn" title="新手導覽 · 整頁逐步白話說明">新手導覽</button>
     <!-- ===== TOUR HUD END ===== -->
     <button type="button" class="tb-btn help" id="help-btn" data-i18n="helpBtn">? 怎麼用</button>
   </div>
@@ -2244,10 +2253,14 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
     splash.remove();
     return;
   }
+  // 鎖 scroll · 並先把頁面 scroll 到最上方（避免 splash 期間底層被滾動）
   document.body.classList.add('splash-locked');
+  window.scrollTo(0, 0);
   setTimeout(() => {
     splash.remove();
     document.body.classList.remove('splash-locked');
+    // splash 結束後再次確認回到最上方（讓使用者從首頁第一段開始看）
+    window.scrollTo(0, 0);
     try { sessionStorage.setItem('cf_splash_seen', '1'); } catch (e) {}
   }, 6100);
 })();
@@ -3880,6 +3893,12 @@ const I18N = {
     hud.classList.remove('on');
     hud.hidden = true;
     document.body.style.overflow = '';
+    // 結束後跳回首頁上方（避免 user 卡在某個 section 不知道在哪）
+    try {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (e) {
+      window.scrollTo(0, 0);
+    }
   }
 
   function show() {
@@ -3888,7 +3907,7 @@ const I18N = {
     $title.textContent = s.title;
     $body.innerHTML = s.body;
     btnPrev.style.visibility = curr === 0 ? 'hidden' : 'visible';
-    btnNext.textContent = curr === steps.length - 1 ? '完成 ✓' : '下一步 →';
+    btnNext.textContent = curr === steps.length - 1 ? '完成' : '下一步 →';
 
     if (s.sel) {
       const target = document.querySelector(s.sel);
@@ -3924,25 +3943,15 @@ const I18N = {
     const margin = 24;
 
     let top, left;
-    // 優先放右側
+    // 永遠固定右側（Maxi 2026-04-26 指定）
     if (r.right + margin + tipW < vw) {
       left = r.right + margin;
       top = Math.max(margin, Math.min(r.top, vh - tipH - margin));
     }
-    // 否則放下方
-    else if (r.bottom + margin + tipH < vh) {
-      left = Math.max(margin, Math.min(r.left, vw - tipW - margin));
-      top = r.bottom + margin;
-    }
-    // 否則放上方
-    else if (r.top - margin - tipH > 0) {
-      left = Math.max(margin, Math.min(r.left, vw - tipW - margin));
-      top = r.top - margin - tipH;
-    }
-    // 最後居中
+    // 右側放不下 · 退到右邊距內側（不換到下方/上方）
     else {
-      placeTooltipCenter();
-      return;
+      left = vw - tipW - margin;
+      top = Math.max(margin, Math.min(r.top, vh - tipH - margin));
     }
     tooltip.style.top = `${top}px`;
     tooltip.style.left = `${left}px`;

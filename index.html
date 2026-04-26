@@ -954,14 +954,14 @@ body {
   pointer-events: none;
 }
 
-/* --- 樹苗 · 播種 + 葉優雅長出 · cage 50×70 · 無中間線 --- */
+/* --- 樹苗第一版 · 種子 + 主莖 + 雙枝 + 三葉 · cage 60×75 · 無風 --- */
 .cf-mascot-tree {
-  /* cage 底緣對齊 CF 框頂 stroke 底（wrapper-y ≈ 5）· 高 70px */
-  top: -65px;
+  /* cage 底緣對齊 CF 框頂 stroke 底（wrapper-y ≈ 5）· 高 75px */
+  top: -70px;
   left: 50%;
-  margin-left: -25px;
-  width: 50px;
-  height: 70px;
+  margin-left: -30px;
+  width: 60px;
+  height: 75px;
   overflow: visible;
 }
 .cf-mascot-tree svg {
@@ -969,51 +969,57 @@ body {
   width: 100%;
   height: 100%;
 }
-/* 種子 · 小圓點淡入（播種狀態）*/
+/* 種子 · 小圓點淡入（播種狀態）· 留 50% opacity 隱約可見 */
 .cf-mascot-tree .cf-seed {
   fill: var(--claude-orange);
   opacity: 0;
-  animation: cfSeedAppear 700ms cubic-bezier(0.4, 0, 0.2, 1) 2100ms forwards;
+  animation: cfSeedAppear 500ms cubic-bezier(0.4, 0, 0.2, 1) 2050ms forwards;
 }
-/* 葉 · 從種子點往上生長 · transform-origin 在底部尖點 */
+/* 主莖 · stroke-dashoffset 由下而上描出 */
+.cf-mascot-tree .cf-stem {
+  stroke: var(--claude-orange);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  fill: none;
+  stroke-dasharray: 17;
+  stroke-dashoffset: 17;
+  animation: cfStemDraw 800ms cubic-bezier(0.4, 0, 0.2, 1) 2300ms forwards;
+}
+/* 雙枝 · stroke-draw · 主莖完成後 */
+.cf-mascot-tree .cf-branch {
+  stroke: var(--claude-orange);
+  stroke-width: 0.8;
+  stroke-linecap: round;
+  fill: none;
+  stroke-dasharray: 8;
+  stroke-dashoffset: 8;
+}
+.cf-mascot-tree .cf-branch-left {
+  animation: cfBranchDraw 400ms cubic-bezier(0.4, 0, 0.2, 1) 2900ms forwards;
+}
+.cf-mascot-tree .cf-branch-right {
+  animation: cfBranchDraw 400ms cubic-bezier(0.4, 0, 0.2, 1) 3000ms forwards;
+}
+/* 三葉 · scale 0 → 1 沉靜綻放 · 從各自位置 */
 .cf-mascot-tree .cf-leaf {
   fill: var(--deep);
   stroke: var(--claude-orange);
-  stroke-width: 1;
+  stroke-width: 0.7;
   stroke-linejoin: round;
   opacity: 0;
-  transform-origin: 18px 44px;
-  animation: cfLeafGrow 1400ms cubic-bezier(0.4, 0, 0.2, 1) 2400ms forwards;
 }
-
-/* --- 流動空氣 · 替代貓頭鷹 · Monet 的擾動 --- */
-.cf-mascot-wind {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 100px;
-  margin-top: -50px;
-  pointer-events: none;
-  z-index: -1;
-  opacity: 0;
-  transform: translateX(-30px);
-  animation: cfWindDrift 2000ms cubic-bezier(0.4, 0, 0.4, 1) 2700ms forwards;
+.cf-mascot-tree .cf-leaf-left {
+  transform-origin: 6px 17px;
+  animation: cfLeafBloom 600ms cubic-bezier(0.4, 0, 0.2, 1) 3150ms forwards;
 }
-.cf-mascot-wind svg {
-  width: 100%;
-  height: 100%;
-  display: block;
+.cf-mascot-tree .cf-leaf-right {
+  transform-origin: 18px 17px;
+  animation: cfLeafBloom 600ms cubic-bezier(0.4, 0, 0.2, 1) 3250ms forwards;
 }
-.cf-mascot-wind .wind-curve {
-  fill: none;
-  stroke: var(--claude-orange);
-  stroke-width: 0.6;
-  stroke-linecap: round;
-  opacity: 0.5;
+.cf-mascot-tree .cf-leaf-top {
+  transform-origin: 12px 10px;
+  animation: cfLeafBloom 700ms cubic-bezier(0.4, 0, 0.2, 1) 3400ms forwards;
 }
-.cf-mascot-wind .wind-2 { opacity: 0.4; stroke-width: 0.5; }
-.cf-mascot-wind .wind-3 { opacity: 0.3; stroke-width: 0.4; }
 
 .cf-splash-text {
   display: flex;
@@ -1045,18 +1051,21 @@ body {
   opacity: 0;
   animation: cfFadeUp 900ms cubic-bezier(0.4, 0, 0.2, 1) 5800ms forwards;
 }
-/* sparse cut · 4.5s timeline · 簡化 keyframes */
+/* sparse cut · 4.5s timeline · 樹苗第一版 keyframes */
 @keyframes cfDraw { to { stroke-dashoffset: 0; } }
-/* 種子點亮 · 淡入後保留半透明（葉長出後仍隱約可見）*/
+/* 種子點亮（播種狀態）· 淡入留 50% opacity 隱約可見 */
 @keyframes cfSeedAppear {
   0%   { opacity: 0; transform: scale(0.6); }
   60%  { opacity: 1; transform: scale(1); }
   100% { opacity: 0.5; transform: scale(1); }
 }
-/* 葉優雅生長 · 從底部 0 到全尺 · 不彈不抖 · 沉靜 */
-@keyframes cfLeafGrow {
+/* 主莖由下而上描出 */
+@keyframes cfStemDraw { to { stroke-dashoffset: 0; } }
+/* 雙枝由內向外描出 */
+@keyframes cfBranchDraw { to { stroke-dashoffset: 0; } }
+/* 葉子綻放（scale 0 → 1）*/
+@keyframes cfLeafBloom {
   0%   { opacity: 0; transform: scale(0); }
-  20%  { opacity: 1; transform: scale(0.15); }
   100% { opacity: 1; transform: scale(1); }
 }
 /* CF logo wrap · 從 stage 中央位移到左側落定（讓 wordmark 進）*/
@@ -1437,30 +1446,29 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
 </head>
 <body>
 
-<!-- 開場動畫 · CF Logo Splash · 4s sparse cut · CF 中央 → wordmark 推進 → 風吹過 -->
+<!-- 開場動畫 · CF Logo Splash · 4.5s · 樹苗第一版 + 拿掉風 -->
 <div class="cf-splash" id="cf-splash" aria-hidden="true">
   <div class="cf-splash-stage">
-    <!-- 流動空氣 · 取代貓頭鷹 · Monet 的擾動 -->
-    <div class="cf-mascot-wind" aria-hidden="true">
-      <svg viewBox="0 0 400 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <path class="wind-curve wind-1" d="M -20 24 Q 100 18 220 24 T 420 28" />
-        <path class="wind-curve wind-2" d="M -20 42 Q 130 36 260 42 T 420 46" />
-        <path class="wind-curve wind-3" d="M -20 60 Q 150 54 290 60 T 420 64" />
-      </svg>
-    </div>
     <div class="cf-splash-logo-wrap">
       <svg class="cf-logo-svg" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <rect x="1.5" y="1.5" width="37" height="37" rx="6" />
         <path class="c-path" d="M 19.5 11 Q 10.5 11 10.5 20 Q 10.5 29 19.5 29" />
         <path class="f-path" d="M 21.5 11 L 21.5 29 M 21.5 11 L 29.5 11 M 21.5 20 L 27.5 20" />
       </svg>
-      <!-- 樹苗 · 種子 → 葉優雅長出（無中間線 · 從 CF 框頂緣場出來）-->
+      <!-- 樹苗第一版 · 種子 + 主莖 + 雙枝 + 三葉（左/右側葉 + 頂葉）-->
       <div class="cf-mascot cf-mascot-tree" aria-hidden="true">
-        <svg viewBox="0 0 36 50" xmlns="http://www.w3.org/2000/svg">
-          <!-- 種子 · 小圓點落在 CF 框頂邊緣 -->
-          <circle class="cf-seed" cx="18" cy="46" r="1.6" />
-          <!-- 葉 · 杏仁形 · 從種子點往上生長 -->
-          <path class="cf-leaf" d="M 18 4 Q 28 24 18 44 Q 8 24 18 4 Z" />
+        <svg viewBox="0 0 24 30" xmlns="http://www.w3.org/2000/svg">
+          <!-- 種子 · 播種狀態 · 落在莖底（CF 框頂緣）-->
+          <circle class="cf-seed" cx="12" cy="29" r="1" />
+          <!-- 主莖 -->
+          <line class="cf-stem" x1="12" y1="30" x2="12" y2="13" />
+          <!-- 雙枝 -->
+          <path class="cf-branch cf-branch-left" d="M 12 22 Q 9 19 6 17" />
+          <path class="cf-branch cf-branch-right" d="M 12 22 Q 15 19 18 17" />
+          <!-- 三葉 -->
+          <ellipse class="cf-leaf cf-leaf-left" cx="6" cy="17" rx="2.5" ry="3.5" transform="rotate(-30 6 17)" />
+          <ellipse class="cf-leaf cf-leaf-right" cx="18" cy="17" rx="2.5" ry="3.5" transform="rotate(30 18 17)" />
+          <ellipse class="cf-leaf cf-leaf-top" cx="12" cy="10" rx="2.2" ry="3" />
         </svg>
       </div>
     </div>

@@ -893,6 +893,149 @@ body {
   .dot-nav { display: none; }
 }
 
+/* ===== TOUR HUD START · 新手白話導覽（不喜歡整段刪除即可 · 對應右側 dot-nav 章節）===== */
+.tb-btn.tour-trigger {
+  border-color: var(--iris-tint);
+  color: var(--iris-tint);
+}
+.tb-btn.tour-trigger:hover {
+  background: var(--iris-tint);
+  color: var(--deep);
+}
+
+#tour-hud {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  pointer-events: none;
+  font-family: var(--f-zh), var(--f-en);
+}
+#tour-hud.on { pointer-events: auto; }
+
+.tour-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  pointer-events: auto;
+}
+
+.tour-spotlight {
+  position: absolute;
+  border-radius: 12px;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.72), 0 0 0 3px var(--iris-tint);
+  pointer-events: none;
+  transition: top 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              left 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.tour-spotlight.center {
+  /* 無對應元素時、隱藏 spotlight */
+  box-shadow: none;
+  background: transparent;
+  width: 0; height: 0;
+}
+
+.tour-tooltip {
+  position: absolute;
+  background: var(--deep);
+  border: 1px solid var(--ash);
+  border-radius: 14px;
+  padding: 1.6rem 1.8rem;
+  max-width: 420px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  pointer-events: auto;
+  transition: top 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.tour-tooltip .tour-progress {
+  font-family: var(--f-en);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: var(--smoke);
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+.tour-tooltip .tour-title {
+  font-family: var(--f-ser);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.4rem;
+  color: var(--bone);
+  margin-bottom: 0.8rem;
+  line-height: 1.3;
+}
+.tour-tooltip .tour-body {
+  font-size: 0.92rem;
+  color: var(--bone);
+  line-height: 1.7;
+  margin-bottom: 1.2rem;
+}
+.tour-tooltip .tour-body strong {
+  color: var(--iris-tint);
+  font-weight: 500;
+}
+.tour-tooltip .tour-body ul {
+  margin: 0.6rem 0 0 0;
+  padding-left: 1.2rem;
+}
+.tour-tooltip .tour-body li {
+  margin-bottom: 0.3rem;
+  font-size: 0.86rem;
+  color: var(--smoke);
+}
+.tour-tooltip .tour-actions {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+.tour-tooltip .tour-actions .spacer { flex: 1; }
+.tour-tooltip .tour-btn {
+  padding: 0.5rem 0.95rem;
+  border-radius: 8px;
+  border: 1px solid var(--ash);
+  background: transparent;
+  color: var(--bone);
+  font-family: var(--f-zh), var(--f-en);
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: 0.15s;
+}
+.tour-tooltip .tour-btn:hover {
+  border-color: var(--iris-tint);
+  color: var(--iris-tint);
+}
+.tour-tooltip .tour-btn.primary {
+  background: var(--iris-tint);
+  color: var(--deep);
+  border-color: var(--iris-tint);
+}
+.tour-tooltip .tour-btn.primary:hover {
+  background: var(--claude-orange);
+  border-color: var(--claude-orange);
+}
+.tour-tooltip .tour-skip {
+  background: transparent;
+  border: none;
+  color: var(--smoke);
+  font-size: 0.78rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.tour-tooltip .tour-skip:hover { color: var(--claude-orange); }
+
+@media (max-width: 700px) {
+  .tour-tooltip {
+    max-width: 92vw;
+    left: 4vw !important;
+    right: 4vw !important;
+    bottom: 1rem !important;
+    top: auto !important;
+  }
+}
+/* ===== TOUR HUD END ===== */
+}
+
 /* ===== 開場動畫 · CF Logo Splash（儀式感版本）===== */
 .cf-splash {
   position: fixed;
@@ -1541,6 +1684,9 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
       <button type="button" class="tb-btn" data-theme="dark" id="theme-dark" title="深色">Dark</button>
     </div>
     <a href="pool.html" class="tb-btn pool" id="pool-link" data-i18n="poolBtn" title="森林對話池 · 看訪客的林相 / 把你的林分享出去">森林對話池 · 訪客的種子</a>
+    <!-- ===== TOUR HUD START · 新手白話導覽（不喜歡整段刪除即可） ===== -->
+    <button type="button" class="tb-btn tour-trigger" id="tour-btn" title="新手導覽 · 整頁逐步白話說明">✨ 新手導覽</button>
+    <!-- ===== TOUR HUD END ===== -->
     <button type="button" class="tb-btn help" id="help-btn" data-i18n="helpBtn">? 怎麼用</button>
   </div>
 
@@ -3586,6 +3732,236 @@ const I18N = {
       }
     });
   }
+</script>
+
+<!-- ===== TOUR HUD START · 新手白話導覽 markup（不喜歡整段刪除即可）===== -->
+<div id="tour-hud" hidden>
+  <div class="tour-overlay" id="tour-overlay"></div>
+  <div class="tour-spotlight" id="tour-spotlight"></div>
+  <div class="tour-tooltip" id="tour-tooltip">
+    <div class="tour-progress" id="tour-progress">1 / 17</div>
+    <h3 class="tour-title" id="tour-title"></h3>
+    <div class="tour-body" id="tour-body"></div>
+    <div class="tour-actions">
+      <button type="button" class="tour-skip" id="tour-skip">跳過導覽</button>
+      <span class="spacer"></span>
+      <button type="button" class="tour-btn" id="tour-prev">← 上一步</button>
+      <button type="button" class="tour-btn primary" id="tour-next">下一步 →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===== TOUR HUD JS · 新手白話導覽（對應右側 dot-nav 章節）===== */
+(function(){
+  const steps = [
+    {
+      sel: null,
+      title: '歡迎 · 開始你的第一片林',
+      body: '這是一個<strong>工具</strong>、不是 AI 平台、不是 SaaS。<br/><br/>它幫你準備一段給 <strong>Claude Design</strong> 用的文字、讓 Claude Design 生出<strong>屬於你的</strong>網頁。<br/><br/>完全不懂網站？沒關係。我們一起走過 17 個小步驟、每步都用白話告訴你在做什麼。'
+    },
+    {
+      sel: '#sec-profile',
+      title: '印記 · 你的「光」是什麼',
+      body: '所有網頁都需要：<br/>① <strong>品牌名</strong>——給網頁的名字<br/>② <strong>主色</strong>——你想要的主要顏色<br/>③ <strong>字型</strong>——文字長什麼樣子<br/><br/>這三樣 = 你帶進來的「光」。<br/>完全不懂？點頂部的「<strong>Maxi</strong>」按鈕看範例、再改成你想要的。'
+    },
+    {
+      sel: '#sec-s1',
+      title: '第一題 · 你的網頁要做什麼？',
+      body: '白話：你做這個網頁是為了什麼？<br/><br/>例如：<ul><li>賣東西（電商）</li><li>放作品集</li><li>講一個故事</li><li>給人預約服務</li><li>辦活動報名</li><li>放履歷</li></ul>從清單選一個最接近的就好。'
+    },
+    {
+      sel: '#sec-s2',
+      title: '第二題 · 主角是什麼？',
+      body: '白話：你網頁主要是「在介紹什麼」？<br/><br/>例如：<ul><li>實體商品（杯子、衣服）</li><li>軟體 App</li><li>人（你自己 / 名人）</li><li>團隊 / 工作室</li><li>客戶案例</li><li>抽象概念 / 活動</li></ul>主角不同、整個網頁長相會不一樣。'
+    },
+    {
+      sel: '#sec-s3',
+      title: '第三題 · 你想要什麼氣質？',
+      body: '白話：選一個最接近你想要的氣氛。<br/>常見對應：<ul><li><strong>苔林</strong> = Apple / 無印良品（安靜）</li><li><strong>雨林</strong> = Stripe / Linear（自由有機）</li><li><strong>竹林</strong> = Hermès / Bottega（精品）</li><li><strong>松林</strong> = IBM / Porsche（井然有序）</li><li><strong>野林</strong> = Nike / Spotify（動感）</li><li><strong>枯林</strong> = A24 / Brutalist（反常留白）</li></ul>'
+    },
+    {
+      sel: '#sec-s4',
+      title: '第四題 · 內容怎麼排？',
+      body: '白話：你網頁的內容怎麼分布？<br/><br/>最常用：<strong>垂直分段</strong>——往下捲一段一段（像 Apple 官網）。<br/><br/>也可以左右分欄、卡片網格、時間軸、地圖、便當格...。<br/><br/>不確定就選「<strong>Hero+Sections</strong>」（英雄區+內容段落）、最通用。'
+    },
+    {
+      sel: '#sec-s5',
+      title: '第五題 · 字 vs 圖、誰當主角？',
+      body: '白話：<ul><li><strong>字當主角</strong> = 像書、雜誌（多文字）</li><li><strong>圖當主角</strong> = 像 IG、Pinterest（多圖片）</li><li><strong>敘事</strong> = 像長文故事</li><li><strong>資料表</strong> = 表格資料</li></ul>下面還可以選中英文怎麼擺：<br/>A 主從（中文大、英文小）/ B 並置 / C 融合 / 純中文'
+    },
+    {
+      sel: '#sec-s6',
+      title: '第六題 · 要不要動效？',
+      body: '白話：要不要動畫效果？<br/><br/><ul><li><strong>純靜態</strong> = 都不動、最快最輕</li><li><strong>CSS Hover</strong> = 滑過去有反應（最常見）</li><li><strong>簡動 Transitions</strong> = 切換有過場</li><li><strong>捲動觸發</strong> = 滑下去元素跳出</li></ul>後面選項越往下越複雜、需要更多資源（Canvas、WebGL）。'
+    },
+    {
+      sel: '#sec-spore',
+      title: '選 0-3 個「創意火花」（可選可不選）',
+      body: '白話：你可以從清單選 <strong>0-3 個</strong>額外的創意火花、給作品一些不可預期的小驚喜。<br/><br/><strong>完全不選也 OK</strong>、不會少什麼基本功。<br/><br/>看不懂火花名字？跳過就好、之後可以回來再選。'
+    },
+    {
+      sel: '#sec-advanced',
+      title: '進階設計師模式（可全部跳過）',
+      body: '白話：這區是給「<strong>懂一點 prompt 的人</strong>」玩的。<br/><br/><strong>完全不懂可以全部跳過</strong>、預設值已經能用。<br/><br/>看不懂的選項就不用動、不會影響結果。'
+    },
+    {
+      sel: '#sec-actions',
+      title: '按下橘色大按鈕 · 把選擇變成 prompt',
+      body: '白話：選好以上後、按橘色「<strong>凝相</strong>」按鈕。<br/>系統會把你所有選擇變成一段給 Claude Design 用的文字。<br/><br/>不確定要怎麼選？按「<strong>風吹一回</strong>」讓系統幫你隨機選六軸。<br/><br/>想重來？按「<strong>清空土地</strong>」回到預設值。'
+    },
+    {
+      sel: '#ambient-preview',
+      title: '預覽你的氣質',
+      body: '白話：凝相完成後、這裡會出現一張<strong>抽象氛圍圖</strong>——預覽你選擇的整體氣質感對不對。<br/><br/>氣氛不對？回去改一兩個選項、再凝相一次。'
+    },
+    {
+      sel: '#sec-ref',
+      title: '四片參考林',
+      body: '白話：這裡放了<strong>四個範例林</strong>讓你對照。<br/><br/>看別人怎麼搭配色彩、字型、六軸、孢子、最後生出什麼樣的網頁。<br/><br/>給你選擇方向時的靈感。'
+    },
+    {
+      sel: '#sec-gallery',
+      title: '池魂 · Deep Pool',
+      body: '白話：這裡是<strong>示範範例池</strong>——19 顆物理視覺現象當靈感（雙狹縫、Moiré、馬赫帶等）。<br/><br/>不需要懂這些、看圖找感覺就好。'
+    },
+    {
+      sel: '#sec-dna',
+      title: 'DNA 指紋（可略過）',
+      body: '白話：這是<strong>進階展示區</strong>。<br/><br/>給你看不同 prompt 配方做出的不同結果指紋。<br/><br/>完全可以略過、不影響你做你的網頁。'
+    },
+    {
+      sel: '#pool-link',
+      title: '森林對話池 · 看別人的林',
+      body: '白話：點頂部「<strong>森林對話池</strong>」可以看訪客留下的林、領一點啟發走自己的路。<br/><br/>也可以把你做的林留下、給下一個園丁學。<br/><br/>是「<strong>池</strong>」、不是排行榜——人類在池裡共同生長。'
+    },
+    {
+      sel: null,
+      title: '學完了 · 走自己的路',
+      body: '你已經知道整個流程了。<br/><br/><ul><li>不確定？按「<strong>風吹一回</strong>」讓系統幫你選</li><li>想看別人的？點頂部「<strong>森林對話池</strong>」</li><li>重做？按「<strong>清空土地</strong>」</li></ul>這是工具、可以重複用。'
+    }
+  ];
+
+  let curr = 0;
+  const hud = document.getElementById('tour-hud');
+  const overlay = document.getElementById('tour-overlay');
+  const spotlight = document.getElementById('tour-spotlight');
+  const tooltip = document.getElementById('tour-tooltip');
+  const $progress = document.getElementById('tour-progress');
+  const $title = document.getElementById('tour-title');
+  const $body = document.getElementById('tour-body');
+  const btnPrev = document.getElementById('tour-prev');
+  const btnNext = document.getElementById('tour-next');
+  const btnSkip = document.getElementById('tour-skip');
+  const btnTrigger = document.getElementById('tour-btn');
+
+  function start() {
+    curr = 0;
+    hud.hidden = false;
+    hud.classList.add('on');
+    document.body.style.overflow = 'hidden';
+    show();
+  }
+
+  function end() {
+    hud.classList.remove('on');
+    hud.hidden = true;
+    document.body.style.overflow = '';
+  }
+
+  function show() {
+    const s = steps[curr];
+    $progress.textContent = `${curr + 1} / ${steps.length}`;
+    $title.textContent = s.title;
+    $body.innerHTML = s.body;
+    btnPrev.style.visibility = curr === 0 ? 'hidden' : 'visible';
+    btnNext.textContent = curr === steps.length - 1 ? '完成 ✓' : '下一步 →';
+
+    if (s.sel) {
+      const target = document.querySelector(s.sel);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => placeSpot(target), 320);
+        return;
+      }
+    }
+    // 無對應元素 · 居中模式
+    spotlight.classList.add('center');
+    spotlight.style.top = '50vh';
+    spotlight.style.left = '50vw';
+    placeTooltipCenter();
+  }
+
+  function placeSpot(target) {
+    spotlight.classList.remove('center');
+    const r = target.getBoundingClientRect();
+    const pad = 8;
+    spotlight.style.top = `${r.top - pad}px`;
+    spotlight.style.left = `${r.left - pad}px`;
+    spotlight.style.width = `${r.width + pad * 2}px`;
+    spotlight.style.height = `${r.height + pad * 2}px`;
+    placeTooltip(r);
+  }
+
+  function placeTooltip(r) {
+    const tipW = tooltip.offsetWidth || 420;
+    const tipH = tooltip.offsetHeight || 280;
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const margin = 24;
+
+    let top, left;
+    // 優先放右側
+    if (r.right + margin + tipW < vw) {
+      left = r.right + margin;
+      top = Math.max(margin, Math.min(r.top, vh - tipH - margin));
+    }
+    // 否則放下方
+    else if (r.bottom + margin + tipH < vh) {
+      left = Math.max(margin, Math.min(r.left, vw - tipW - margin));
+      top = r.bottom + margin;
+    }
+    // 否則放上方
+    else if (r.top - margin - tipH > 0) {
+      left = Math.max(margin, Math.min(r.left, vw - tipW - margin));
+      top = r.top - margin - tipH;
+    }
+    // 最後居中
+    else {
+      placeTooltipCenter();
+      return;
+    }
+    tooltip.style.top = `${top}px`;
+    tooltip.style.left = `${left}px`;
+  }
+
+  function placeTooltipCenter() {
+    const tipW = tooltip.offsetWidth || 420;
+    const tipH = tooltip.offsetHeight || 280;
+    tooltip.style.top = `${(window.innerHeight - tipH) / 2}px`;
+    tooltip.style.left = `${(window.innerWidth - tipW) / 2}px`;
+  }
+
+  btnTrigger?.addEventListener('click', start);
+  btnSkip?.addEventListener('click', end);
+  btnPrev?.addEventListener('click', () => { if (curr > 0) { curr--; show(); } });
+  btnNext?.addEventListener('click', () => {
+    if (curr < steps.length - 1) { curr++; show(); }
+    else end();
+  });
+  // ESC 關閉
+  document.addEventListener('keydown', (e) => {
+    if (!hud.classList.contains('on')) return;
+    if (e.key === 'Escape') end();
+    if (e.key === 'ArrowRight') btnNext.click();
+    if (e.key === 'ArrowLeft') btnPrev.click();
+  });
+  // 視窗 resize 重算位置
+  window.addEventListener('resize', () => {
+    if (hud.classList.contains('on')) show();
+  });
+})();
+/* ===== TOUR HUD END ===== */
 </script>
 
 </body>

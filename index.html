@@ -1023,6 +1023,9 @@ body {
   text-decoration: underline;
 }
 .tour-tooltip .tour-skip:hover { color: var(--claude-orange); }
+.tour-tooltip .tour-skip.dismiss { font-style: italic; }
+.tour-tooltip .tour-skip.dismiss:hover { color: var(--iris-tint); }
+.tour-tooltip .tour-actions { flex-wrap: wrap; row-gap: 0.5rem; }
 
 @media (max-width: 700px) {
   .tour-tooltip {
@@ -3743,7 +3746,8 @@ const I18N = {
     <h3 class="tour-title" id="tour-title"></h3>
     <div class="tour-body" id="tour-body"></div>
     <div class="tour-actions">
-      <button type="button" class="tour-skip" id="tour-skip">跳過導覽</button>
+      <button type="button" class="tour-skip" id="tour-skip" title="只關掉這次、下次進入還會出現">略過 · SKIP</button>
+      <button type="button" class="tour-skip dismiss" id="tour-dismiss" title="永久關閉、下次不再自動跳出（仍可從頂部「✨ 新手導覽」手動開啟）">下次不再顯示</button>
       <span class="spacer"></span>
       <button type="button" class="tour-btn" id="tour-prev">← 上一步</button>
       <button type="button" class="tour-btn primary" id="tour-next">下一步 →</button>
@@ -3853,7 +3857,16 @@ const I18N = {
   const btnPrev = document.getElementById('tour-prev');
   const btnNext = document.getElementById('tour-next');
   const btnSkip = document.getElementById('tour-skip');
+  const btnDismiss = document.getElementById('tour-dismiss');
   const btnTrigger = document.getElementById('tour-btn');
+
+  const DISMISS_KEY = 'cf_tour_dismissed';
+  const isDismissed = () => {
+    try { return localStorage.getItem(DISMISS_KEY) === '1'; } catch (e) { return false; }
+  };
+  const setDismissed = () => {
+    try { localStorage.setItem(DISMISS_KEY, '1'); } catch (e) {}
+  };
 
   function start() {
     curr = 0;
@@ -3942,14 +3955,18 @@ const I18N = {
     tooltip.style.left = `${(window.innerWidth - tipW) / 2}px`;
   }
 
-  btnTrigger?.addEventListener('click', start);
-  btnSkip?.addEventListener('click', end);
+  btnTrigger?.addEventListener('click', start); // 手動觸發 · 不論 dismissed 都可開
+  btnSkip?.addEventListener('click', end); // 略過 · 不寫 localStorage、下次自動啟動還會跳
+  btnDismiss?.addEventListener('click', () => { // 下次不再顯示 · 寫 localStorage 永久關閉
+    setDismissed();
+    end();
+  });
   btnPrev?.addEventListener('click', () => { if (curr > 0) { curr--; show(); } });
   btnNext?.addEventListener('click', () => {
     if (curr < steps.length - 1) { curr++; show(); }
     else end();
   });
-  // ESC 關閉
+  // ESC 關閉（只當次、不 dismiss）
   document.addEventListener('keydown', (e) => {
     if (!hud.classList.contains('on')) return;
     if (e.key === 'Escape') end();
@@ -3960,6 +3977,23 @@ const I18N = {
   window.addEventListener('resize', () => {
     if (hud.classList.contains('on')) show();
   });
+
+  // 自動啟動：第一次進入（無 localStorage flag）· 等 splash 結束才啟動
+  function maybeAutoStart() {
+    if (isDismissed()) return;
+    const splashSkipped = document.documentElement.classList.contains('cf-splash-skip');
+    const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const delay = (splashSkipped || reduced) ? 800 : 6500; // 跳過 splash → 0.8s · 完整 splash → 6.5s
+    setTimeout(() => {
+      if (!isDismissed()) start(); // 雙重檢查（萬一 user 在等待期間手動開過又關了）
+    }, delay);
+  }
+  // DOM ready 後評估
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', maybeAutoStart);
+  } else {
+    maybeAutoStart();
+  }
 })();
 /* ===== TOUR HUD END ===== */
 </script>

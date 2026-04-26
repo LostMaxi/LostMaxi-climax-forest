@@ -922,7 +922,7 @@ body {
   height: 70px;
   font-size: initial; /* 還原（stage 設了 font-size:0）*/
   margin-right: 1rem; /* 取代 flex gap */
-  transform: translate(278px, 0);
+  transform: translate(285px, 0);
   animation: cfWrapMotion 6000ms cubic-bezier(0.4, 0, 0.4, 1) 0ms forwards;
 }
 .cf-splash .cf-logo-svg {
@@ -1036,14 +1036,15 @@ body {
   vertical-align: baseline; /* baseline = first line baseline = .cf-splash-name 的 C baseline */
   font-size: initial; /* 還原 */
   opacity: 0;
-  transform: translateX(560px);
+  transform: translateX(575px);
   animation: cfTextSlide 1100ms cubic-bezier(0.4, 0, 0.2, 1) 3500ms forwards;
 }
 .cf-splash-name {
-  /* Maxi Illustrator 精確量測（2026-04-26）：CF 框 41.4px vs C 32.3px → 真實 visual cap ratio = 0.78 · 反推 font-size = 70 / 0.78 = 89.7 → 用 90px · 預測 cap = 90 × 0.78 = 70.2 ≈ 框 70 ✓ */
+  /* 95% → 微調逼近：font-size 90 → 92（C 再放大 ~2%）· transform translateY(-1.5px) 補 C overshoot（Playfair Display C 在 baseline 之下故意溢出 1-2px 為光學調整、視覺上補回讓 baseline 對齊更精準）*/
   display: block;
   font-family: 'Playfair Display', Georgia, 'Noto Serif TC', serif;
-  font-size: 90px;
+  font-size: 92px;
+  transform: translateY(-1.5px);
   font-weight: 500;
   color: var(--snow);
   line-height: 1;
@@ -1093,12 +1094,12 @@ body {
 }
 /* CF wrap 整段運動：viewport 中央 → 種子落下時反彈 → 推左 → 停頓 1 秒 */
 @keyframes cfWrapMotion {
-  0%    { transform: translate(278px, 0); }     /* 0ms · viewport 中心 */
-  40%   { transform: translate(278px, 0); }     /* 2400ms · 種子即將落下 */
-  43.3% { transform: translate(278px, 8px); }   /* 2600ms · 反彈下沉（8px 幅度）*/
-  46.7% { transform: translate(278px, -3px); }  /* 2800ms · 反彈上揚 */
-  50%   { transform: translate(278px, 0); }     /* 3000ms · 回歸水平 */
-  58.3% { transform: translate(278px, 0); }     /* 3500ms · 樹苗生長中、保持 */
+  0%    { transform: translate(285px, 0); }     /* 0ms · viewport 中心 */
+  40%   { transform: translate(285px, 0); }     /* 2400ms · 種子即將落下 */
+  43.3% { transform: translate(285px, 8px); }   /* 2600ms · 反彈下沉（8px 幅度）*/
+  46.7% { transform: translate(285px, -3px); }  /* 2800ms · 反彈上揚 */
+  50%   { transform: translate(285px, 0); }     /* 3000ms · 回歸水平 */
+  58.3% { transform: translate(285px, 0); }     /* 3500ms · 樹苗生長中、保持 */
   75%   { transform: translate(0, 0); }         /* 4500ms · 推到左側落定 */
   100%  { transform: translate(0, 0); }         /* 6000ms · 停頓 1.5s 至 fadeout 起 */
 }

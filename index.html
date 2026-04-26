@@ -1053,7 +1053,6 @@ body {
   }
 }
 /* ===== TOUR HUD END ===== */
-}
 
 /* 開場動畫 splash 已搬到獨立 splash.html · 此處不再保留任何 .cf-splash CSS */
 
@@ -3713,15 +3712,25 @@ const I18N = {
     const margin = 24;
 
     let top, left;
-    // 永遠固定右側（Maxi 2026-04-26 指定）
+    // 優先右側（Maxi 2026-04-26 指定）
     if (r.right + margin + tipW < vw) {
       left = r.right + margin;
       top = Math.max(margin, Math.min(r.top, vh - tipH - margin));
     }
-    // 右側放不下 · 退到右邊距內側（不換到下方/上方）
-    else {
-      left = vw - tipW - margin;
+    // 右側放不下 · 嘗試左側（不退到右邊內側、避免擋住 spotlight 元素）
+    else if (r.left - margin - tipW > 0) {
+      left = r.left - margin - tipW;
       top = Math.max(margin, Math.min(r.top, vh - tipH - margin));
+    }
+    // 左右都不夠 · 上方（避開底部 sticky 按鈕區）
+    else if (r.top - margin - tipH > 0) {
+      left = Math.max(margin, Math.min((vw - tipW) / 2, vw - tipW - margin));
+      top = r.top - margin - tipH;
+    }
+    // 上方也放不下 · 下方
+    else {
+      left = Math.max(margin, Math.min((vw - tipW) / 2, vw - tipW - margin));
+      top = Math.min(vh - tipH - margin, r.bottom + margin);
     }
     tooltip.style.top = `${top}px`;
     tooltip.style.left = `${left}px`;

@@ -4,6 +4,9 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="theme-color" content="#8384BD" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
 <title>森林對話池 · Climax Forest Pool</title>
 <meta name="description" content="森林對話池 · 訪客留下的林相 · 看別人帶來的光與骨架。" />
 
@@ -21,6 +24,7 @@
   --ash:    #C8BEA8;
   --iris:   #8384BD;
   --orange: #C2765A;
+  --leaf:   #7A8B5C;
   --f-en:   'Inter', sans-serif;
   --f-zh:   'Noto Sans TC', sans-serif;
   --f-ser:  'Playfair Display', serif;
@@ -34,7 +38,7 @@ body {
   padding: 3rem 2rem 6rem;
   line-height: 1.7;
 }
-.wrap { max-width: 1100px; margin: 0 auto; }
+.wrap { max-width: 1200px; margin: 0 auto; }
 .nav { display: flex; gap: 1.4rem; font-size: 0.85rem; color: var(--smoke); margin-bottom: 3rem; }
 .nav a { color: var(--smoke); text-decoration: none; border-bottom: 1px solid transparent; transition: 0.2s; }
 .nav a:hover { color: var(--iris); border-bottom-color: var(--iris); }
@@ -52,22 +56,206 @@ h1 {
 h1 em { color: var(--iris); font-style: normal; }
 .intro {
   color: var(--smoke);
-  margin-bottom: 3rem;
+  margin-bottom: 2.4rem;
   max-width: 680px;
   font-size: 0.95rem;
 }
 .intro strong { color: var(--bone); }
 
+/* === Dashboard 統計 === */
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.8rem;
+  margin-bottom: 2rem;
+}
+.stat {
+  background: var(--deep-2);
+  border: 1px solid var(--ash);
+  border-radius: 10px;
+  padding: 0.9rem 1.1rem;
+}
+.stat .label {
+  font-size: 0.7rem;
+  color: var(--smoke);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-family: var(--f-en);
+  margin-bottom: 0.3rem;
+}
+.stat .value {
+  font-family: var(--f-ser);
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--bone);
+  line-height: 1.1;
+}
+.stat .sub {
+  font-size: 0.75rem;
+  color: var(--smoke);
+  margin-top: 0.2rem;
+}
+
+/* === Toolbar === */
+.toolbar {
+  display: flex;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+.toolbar .search {
+  flex: 1;
+  min-width: 240px;
+  padding: 0.55rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid var(--ash);
+  background: var(--deep-2);
+  color: var(--snow);
+  font-family: var(--f-zh), var(--f-en);
+  font-size: 0.88rem;
+}
+.toolbar .search:focus {
+  outline: none;
+  border-color: var(--iris);
+}
+.toolbar select, .toolbar .wind-btn {
+  padding: 0.55rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid var(--ash);
+  background: var(--deep-2);
+  color: var(--bone);
+  font-family: var(--f-en);
+  font-size: 0.82rem;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+}
+.toolbar .wind-btn {
+  border-color: var(--iris);
+  color: var(--iris);
+  transition: 0.2s;
+}
+.toolbar .wind-btn:hover {
+  background: var(--iris);
+  color: var(--deep);
+}
+
+/* === Filter chips === */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.4rem;
+  align-items: center;
+}
+.filter-group {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+  padding-right: 0.8rem;
+  border-right: 1px solid var(--ash);
+}
+.filter-group:last-child { border-right: none; }
+.filter-group .group-label {
+  font-size: 0.72rem;
+  color: var(--smoke);
+  font-family: var(--f-en);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-right: 0.2rem;
+}
+.chip {
+  padding: 0.28rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid var(--ash);
+  background: transparent;
+  color: var(--smoke);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: 0.15s;
+  font-family: var(--f-zh), var(--f-en);
+}
+.chip:hover { border-color: var(--iris); color: var(--iris); }
+.chip.on {
+  background: var(--iris);
+  color: var(--deep);
+  border-color: var(--iris);
+}
+.clear-btn {
+  padding: 0.28rem 0.6rem;
+  background: transparent;
+  color: var(--smoke);
+  border: none;
+  font-size: 0.72rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.clear-btn:hover { color: var(--orange); }
+
+/* === Tabs === */
+.tabs {
+  display: flex;
+  gap: 1.4rem;
+  margin-bottom: 1.4rem;
+  border-bottom: 1px solid var(--ash);
+}
+.tab {
+  padding: 0.7rem 0.2rem;
+  background: transparent;
+  border: none;
+  color: var(--smoke);
+  font-family: var(--f-zh), var(--f-en);
+  font-size: 0.92rem;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+.tab:hover { color: var(--bone); }
+.tab.active {
+  color: var(--iris);
+  border-bottom-color: var(--iris);
+}
+
+/* === 時間分區 === */
+.time-section {
+  margin-bottom: 2.6rem;
+}
+.time-section h3 {
+  font-family: var(--f-ser);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.4rem;
+  color: var(--bone);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+}
+.time-section h3 .count {
+  font-family: var(--f-en);
+  font-size: 0.78rem;
+  color: var(--smoke);
+  font-style: normal;
+  letter-spacing: 0.04em;
+}
+.silent-hint {
+  font-size: 0.78rem;
+  color: var(--smoke);
+  margin-top: -0.6rem;
+  margin-bottom: 0.8rem;
+  font-style: italic;
+}
+
 .status {
   font-size: 0.78rem;
   color: var(--smoke);
-  margin-bottom: 1.4rem;
+  margin-bottom: 1rem;
   font-family: var(--f-en);
   letter-spacing: 0.05em;
-  text-transform: uppercase;
 }
 
-#grid {
+/* === Grid === */
+.grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 1.4rem;
@@ -82,10 +270,18 @@ h1 em { color: var(--iris); font-style: normal; }
   flex-direction: column;
   gap: 0.8rem;
   transition: 0.2s;
+  scroll-margin-top: 2rem;
 }
 .card:hover {
   border-color: var(--iris);
   transform: translateY(-2px);
+}
+.card.highlight {
+  border-color: var(--iris);
+  box-shadow: 0 0 0 3px rgba(131, 132, 189, 0.2);
+}
+.card.ranked {
+  border-color: var(--leaf);
 }
 
 .card .head {
@@ -94,6 +290,13 @@ h1 em { color: var(--iris); font-style: normal; }
   gap: 0.7rem;
   padding-bottom: 0.6rem;
   border-bottom: 1px dashed var(--ash);
+}
+.card .num {
+  font-family: var(--f-en);
+  font-size: 0.7rem;
+  color: var(--smoke);
+  font-weight: 500;
+  letter-spacing: 0.06em;
 }
 .card .swatches {
   display: flex;
@@ -135,43 +338,64 @@ h1 em { color: var(--iris); font-style: normal; }
 }
 .card .axis strong { color: var(--bone); margin-right: 0.3rem; font-weight: 500; }
 
-.card .seeds {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem;
-  font-size: 0.68rem;
-}
-.card .seed {
-  color: var(--orange);
-  font-family: var(--f-en);
-  letter-spacing: 0.03em;
-}
-
 .card .fonts {
   font-size: 0.72rem;
   color: var(--smoke);
 }
 
-.card pre {
+/* === Prompt 截斷 + hover 展開（防靜態爬蟲） === */
+.card .prompt-box {
+  position: relative;
   background: var(--deep);
   border: 1px solid var(--ash);
   border-radius: 8px;
-  padding: 0.8rem;
   font-size: 0.74rem;
   font-family: var(--f-en);
   color: var(--bone);
-  white-space: pre-wrap;
-  max-height: 240px;
-  overflow: auto;
   line-height: 1.5;
+  overflow: hidden;
 }
-.card pre::-webkit-scrollbar { width: 4px; }
-.card pre::-webkit-scrollbar-thumb { background: var(--ash); }
+.card .prompt-box .preview {
+  padding: 0.8rem;
+  white-space: pre-wrap;
+  max-height: 100px;
+  overflow: hidden;
+  position: relative;
+}
+.card .prompt-box .preview::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 30px;
+  background: linear-gradient(transparent, var(--deep));
+  pointer-events: none;
+}
+.card .prompt-box.expanded .preview {
+  max-height: 320px;
+  overflow: auto;
+}
+.card .prompt-box.expanded .preview::after { display: none; }
+.card .expand-btn {
+  display: block;
+  width: 100%;
+  padding: 0.4rem;
+  background: var(--deep-2);
+  border: none;
+  border-top: 1px dashed var(--ash);
+  color: var(--smoke);
+  font-family: var(--f-en);
+  font-size: 0.7rem;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+}
+.card .expand-btn:hover { color: var(--iris); }
 
+/* === Card actions === */
 .card .actions {
   display: flex;
   gap: 0.5rem;
   margin-top: auto;
+  flex-wrap: wrap;
 }
 .card .btn {
   font-family: var(--f-en);
@@ -184,19 +408,82 @@ h1 em { color: var(--iris); font-style: normal; }
   cursor: pointer;
   letter-spacing: 0.04em;
   transition: 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: var(--f-zh), var(--f-en);
 }
 .card .btn:hover {
   border-color: var(--iris);
   color: var(--iris);
 }
+.card .btn.tribute {
+  border-color: var(--leaf);
+  color: var(--leaf);
+}
+.card .btn.tribute:hover {
+  background: var(--leaf);
+  color: var(--deep);
+}
+.card .btn.wind {
+  border-color: var(--iris);
+  color: var(--iris);
+}
+.card .tribute-count {
+  font-size: 0.7rem;
+  color: var(--smoke);
+  margin-left: auto;
+  font-family: var(--f-en);
+}
+.card .tribute-count strong {
+  color: var(--leaf);
+  font-weight: 500;
+}
 
+.card .similar-btn {
+  background: transparent;
+  border: none;
+  color: var(--smoke);
+  font-size: 0.72rem;
+  cursor: pointer;
+  text-align: left;
+  padding: 0.4rem 0;
+  text-decoration: underline;
+  font-family: var(--f-zh), var(--f-en);
+}
+.card .similar-btn:hover { color: var(--iris); }
+.card .similar-list {
+  display: none;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.6rem 0.8rem;
+  background: var(--deep);
+  border: 1px dashed var(--ash);
+  border-radius: 6px;
+  margin-top: 0.4rem;
+  font-size: 0.74rem;
+}
+.card .similar-list.open { display: flex; }
+.card .similar-list a {
+  color: var(--bone);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: 0.15s;
+}
+.card .similar-list a:hover {
+  color: var(--iris);
+  border-bottom-color: var(--iris);
+}
+
+/* === States === */
 .empty, .loading, .errored {
   text-align: center;
-  padding: 4rem 2rem;
+  padding: 3rem 2rem;
   color: var(--smoke);
   border: 1px dashed var(--ash);
   border-radius: 14px;
   font-size: 0.95rem;
+  grid-column: 1 / -1;
 }
 .empty h3, .errored h3 {
   font-family: var(--f-ser);
@@ -228,6 +515,12 @@ footer {
   text-align: center;
 }
 footer a { color: var(--smoke); }
+
+@media (max-width: 600px) {
+  body { padding: 2rem 1rem 4rem; }
+  .toolbar .search { min-width: 0; }
+  .filter-group { border-right: none; padding-right: 0; }
+}
 </style>
 </head>
 <body>
@@ -242,14 +535,40 @@ footer a { color: var(--smoke); }
   <h1>森林<em>對話池</em></h1>
   <p class="intro">
     訪客留下的林相 · 看別人帶來的光與骨架。<br/>
-    <strong>願意分享的人類留下的種子</strong>——
-    一片林教另一片林怎麼長。
-    展示生態的多樣性。
+    <strong>願意分享的人類留下的林</strong>——
+    一片林教另一片林怎麼長 · 領一點走自己的路。
   </p>
+
+  <!-- Dashboard 統計 -->
+  <div class="dashboard" id="dashboard"></div>
+
+  <!-- Toolbar: 搜尋 + 排序 + 風吹一回 -->
+  <div class="toolbar">
+    <input class="search" id="search" placeholder="搜林、搜品牌、搜內容..." />
+    <select id="sort">
+      <option value="newest">最新 → 最舊</option>
+      <option value="oldest">最舊 → 最新</option>
+      <option value="random">隨機</option>
+    </select>
+    <button class="wind-btn" id="windBtn">🌬 風吹一回</button>
+  </div>
+
+  <!-- Filter chips -->
+  <div class="filters" id="filters"></div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" data-view="recent">林分時間軸</button>
+    <button class="tab" data-view="ranking">向林學排行</button>
+  </div>
 
   <div class="status" id="status">載入中…</div>
 
-  <div id="grid"></div>
+  <!-- 林分時間軸視圖 -->
+  <div id="view-recent"></div>
+
+  <!-- 排行榜視圖 -->
+  <div id="view-ranking" hidden></div>
 
   <footer>
     ◎ Climax Forest · 極相林 ·
@@ -265,14 +584,29 @@ footer a { color: var(--smoke); }
   const SUPABASE_KEY = 'sb_publishable_p1Ppq0OcYpNqKyTNVghWnQ_TQP-yZai';
   const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  const $ = (s) => document.querySelector(s);
-  const grid = $('#grid');
-  const status = $('#status');
+  const $  = (s) => document.querySelector(s);
+  const $$ = (s) => Array.from(document.querySelectorAll(s));
 
   const escapeHtml = (s) => String(s ?? '')
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 
+  // ===== State =====
+  const state = {
+    raw: [],            // 原始資料（含 tribute count、流水號）
+    filtered: [],       // 過濾後
+    view: 'recent',     // recent / ranking
+    sort: 'newest',
+    search: '',
+    filters: {
+      color: new Set(),    // 暖 / 冷 / 中性
+      typo: new Set(),     // 襯線 / 黑體
+      style: new Set(),    // 動態
+      physics: new Set(),  // 動態
+    }
+  };
+
+  // ===== Helpers =====
   const fmtTime = (ts) => {
     const d = new Date(ts);
     const now = new Date();
@@ -287,6 +621,203 @@ footer a { color: var(--smoke); }
     return d.toISOString().slice(0, 10);
   };
 
+  // hex → 色系（暖/冷/中性）
+  const hexToHSL = (hex) => {
+    if (!hex || !/^#[0-9a-f]{6}$/i.test(hex)) return null;
+    const r = parseInt(hex.slice(1,3), 16) / 255;
+    const g = parseInt(hex.slice(3,5), 16) / 255;
+    const b = parseInt(hex.slice(5,7), 16) / 255;
+    const max = Math.max(r,g,b), min = Math.min(r,g,b);
+    let h = 0, s = 0, l = (max+min)/2;
+    if (max !== min) {
+      const d = max - min;
+      s = l > 0.5 ? d / (2-max-min) : d / (max+min);
+      switch(max) {
+        case r: h = ((g-b)/d + (g<b ? 6 : 0)); break;
+        case g: h = ((b-r)/d + 2); break;
+        case b: h = ((r-g)/d + 4); break;
+      }
+      h *= 60;
+    }
+    return { h, s, l };
+  };
+  const colorFamily = (hex) => {
+    const hsl = hexToHSL(hex);
+    if (!hsl) return null;
+    if (hsl.s < 0.12) return '中性';
+    if ((hsl.h >= 0 && hsl.h < 60) || hsl.h >= 300) return '暖';
+    if (hsl.h >= 60 && hsl.h < 180) return '中性';
+    return '冷';
+  };
+
+  // 字型 → 類別
+  const fontFamily = (name) => {
+    if (!name) return null;
+    const n = name.toLowerCase();
+    if (/playfair|serif|georgia|times|noto serif/.test(n)) return '襯線';
+    if (/inter|noto sans|helvetica|arial|sans/.test(n)) return '黑體';
+    return null;
+  };
+
+  // 時間分群
+  const periodOf = (ts) => {
+    const d = new Date(ts);
+    const now = new Date();
+    const diffMs = now - d;
+    const diffDay = diffMs / 86400000;
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const isToday = d >= today;
+    const weekStart = new Date(today); weekStart.setDate(today.getDate() - today.getDay());
+    const lastWeekStart = new Date(weekStart); lastWeekStart.setDate(weekStart.getDate() - 7);
+    if (isToday) return 'today';
+    if (d >= weekStart) return 'week';
+    if (d >= lastWeekStart) return 'lastweek';
+    if (diffDay < 30) return 'recent';
+    return 'silent';
+  };
+
+  // 六軸距離
+  const sixAxesDistance = (a, b) => {
+    if (!a || !b) return 999;
+    const keys = ['intent','subject','style_primary','style_perturb','layout','typography','bilingual','physics'];
+    let d = 0;
+    keys.forEach(k => {
+      if ((a[k] || '') !== (b[k] || '')) d += 1;
+    });
+    return d;
+  };
+
+  // Fisher-Yates shuffle
+  const shuffle = (arr) => {
+    const a = arr.slice();
+    for (let i = a.length-1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i+1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  };
+
+  // ===== Render: Dashboard =====
+  const renderDashboard = () => {
+    const all = state.raw;
+    if (!all.length) { $('#dashboard').innerHTML = ''; return; }
+    const today = all.filter(r => periodOf(r.created_at) === 'today').length;
+    const monthAgo = Date.now() - 30 * 86400000;
+    const month = all.filter(r => new Date(r.created_at).getTime() >= monthAgo).length;
+    const colorCount = {};
+    all.forEach(r => {
+      const f = colorFamily(r.primary_color);
+      if (f) colorCount[f] = (colorCount[f] || 0) + 1;
+    });
+    const topColor = Object.entries(colorCount).sort((a,b) => b[1]-a[1])[0];
+    const fontCount = {};
+    all.forEach(r => {
+      const f = fontFamily(r.font_en) || fontFamily(r.font_zh);
+      if (f) fontCount[f] = (fontCount[f] || 0) + 1;
+    });
+    const topFont = Object.entries(fontCount).sort((a,b) => b[1]-a[1])[0];
+
+    $('#dashboard').innerHTML = `
+      <div class="stat">
+        <div class="label">Today</div>
+        <div class="value">${today} <span class="sub">片</span></div>
+      </div>
+      <div class="stat">
+        <div class="label">本月 30 天</div>
+        <div class="value">${month} <span class="sub">片</span></div>
+      </div>
+      <div class="stat">
+        <div class="label">最常色系</div>
+        <div class="value">${topColor ? topColor[0] : '—'}</div>
+        <div class="sub">${topColor ? topColor[1] + ' 片' : ''}</div>
+      </div>
+      <div class="stat">
+        <div class="label">最常字型</div>
+        <div class="value">${topFont ? topFont[0] : '—'}</div>
+        <div class="sub">${topFont ? topFont[1] + ' 片' : ''}</div>
+      </div>
+    `;
+  };
+
+  // ===== Render: Filters =====
+  const renderFilters = () => {
+    // 動態 style / physics 維度
+    const styleSet = new Set(), physSet = new Set();
+    state.raw.forEach(r => {
+      const a = r.six_axes || {};
+      if (a.style_primary) styleSet.add(a.style_primary);
+      if (a.physics) physSet.add(a.physics);
+    });
+
+    const groups = [
+      { label: 'COLOR', key: 'color', opts: ['暖', '中性', '冷'] },
+      { label: 'TYPO',  key: 'typo',  opts: ['襯線', '黑體'] },
+      { label: 'STYLE', key: 'style', opts: Array.from(styleSet).sort() },
+      { label: 'PHYSICS', key: 'physics', opts: Array.from(physSet).sort() },
+    ];
+    const html = groups.filter(g => g.opts.length).map(g => `
+      <div class="filter-group">
+        <span class="group-label">${g.label}</span>
+        ${g.opts.map(opt => `
+          <button class="chip ${state.filters[g.key].has(opt) ? 'on' : ''}"
+                  data-fkey="${g.key}" data-fval="${escapeHtml(opt)}">${escapeHtml(opt)}</button>
+        `).join('')}
+      </div>
+    `).join('');
+    const hasActive = Object.values(state.filters).some(s => s.size > 0);
+    $('#filters').innerHTML = html + (hasActive ? `<button class="clear-btn" id="clearFilters">清除全部</button>` : '');
+
+    $$('.chip[data-fkey]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const k = btn.dataset.fkey, v = btn.dataset.fval;
+        if (state.filters[k].has(v)) state.filters[k].delete(v);
+        else state.filters[k].add(v);
+        applyFilters();
+      });
+    });
+    const cb = $('#clearFilters');
+    if (cb) cb.addEventListener('click', () => {
+      Object.values(state.filters).forEach(s => s.clear());
+      applyFilters();
+    });
+  };
+
+  // ===== Filter logic =====
+  const matchFilters = (row) => {
+    const f = state.filters;
+    if (f.color.size && !f.color.has(colorFamily(row.primary_color))) return false;
+    if (f.typo.size) {
+      const fe = fontFamily(row.font_en), fz = fontFamily(row.font_zh);
+      if (!f.typo.has(fe) && !f.typo.has(fz)) return false;
+    }
+    if (f.style.size && !f.style.has(row.six_axes?.style_primary)) return false;
+    if (f.physics.size && !f.physics.has(row.six_axes?.physics)) return false;
+    return true;
+  };
+  const matchSearch = (row, q) => {
+    if (!q) return true;
+    const lq = q.toLowerCase();
+    return (row.brand_name || '').toLowerCase().includes(lq)
+        || (row.prompt || '').toLowerCase().includes(lq);
+  };
+  const sortRows = (rows) => {
+    const s = state.sort;
+    if (s === 'newest') return rows.slice().sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
+    if (s === 'oldest') return rows.slice().sort((a,b) => new Date(a.created_at) - new Date(b.created_at));
+    if (s === 'random') return shuffle(rows);
+    return rows;
+  };
+
+  const applyFilters = () => {
+    const q = state.search;
+    state.filtered = state.raw
+      .filter(r => matchFilters(r))
+      .filter(r => matchSearch(r, q));
+    renderFilters();
+    render();
+  };
+
+  // ===== Render: Card =====
   const renderAxes = (axes) => {
     if (!axes) return '';
     const order = ['intent','subject','style_primary','style_perturb','layout','typography','bilingual','physics'];
@@ -300,12 +831,7 @@ footer a { color: var(--smoke); }
       .join('');
   };
 
-  const renderSeeds = (seeds) => {
-    if (!seeds || !seeds.length) return '';
-    return `<div class="seeds">${seeds.map(s => `<span class="seed">${escapeHtml(s)}</span>`).join(' · ')}</div>`;
-  };
-
-  const renderCard = (row) => {
+  const renderCard = (row, opts = {}) => {
     const swatches = `
       <div class="swatches">
         ${row.primary_color ? `<span class="swatch" style="background:${escapeHtml(row.primary_color)}"></span>` : ''}
@@ -315,38 +841,252 @@ footer a { color: var(--smoke); }
     const fonts = (row.font_en || row.font_zh)
       ? `<div class="fonts">${escapeHtml(row.font_en || '')} · ${escapeHtml(row.font_zh || '')}</div>`
       : '';
+    const tributeCount = row._tribute || 0;
+    const numStr = '#' + String(row._num).padStart(3, '0');
+    const isHighlight = location.hash === '#' + numStr.slice(1);
+    const klass = ['card', opts.ranked ? 'ranked' : '', isHighlight ? 'highlight' : ''].filter(Boolean).join(' ');
     return `
-      <div class="card">
+      <div class="${klass}" id="${numStr.slice(1)}" data-id="${row.id}">
         <div class="head">
+          <span class="num">${numStr}</span>
           ${swatches}
           <span class="brand">${escapeHtml(row.brand_name || '匿名')}</span>
           <span class="time">${fmtTime(row.created_at)}</span>
         </div>
         <div class="axes">${renderAxes(row.six_axes)}</div>
-        ${renderSeeds(row.fire_seeds)}
         ${fonts}
-        <pre>${escapeHtml(row.prompt)}</pre>
-        <div class="actions">
-          <button class="btn" data-copy="${row.id}">複製 prompt</button>
+        <div class="prompt-box" data-prompt-box>
+          <div class="preview">${escapeHtml((row.prompt || '').slice(0, 200))}${row.prompt && row.prompt.length > 200 ? '...' : ''}</div>
+          ${row.prompt && row.prompt.length > 200 ? `<button class="expand-btn" data-expand>展開全文 ↓</button>` : ''}
         </div>
+        <div class="actions">
+          <button class="btn wind" data-wind="${row.id}">🌬 風帶走</button>
+          <button class="btn tribute" data-tribute="${row.id}">🌱 向林學</button>
+          <span class="tribute-count">✓ <strong data-tcount="${row.id}">${tributeCount}</strong> 人向這片林學過</span>
+        </div>
+        <button class="similar-btn" data-similar="${row.id}">相似的林 →</button>
+        <div class="similar-list" data-similar-list="${row.id}"></div>
       </div>
     `;
   };
 
+  // ===== Render: views =====
+  const render = () => {
+    if (state.view === 'recent') renderRecent();
+    else renderRanking();
+    bindCardEvents();
+    // hash scroll
+    if (location.hash && location.hash.length === 4) {
+      const t = document.getElementById(location.hash.slice(1));
+      if (t) t.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
+
+  const renderRecent = () => {
+    const sorted = sortRows(state.filtered);
+    const groups = { today: [], week: [], lastweek: [], recent: [], silent: [] };
+    sorted.forEach(r => groups[periodOf(r.created_at)].push(r));
+    const sections = [
+      { key: 'today',    title: '今日' },
+      { key: 'week',     title: '本週' },
+      { key: 'lastweek', title: '上週' },
+      { key: 'recent',   title: '更早 · 30 天內' },
+      { key: 'silent',   title: '沉默池 · 30 天以上', hint: '這些林沉了下去 · 但它們的種子仍在風裡' },
+    ];
+    const html = sections
+      .filter(s => groups[s.key].length > 0)
+      .map(s => `
+        <div class="time-section">
+          <h3>${s.title} <span class="count">${groups[s.key].length} 片</span></h3>
+          ${s.hint ? `<p class="silent-hint">${s.hint}</p>` : ''}
+          <div class="grid">${groups[s.key].map(r => renderCard(r)).join('')}</div>
+        </div>
+      `).join('');
+    $('#view-recent').innerHTML = html || `
+      <div class="empty">
+        <h3>沒找到符合的林</h3>
+        <p>試試清除過濾條件、或換一個搜尋關鍵字。</p>
+      </div>
+    `;
+    $('#status').textContent = `${state.filtered.length} 片林（共 ${state.raw.length} 片在池中）`;
+  };
+
+  const renderRanking = () => {
+    const ranked = state.filtered
+      .slice()
+      .sort((a,b) => (b._tribute || 0) - (a._tribute || 0))
+      .slice(0, 30);
+    if (!ranked.length) {
+      $('#view-ranking').innerHTML = `
+        <div class="empty">
+          <h3>還沒有林被學過</h3>
+          <p>第一個按下「向林學」的人會出現在這裡。</p>
+        </div>
+      `;
+    } else {
+      $('#view-ranking').innerHTML = `
+        <div class="grid">${ranked.map(r => renderCard(r, { ranked: true })).join('')}</div>
+      `;
+    }
+    $('#status').textContent = `向林學排行 · top ${ranked.length}`;
+  };
+
+  // ===== Bind card events =====
+  const bindCardEvents = () => {
+    // 風帶走
+    $$('[data-wind]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.wind;
+        const row = state.raw.find(r => r.id === id);
+        if (!row) return;
+        navigator.clipboard.writeText(row.prompt).then(() => {
+          btn.textContent = '✓ 風帶走了';
+          btn.style.color = 'var(--iris)';
+          setTimeout(() => {
+            btn.innerHTML = '🌬 風帶走';
+            btn.style.color = '';
+          }, 1800);
+        });
+      });
+    });
+
+    // 向林學
+    $$('[data-tribute]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const id = btn.dataset.tribute;
+        const row = state.raw.find(r => r.id === id);
+        if (!row || btn.disabled) return;
+        btn.disabled = true;
+        const newCount = (row._tribute || 0) + 1;
+        const { error } = await supabase
+          .from('forest_tributes')
+          .update({ count: newCount, updated_at: new Date().toISOString() })
+          .eq('share_id', id);
+        if (error) {
+          console.error('tribute error', error);
+          btn.disabled = false;
+          return;
+        }
+        row._tribute = newCount;
+        const cnt = $(`[data-tcount="${id}"]`);
+        if (cnt) cnt.textContent = newCount;
+        btn.textContent = '✓ 領了一點 · 走自己的路';
+        setTimeout(() => {
+          btn.innerHTML = '🌱 向林學';
+          btn.disabled = false;
+        }, 2400);
+      });
+    });
+
+    // 展開 prompt
+    $$('[data-expand]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const box = btn.closest('[data-prompt-box]');
+        box.classList.toggle('expanded');
+        btn.textContent = box.classList.contains('expanded') ? '收合 ↑' : '展開全文 ↓';
+      });
+    });
+
+    // 相似林
+    $$('[data-similar]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.similar;
+        const list = $(`[data-similar-list="${id}"]`);
+        if (list.classList.contains('open')) {
+          list.classList.remove('open');
+          btn.textContent = '相似的林 →';
+          return;
+        }
+        const row = state.raw.find(r => r.id === id);
+        if (!row) return;
+        const sims = state.raw
+          .filter(r => r.id !== id)
+          .map(r => ({ r, d: sixAxesDistance(row.six_axes, r.six_axes) }))
+          .sort((a,b) => a.d - b.d)
+          .slice(0, 3);
+        list.innerHTML = sims.length
+          ? sims.map(s => `<a href="#${String(s.r._num).padStart(3,'0')}">#${String(s.r._num).padStart(3,'0')} · ${escapeHtml(s.r.brand_name || '匿名')}</a>`).join('')
+          : '<span style="color:var(--smoke);">池子裡還沒有相似的林</span>';
+        list.classList.add('open');
+        btn.textContent = '收起相似 ↑';
+      });
+    });
+  };
+
+  // ===== Tabs =====
+  $$('.tab').forEach(t => {
+    t.addEventListener('click', () => {
+      $$('.tab').forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      state.view = t.dataset.view;
+      $('#view-recent').hidden = state.view !== 'recent';
+      $('#view-ranking').hidden = state.view !== 'ranking';
+      render();
+    });
+  });
+
+  // ===== Toolbar =====
+  $('#search').addEventListener('input', (e) => {
+    state.search = e.target.value.trim();
+    applyFilters();
+  });
+  $('#sort').addEventListener('change', (e) => {
+    state.sort = e.target.value;
+    render();
+  });
+  $('#windBtn').addEventListener('click', () => {
+    state.sort = 'random';
+    $('#sort').value = 'random';
+    state.filtered = shuffle(state.raw).slice(0, 5);
+    state.view = 'recent';
+    $$('.tab').forEach(x => x.classList.remove('active'));
+    $$('.tab')[0].classList.add('active');
+    $('#view-recent').hidden = false;
+    $('#view-ranking').hidden = true;
+    $('#view-recent').innerHTML = `
+      <div class="time-section">
+        <h3>風吹一回 <span class="count">${state.filtered.length} 片</span></h3>
+        <p class="silent-hint">隨機從池底吹起 · 偶遇你還沒見過的林</p>
+        <div class="grid">${state.filtered.map(r => renderCard(r)).join('')}</div>
+      </div>
+    `;
+    bindCardEvents();
+    $('#status').textContent = `風吹一回 · ${state.filtered.length} 片`;
+  });
+
+  // ===== Load =====
   async function load() {
     try {
-      const { data, error } = await supabase
+      const { data: shares, error: e1 } = await supabase
         .from('forest_shares')
-        .select('id, prompt, brand_name, primary_color, deep_color, font_en, font_zh, six_axes, fire_seeds, created_at')
-        .order('created_at', { ascending: false })
-        .limit(50);
+        .select('id, prompt, brand_name, primary_color, deep_color, font_en, font_zh, six_axes, created_at')
+        .order('created_at', { ascending: true });
 
-      if (error) throw error;
+      if (e1) throw e1;
 
-      if (!data || data.length === 0) {
-        status.textContent = '';
-        grid.innerHTML = `
-          <div class="empty" style="grid-column: 1 / -1;">
+      const { data: tribs, error: e2 } = await supabase
+        .from('forest_tributes')
+        .select('share_id, count');
+
+      // tribute 失敗不阻擋整個 pool 顯示
+      const tribMap = {};
+      if (!e2 && tribs) {
+        tribs.forEach(t => { tribMap[t.share_id] = t.count; });
+      }
+
+      // 流水號 + tribute count
+      shares.forEach((r, i) => {
+        r._num = i + 1;
+        r._tribute = tribMap[r.id] || 0;
+      });
+
+      state.raw = shares;
+      state.filtered = shares;
+
+      if (!shares.length) {
+        $('#status').textContent = '';
+        $('#view-recent').innerHTML = `
+          <div class="empty">
             <h3>還沒有林相留下</h3>
             <p>第一個人類進來分享後 · 池子才開始有對話。</p>
             <p style="margin-top:1rem;"><a href="/generator.html" style="color:var(--iris);">去凝相一片你的林</a></p>
@@ -355,30 +1095,14 @@ footer a { color: var(--smoke); }
         return;
       }
 
-      status.textContent = `${data.length} 片林 · 最近的 50 個`;
-      grid.innerHTML = data.map(renderCard).join('');
-
-      // copy buttons
-      grid.querySelectorAll('[data-copy]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const id = btn.getAttribute('data-copy');
-          const row = data.find(r => r.id === id);
-          if (!row) return;
-          navigator.clipboard.writeText(row.prompt).then(() => {
-            btn.textContent = '✓ 已複製';
-            btn.style.color = 'var(--iris)';
-            setTimeout(() => {
-              btn.textContent = '複製 prompt';
-              btn.style.color = '';
-            }, 1500);
-          });
-        });
-      });
+      renderDashboard();
+      renderFilters();
+      render();
     } catch (err) {
       console.error('pool load error', err);
-      status.textContent = '';
-      grid.innerHTML = `
-        <div class="errored" style="grid-column: 1 / -1;">
+      $('#status').textContent = '';
+      $('#view-recent').innerHTML = `
+        <div class="errored">
           <h3>對話池暫時無法連線</h3>
           <p>後端 Supabase 沒回應 · 稍後再試。</p>
           <code>${escapeHtml(err.message || String(err))}</code>
@@ -388,6 +1112,18 @@ footer a { color: var(--smoke); }
   }
 
   load();
+
+  // hash change → highlight
+  window.addEventListener('hashchange', () => {
+    $$('.card').forEach(c => c.classList.remove('highlight'));
+    if (location.hash.length === 4) {
+      const t = document.getElementById(location.hash.slice(1));
+      if (t) {
+        t.classList.add('highlight');
+        t.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  });
 </script>
 
 </body>

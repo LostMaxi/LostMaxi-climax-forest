@@ -1407,20 +1407,20 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
 
 <!-- 右側摘要圓點 · 章節快速跳轉 -->
 <nav class="dot-nav" id="dot-nav" aria-label="章節導覽">
-  <a href="#sec-profile" data-section="sec-profile"><span class="dot-label">印記</span></a>
-  <a href="#sec-s1" data-section="sec-s1"><span class="dot-label">一·樹冠</span></a>
-  <a href="#sec-s2" data-section="sec-s2"><span class="dot-label">二·優勢種</span></a>
-  <a href="#sec-s3" data-section="sec-s3"><span class="dot-label">三·林相</span></a>
-  <a href="#sec-s4" data-section="sec-s4"><span class="dot-label">四·林分</span></a>
-  <a href="#sec-s5" data-section="sec-s5"><span class="dot-label">五·葉形</span></a>
-  <a href="#sec-s6" data-section="sec-s6"><span class="dot-label">六·風與根</span></a>
-  <a href="#sec-spore" data-section="sec-spore"><span class="dot-label">孢子</span></a>
-  <a href="#sec-advanced" data-section="sec-advanced"><span class="dot-label">進階</span></a>
-  <a href="#sec-actions" data-section="sec-actions"><span class="dot-label">凝相</span></a>
-  <a href="#ambient-preview" data-section="ambient-preview"><span class="dot-label">氛圍</span></a>
-  <a href="#sec-ref" data-section="sec-ref"><span class="dot-label">四片森林</span></a>
-  <a href="#sec-gallery" data-section="sec-gallery"><span class="dot-label">池魂</span></a>
-  <a href="#sec-dna" data-section="sec-dna"><span class="dot-label">DNA 指紋</span></a>
+  <a href="#sec-profile" data-section="sec-profile"><span class="dot-label" data-i18n="dotProfile">印記</span></a>
+  <a href="#sec-s1" data-section="sec-s1"><span class="dot-label" data-i18n="dotS1">一·樹冠</span></a>
+  <a href="#sec-s2" data-section="sec-s2"><span class="dot-label" data-i18n="dotS2">二·優勢種</span></a>
+  <a href="#sec-s3" data-section="sec-s3"><span class="dot-label" data-i18n="dotS3">三·林相</span></a>
+  <a href="#sec-s4" data-section="sec-s4"><span class="dot-label" data-i18n="dotS4">四·林分</span></a>
+  <a href="#sec-s5" data-section="sec-s5"><span class="dot-label" data-i18n="dotS5">五·葉形</span></a>
+  <a href="#sec-s6" data-section="sec-s6"><span class="dot-label" data-i18n="dotS6">六·風與根</span></a>
+  <a href="#sec-spore" data-section="sec-spore"><span class="dot-label" data-i18n="dotSpore">孢子</span></a>
+  <a href="#sec-advanced" data-section="sec-advanced"><span class="dot-label" data-i18n="dotAdvanced">進階</span></a>
+  <a href="#sec-actions" data-section="sec-actions"><span class="dot-label" data-i18n="dotActions">凝相</span></a>
+  <a href="#ambient-preview" data-section="ambient-preview"><span class="dot-label" data-i18n="dotAmbient">氛圍</span></a>
+  <a href="#sec-ref" data-section="sec-ref"><span class="dot-label" data-i18n="dotRef">四片森林</span></a>
+  <a href="#sec-gallery" data-section="sec-gallery"><span class="dot-label" data-i18n="dotGallery">池魂</span></a>
+  <a href="#sec-dna" data-section="sec-dna"><span class="dot-label" data-i18n="dotDna">DNA 指紋</span></a>
 </nav>
 
 <div class="container">
@@ -3140,6 +3140,21 @@ const I18N = {
     // Abyss
     abyssLine: '林已成形，風仍在寫',
     abyssSig: '— 林相 · ∞ —',
+    // Dot-nav 章節導覽
+    dotProfile: '印記',
+    dotS1: '一·樹冠',
+    dotS2: '二·優勢種',
+    dotS3: '三·林相',
+    dotS4: '四·林分',
+    dotS5: '五·葉形',
+    dotS6: '六·風與根',
+    dotSpore: '孢子',
+    dotAdvanced: '進階',
+    dotActions: '凝相',
+    dotAmbient: '氛圍',
+    dotRef: '四片森林',
+    dotGallery: '池魂',
+    dotDna: 'DNA 指紋',
     // Share
     shareToPoolBtn: '分享到森林對話',
     shareToPoolDisabledTitle: '對話池正在生根 · Supabase 接通後啟用',
@@ -3254,6 +3269,21 @@ const I18N = {
     // Abyss
     abyssLine: 'The forest has form · the wind is still writing',
     abyssSig: '— climax forest · ∞ —',
+    // Dot-nav
+    dotProfile: 'Mark',
+    dotS1: '1 · Canopy',
+    dotS2: '2 · Dominant',
+    dotS3: '3 · Forest type',
+    dotS4: '4 · Stand',
+    dotS5: '5 · Leaf form',
+    dotS6: '6 · Wind & roots',
+    dotSpore: 'Spores',
+    dotAdvanced: 'Advanced',
+    dotActions: 'Form',
+    dotAmbient: 'Mood',
+    dotRef: 'Reference',
+    dotGallery: 'Pool Soul',
+    dotDna: 'DNA',
     // Share
     shareToPoolBtn: 'Share to Forest Pool',
     shareToPoolDisabledTitle: 'Pool is taking root · enabled when Supabase connects',
@@ -3369,6 +3399,21 @@ const I18N = {
     // Abyss
     abyssLine: '林は形をなした、風はまだ書き続けている',
     abyssSig: '— climax forest · ∞ —',
+    // Dot-nav
+    dotProfile: '印',
+    dotS1: '1 · 樹冠',
+    dotS2: '2 · 優勢種',
+    dotS3: '3 · 林相',
+    dotS4: '4 · 林分',
+    dotS5: '5 · 葉形',
+    dotS6: '6 · 風と根',
+    dotSpore: '胞子',
+    dotAdvanced: '詳細',
+    dotActions: '凝相',
+    dotAmbient: '雰囲気',
+    dotRef: '参考林',
+    dotGallery: '池魂',
+    dotDna: 'DNA',
     // Share
     shareToPoolBtn: 'フォレスト・プールへ共有',
     shareToPoolDisabledTitle: 'プールは根を張っているところ · Supabase 接続後に有効化',

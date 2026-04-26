@@ -899,8 +899,8 @@ body {
   justify-content: center;
   background: var(--deep);
   pointer-events: auto;
-  /* 5s 整 · 收尾 300ms · 延遲 4.7s 起 */
-  animation: cfSplashOut 300ms cubic-bezier(0.4, 0, 0.2, 1) 4700ms forwards;
+  /* 6s 整 · 推到位 4.5s + 停頓 1s + 收尾 300ms · fadeout 延遲 5.7s */
+  animation: cfSplashOut 300ms cubic-bezier(0.4, 0, 0.2, 1) 5700ms forwards;
 }
 .cf-splash-stage {
   position: relative;
@@ -917,7 +917,7 @@ body {
   width: 70px;
   height: 70px;
   transform: translate(279px, 0);
-  animation: cfWrapMotion 5000ms cubic-bezier(0.4, 0, 0.4, 1) 0ms forwards;
+  animation: cfWrapMotion 6000ms cubic-bezier(0.4, 0, 0.4, 1) 0ms forwards;
 }
 .cf-splash .cf-logo-svg {
   width: 70px;
@@ -1083,16 +1083,16 @@ body {
   0%   { opacity: 0; transform: scale(0); }
   100% { opacity: 1; transform: scale(1); }
 }
-/* CF wrap 整段運動：viewport 中央 → 種子落下時反彈 → 推左讓 wordmark 進 */
+/* CF wrap 整段運動：viewport 中央 → 種子落下時反彈 → 推左 → 停頓 1 秒 */
 @keyframes cfWrapMotion {
-  0%   { transform: translate(279px, 0); }     /* 0ms · viewport 中心（stage 寬 ~512 · CF 居中）*/
-  48%  { transform: translate(279px, 0); }     /* 2400ms · 種子即將落下 */
-  52%  { transform: translate(279px, 8px); }   /* 2600ms · 反彈下沉（重力 · 8px 幅度）*/
-  56%  { transform: translate(279px, -3px); }  /* 2800ms · 反彈上揚 */
-  60%  { transform: translate(279px, 0); }     /* 3000ms · 回歸水平 */
-  70%  { transform: translate(279px, 0); }     /* 3500ms · 樹苗生長中、保持 */
-  90%  { transform: translate(0, 0); }         /* 4500ms · 推到左側落定 */
-  100% { transform: translate(0, 0); }         /* 5000ms · 靜止 */
+  0%    { transform: translate(279px, 0); }     /* 0ms · viewport 中心 */
+  40%   { transform: translate(279px, 0); }     /* 2400ms · 種子即將落下 */
+  43.3% { transform: translate(279px, 8px); }   /* 2600ms · 反彈下沉（8px 幅度）*/
+  46.7% { transform: translate(279px, -3px); }  /* 2800ms · 反彈上揚 */
+  50%   { transform: translate(279px, 0); }     /* 3000ms · 回歸水平 */
+  58.3% { transform: translate(279px, 0); }     /* 3500ms · 樹苗生長中、保持 */
+  75%   { transform: translate(0, 0); }         /* 4500ms · 推到左側落定 */
+  100%  { transform: translate(0, 0); }         /* 6000ms · 停頓 1.5s 至 fadeout 起 */
 }
 /* wordmark · 從 40% stage 右側推進來（距離 ≈ wordmark 寬 + ®）*/
 @keyframes cfTextSlide {
@@ -2090,7 +2090,7 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
     splash.remove();
     document.body.classList.remove('splash-locked');
     try { sessionStorage.setItem('cf_splash_seen', '1'); } catch (e) {}
-  }, 5100);
+  }, 6100);
 })();
 
 /* ============================================================

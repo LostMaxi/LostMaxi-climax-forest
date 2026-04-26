@@ -1032,10 +1032,10 @@ body {
   animation: cfTextSlide 1100ms cubic-bezier(0.4, 0, 0.2, 1) 3500ms forwards;
 }
 .cf-splash-name {
-  /* 實測再校正：Playfair Display visual cap ratio 接近 1.0（line-box ascender 完整顯現）· font-size 70/~1.0 ≈ 70px ≈ 4.375rem · 為避免略超用 4rem (64px) · ratio 1.05 → cap ≈ 67 < 70 框內 ✓ */
+  /* 實證二分：4rem 太小 / 6.3rem 太大 → 中間 88px (5.5rem) · 用 px 鎖死避開 rem 基準不確定 · 預估 cap visual ≈ 70 ≈ CF 框 ✓ */
   display: block;
   font-family: 'Playfair Display', Georgia, 'Noto Serif TC', serif;
-  font-size: 4rem;
+  font-size: 88px;
   font-weight: 500;
   color: var(--snow);
   line-height: 1;

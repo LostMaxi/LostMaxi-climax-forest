@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#8384BD" />
+<title>Climax Forest · Loading</title>
+<meta name="description" content="Climax Forest · 極相林。開場動畫。" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet" />
+
+<style>
+:root {
+  --deep: #F4EDE1;
+  --snow: #1A1A1A;
+  --bone: #3A3530;
+  --claude-orange: #C2765A;
+  --iris-c: #8384BD;
+  --f-zh: 'Noto Sans TC', 'Yu Gothic UI', sans-serif;
+  --f-en: 'Inter', -apple-system, sans-serif;
+  --f-cjk: 'Inter', 'Noto Sans TC', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; }
+body {
+  background: var(--deep);
+  color: var(--bone);
+  font-family: var(--f-cjk);
+}
+
+.cf-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--deep);
+  pointer-events: auto;
+  animation: cfSplashOut 300ms cubic-bezier(0.4, 0, 0.2, 1) 5700ms forwards;
+}
+.cf-splash-stage {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+  font-size: 0;
+}
+.cf-splash-logo-wrap {
+  position: relative;
+  display: inline-block;
+  vertical-align: baseline;
+  width: 70px;
+  height: 70px;
+  font-size: initial;
+  margin-right: 1rem;
+  transform: translate(285px, 0);
+  animation: cfWrapMotion 6000ms cubic-bezier(0.4, 0, 0.4, 1) 0ms forwards;
+}
+.cf-splash .cf-logo-svg {
+  width: 70px;
+  height: 70px;
+  display: block;
+}
+.cf-splash .cf-logo-svg path {
+  stroke: var(--claude-orange);
+  fill: none;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+}
+.cf-splash .cf-logo-svg .c-path {
+  animation: cfDraw 700ms cubic-bezier(0.4, 0, 0.2, 1) 300ms forwards;
+}
+.cf-splash .cf-logo-svg .f-path {
+  animation: cfDraw 600ms cubic-bezier(0.4, 0, 0.2, 1) 800ms forwards;
+}
+.cf-splash .cf-logo-svg rect {
+  fill: transparent;
+  stroke: var(--claude-orange);
+  stroke-width: 1.5;
+  stroke-dasharray: 220;
+  stroke-dashoffset: 220;
+  animation: cfDraw 600ms cubic-bezier(0.4, 0, 0.2, 1) 1400ms forwards;
+}
+
+.cf-mascot {
+  position: absolute;
+  pointer-events: none;
+}
+.cf-mascot-tree {
+  top: -67%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 54%;
+  height: 67%;
+  overflow: visible;
+}
+.cf-mascot-tree svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.cf-mascot-tree .cf-seed {
+  fill: var(--claude-orange);
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: cfSeedDrop 600ms cubic-bezier(0.5, 0, 0.6, 1) 2000ms forwards;
+}
+.cf-mascot-tree .cf-stem {
+  stroke: var(--claude-orange);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  fill: none;
+  stroke-dasharray: 17;
+  stroke-dashoffset: 17;
+  animation: cfStemDraw 600ms cubic-bezier(0.4, 0, 0.2, 1) 2900ms forwards;
+}
+.cf-mascot-tree .cf-branch {
+  stroke: var(--claude-orange);
+  stroke-width: 0.8;
+  stroke-linecap: round;
+  fill: none;
+  stroke-dasharray: 8;
+  stroke-dashoffset: 8;
+}
+.cf-mascot-tree .cf-branch-left {
+  animation: cfBranchDraw 350ms cubic-bezier(0.4, 0, 0.2, 1) 3300ms forwards;
+}
+.cf-mascot-tree .cf-branch-right {
+  animation: cfBranchDraw 350ms cubic-bezier(0.4, 0, 0.2, 1) 3380ms forwards;
+}
+.cf-mascot-tree .cf-leaf {
+  fill: var(--deep);
+  stroke: var(--claude-orange);
+  stroke-width: 0.7;
+  stroke-linejoin: round;
+  opacity: 0;
+}
+.cf-mascot-tree .cf-leaf-left {
+  transform-origin: 6px 17px;
+  animation: cfLeafBloom 500ms cubic-bezier(0.4, 0, 0.2, 1) 3500ms forwards;
+}
+.cf-mascot-tree .cf-leaf-right {
+  transform-origin: 18px 17px;
+  animation: cfLeafBloom 500ms cubic-bezier(0.4, 0, 0.2, 1) 3580ms forwards;
+}
+.cf-mascot-tree .cf-leaf-top {
+  transform-origin: 12px 10px;
+  animation: cfLeafBloom 550ms cubic-bezier(0.4, 0, 0.2, 1) 3700ms forwards;
+}
+
+.cf-splash-text {
+  position: relative;
+  display: inline-block;
+  vertical-align: baseline;
+  font-size: initial;
+  opacity: 0;
+  transform: translateX(575px);
+  animation: cfTextSlide 1100ms cubic-bezier(0.4, 0, 0.2, 1) 3500ms forwards;
+}
+.cf-splash-name {
+  display: block;
+  font-family: 'Playfair Display', Georgia, 'Noto Serif TC', serif;
+  font-size: 92px;
+  transform: translateY(-1.5px);
+  font-weight: 500;
+  color: var(--snow);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.cf-splash-pill {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  display: inline-block;
+  font-family: var(--f-en);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--claude-orange);
+  padding: 0.26rem 0.78rem;
+  border: 1px solid var(--claude-orange);
+  border-radius: 999px;
+  opacity: 0;
+  animation: cfFadeUp 900ms cubic-bezier(0.4, 0, 0.2, 1) 5800ms forwards;
+}
+
+@keyframes cfDraw { to { stroke-dashoffset: 0; } }
+@keyframes cfSeedDrop {
+  0%   { opacity: 0; transform: translateY(-30px) scale(0.6); }
+  70%  { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0.5; transform: translateY(0) scale(1); }
+}
+@keyframes cfStemDraw { to { stroke-dashoffset: 0; } }
+@keyframes cfBranchDraw { to { stroke-dashoffset: 0; } }
+@keyframes cfLeafBloom {
+  0%   { opacity: 0; transform: scale(0); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes cfWrapMotion {
+  0%    { transform: translate(285px, 0); }
+  40%   { transform: translate(285px, 0); }
+  43.3% { transform: translate(285px, 8px); }
+  46.7% { transform: translate(285px, -3px); }
+  50%   { transform: translate(285px, 0); }
+  58.3% { transform: translate(285px, 0); }
+  75%   { transform: translate(0, 0); }
+  100%  { transform: translate(0, 0); }
+}
+@keyframes cfTextSlide {
+  0%   { opacity: 0; transform: translateX(480px); }
+  20%  { opacity: 1; }
+  100% { opacity: 1; transform: translateX(0); }
+}
+@keyframes cfFadeUp {
+  0%   { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes cfSplashOut { to { opacity: 0; visibility: hidden; } }
+
+@media (max-width: 600px) {
+  .cf-splash-stage { display: block; text-align: center; font-size: initial; }
+  .cf-splash-logo-wrap { display: block; margin: 0 auto 1rem; transform: none; }
+  .cf-splash-text { display: block; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="cf-splash" id="cf-splash" aria-hidden="true">
+  <div class="cf-splash-stage">
+    <div class="cf-splash-logo-wrap">
+      <svg class="cf-logo-svg" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="1.5" y="1.5" width="37" height="37" rx="6" />
+        <path class="c-path" d="M 19.5 11 Q 10.5 11 10.5 20 Q 10.5 29 19.5 29" />
+        <path class="f-path" d="M 21.5 11 L 21.5 29 M 21.5 11 L 29.5 11 M 21.5 20 L 27.5 20" />
+      </svg>
+      <div class="cf-mascot cf-mascot-tree" aria-hidden="true">
+        <svg viewBox="0 0 24 30" xmlns="http://www.w3.org/2000/svg">
+          <ellipse class="cf-seed" cx="12" cy="28.3" rx="2" ry="1.7" />
+          <line class="cf-stem" x1="12" y1="30" x2="12" y2="13" />
+          <path class="cf-branch cf-branch-left" d="M 12 22 Q 9 19 6 17" />
+          <path class="cf-branch cf-branch-right" d="M 12 22 Q 15 19 18 17" />
+          <ellipse class="cf-leaf cf-leaf-left" cx="6" cy="17" rx="2.5" ry="3.5" transform="rotate(-30 6 17)" />
+          <ellipse class="cf-leaf cf-leaf-right" cx="18" cy="17" rx="2.5" ry="3.5" transform="rotate(30 18 17)" />
+          <ellipse class="cf-leaf cf-leaf-top" cx="12" cy="10" rx="2.2" ry="3" />
+        </svg>
+      </div>
+    </div>
+    <div class="cf-splash-text">
+      <span class="cf-splash-name">Climax Forest</span>
+      <span class="cf-splash-pill">Research Preview</span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function go() {
+    try { sessionStorage.setItem('cf_splash_seen', '1'); } catch (e) {}
+    location.replace('index.html');
+  }
+  if (reduced) { go(); return; }
+  setTimeout(go, 6100);
+})();
+</script>
+
+</body>
+</html>

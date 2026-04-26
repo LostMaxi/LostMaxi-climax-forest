@@ -15,13 +15,17 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet" />
 
-<!-- 同 session 已看過 splash 直接跳過 · 避免閃 -->
+<!-- splash 拆成獨立 splash.html · 沒看過則 redirect、看過則直接進操作頁 -->
 <script>
-  try {
-    if (sessionStorage.getItem('cf_splash_seen') === '1') {
-      document.documentElement.classList.add('cf-splash-skip');
-    }
-  } catch (e) {}
+  (function(){
+    try {
+      var seen = sessionStorage.getItem('cf_splash_seen') === '1';
+      var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!seen && !reduced) {
+        location.replace('splash.html');
+      }
+    } catch (e) {}
+  })();
 </script>
 
 <style>
@@ -1051,254 +1055,7 @@ body {
 /* ===== TOUR HUD END ===== */
 }
 
-/* ===== 開場動畫 · CF Logo Splash（儀式感版本）===== */
-.cf-splash {
-  position: fixed;
-  inset: 0;
-  z-index: 999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--deep);
-  pointer-events: auto;
-  /* 6s 整 · 推到位 4.5s + 停頓 1s + 收尾 300ms · fadeout 延遲 5.7s */
-  animation: cfSplashOut 300ms cubic-bezier(0.4, 0, 0.2, 1) 5700ms forwards;
-}
-.cf-splash-stage {
-  position: relative;
-  /* 改用 inline-block + vertical-align: baseline（CSS 經典）· 比 flex baseline 更可靠 · C 的 baseline 對齊 wrap bottom edge */
-  display: inline-block;
-  white-space: nowrap;
-  font-size: 0; /* 消除 inline-block 之間的 whitespace 間距 */
-}
-/* CF logo wrap · 一開始位移到 stage 中央 · 種子落下時反彈 · 之後推回左側 */
-.cf-splash-logo-wrap {
-  position: relative;
-  display: inline-block;
-  vertical-align: baseline; /* baseline = bottom edge（無 inline content）→ 跟 C 的 baseline 對齊 */
-  width: 70px;
-  height: 70px;
-  font-size: initial; /* 還原（stage 設了 font-size:0）*/
-  margin-right: 1rem; /* 取代 flex gap */
-  transform: translate(285px, 0);
-  animation: cfWrapMotion 6000ms cubic-bezier(0.4, 0, 0.4, 1) 0ms forwards;
-}
-.cf-splash .cf-logo-svg {
-  width: 70px;
-  height: 70px;
-  display: block;
-}
-/* draw 序列 · 反序：CF 字先（C → F）、框後 */
-.cf-splash .cf-logo-svg path {
-  stroke: var(--claude-orange);
-  fill: none;
-  stroke-width: 2.2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-dasharray: 100;
-  stroke-dashoffset: 100;
-}
-.cf-splash .cf-logo-svg .c-path {
-  animation: cfDraw 700ms cubic-bezier(0.4, 0, 0.2, 1) 300ms forwards;
-}
-.cf-splash .cf-logo-svg .f-path {
-  animation: cfDraw 600ms cubic-bezier(0.4, 0, 0.2, 1) 800ms forwards;
-}
-.cf-splash .cf-logo-svg rect {
-  fill: transparent;
-  stroke: var(--claude-orange);
-  stroke-width: 1.5;
-  stroke-dasharray: 220;
-  stroke-dashoffset: 220;
-  animation: cfDraw 600ms cubic-bezier(0.4, 0, 0.2, 1) 1400ms forwards;
-}
-
-/* ===== sparse cut · 單葉樹 + 流動空氣 ===== */
-.cf-mascot {
-  position: absolute;
-  pointer-events: none;
-}
-
-/* --- 樹苗第一版 · 種子 + 主莖 + 雙枝 + 三葉 · cage 等比 % · 配合 CF 70px --- */
-.cf-mascot-tree {
-  /* cage 底緣對齊 CF 框頂 · top -67% = -47px when CF=70 */
-  top: -67%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 54%;   /* 25px when CF=46 */
-  height: 67%;  /* 31px when CF=46 */
-  overflow: visible;
-}
-.cf-mascot-tree svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-/* 種子 · 豌豆形 · 從上方掉落 · 落在 CF 框頂緣（觸發反彈）*/
-.cf-mascot-tree .cf-seed {
-  fill: var(--claude-orange);
-  opacity: 0;
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: cfSeedDrop 600ms cubic-bezier(0.5, 0, 0.6, 1) 2000ms forwards;
-}
-/* 主莖 · stroke-draw · 反彈結束後生長 */
-.cf-mascot-tree .cf-stem {
-  stroke: var(--claude-orange);
-  stroke-width: 1.2;
-  stroke-linecap: round;
-  fill: none;
-  stroke-dasharray: 17;
-  stroke-dashoffset: 17;
-  animation: cfStemDraw 600ms cubic-bezier(0.4, 0, 0.2, 1) 2900ms forwards;
-}
-/* 雙枝 · stroke-draw · 主莖完成後 */
-.cf-mascot-tree .cf-branch {
-  stroke: var(--claude-orange);
-  stroke-width: 0.8;
-  stroke-linecap: round;
-  fill: none;
-  stroke-dasharray: 8;
-  stroke-dashoffset: 8;
-}
-.cf-mascot-tree .cf-branch-left {
-  animation: cfBranchDraw 350ms cubic-bezier(0.4, 0, 0.2, 1) 3300ms forwards;
-}
-.cf-mascot-tree .cf-branch-right {
-  animation: cfBranchDraw 350ms cubic-bezier(0.4, 0, 0.2, 1) 3380ms forwards;
-}
-/* 三葉 · scale 0 → 1 沉靜綻放 */
-.cf-mascot-tree .cf-leaf {
-  fill: var(--deep);
-  stroke: var(--claude-orange);
-  stroke-width: 0.7;
-  stroke-linejoin: round;
-  opacity: 0;
-}
-.cf-mascot-tree .cf-leaf-left {
-  transform-origin: 6px 17px;
-  animation: cfLeafBloom 500ms cubic-bezier(0.4, 0, 0.2, 1) 3500ms forwards;
-}
-.cf-mascot-tree .cf-leaf-right {
-  transform-origin: 18px 17px;
-  animation: cfLeafBloom 500ms cubic-bezier(0.4, 0, 0.2, 1) 3580ms forwards;
-}
-.cf-mascot-tree .cf-leaf-top {
-  transform-origin: 12px 10px;
-  animation: cfLeafBloom 550ms cubic-bezier(0.4, 0, 0.2, 1) 3700ms forwards;
-}
-
-.cf-splash-text {
-  position: relative;
-  display: inline-block;
-  vertical-align: baseline; /* baseline = first line baseline = .cf-splash-name 的 C baseline */
-  font-size: initial; /* 還原 */
-  opacity: 0;
-  transform: translateX(575px);
-  animation: cfTextSlide 1100ms cubic-bezier(0.4, 0, 0.2, 1) 3500ms forwards;
-}
-.cf-splash-name {
-  /* 95% → 微調逼近：font-size 90 → 92（C 再放大 ~2%）· transform translateY(-1.5px) 補 C overshoot（Playfair Display C 在 baseline 之下故意溢出 1-2px 為光學調整、視覺上補回讓 baseline 對齊更精準）*/
-  display: block;
-  font-family: 'Playfair Display', Georgia, 'Noto Serif TC', serif;
-  font-size: 92px;
-  transform: translateY(-1.5px);
-  font-weight: 500;
-  color: var(--snow);
-  line-height: 1;
-  letter-spacing: 0.02em;
-  white-space: nowrap;
-}
-.cf-splash-r {
-  /* ® 商標標註 · 上標 · 不影響 baseline */
-  font-size: 0.32em;
-  vertical-align: super;
-  margin-left: 0.1em;
-  letter-spacing: 0;
-  font-weight: 400;
-}
-.cf-splash-pill {
-  position: absolute;
-  top: calc(100% + 0.5rem); /* 在 wordmark 下方 · 不影響 baseline */
-  left: 0;
-  display: inline-block;
-  font-family: var(--f-en);
-  font-size: 0.65rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--claude-orange);
-  padding: 0.26rem 0.78rem;
-  border: 1px solid var(--claude-orange);
-  border-radius: 999px;
-  opacity: 0;
-  animation: cfFadeUp 900ms cubic-bezier(0.4, 0, 0.2, 1) 5800ms forwards;
-}
-/* 5s 整 · sparse cut · 樹苗第一版 + 反彈 + 40% 占比 */
-@keyframes cfDraw { to { stroke-dashoffset: 0; } }
-/* 種子從上方掉落 · 落到 CF 框頂緣（觸發反彈）· 留 50% opacity 隱約可見 */
-@keyframes cfSeedDrop {
-  0%   { opacity: 0; transform: translateY(-30px) scale(0.6); }
-  70%  { opacity: 1; transform: translateY(0) scale(1); }
-  100% { opacity: 0.5; transform: translateY(0) scale(1); }
-}
-/* 主莖由下而上描出 */
-@keyframes cfStemDraw { to { stroke-dashoffset: 0; } }
-/* 雙枝由內向外描出 */
-@keyframes cfBranchDraw { to { stroke-dashoffset: 0; } }
-/* 葉子綻放（scale 0 → 1）*/
-@keyframes cfLeafBloom {
-  0%   { opacity: 0; transform: scale(0); }
-  100% { opacity: 1; transform: scale(1); }
-}
-/* CF wrap 整段運動：viewport 中央 → 種子落下時反彈 → 推左 → 停頓 1 秒 */
-@keyframes cfWrapMotion {
-  0%    { transform: translate(285px, 0); }     /* 0ms · viewport 中心 */
-  40%   { transform: translate(285px, 0); }     /* 2400ms · 種子即將落下 */
-  43.3% { transform: translate(285px, 8px); }   /* 2600ms · 反彈下沉（8px 幅度）*/
-  46.7% { transform: translate(285px, -3px); }  /* 2800ms · 反彈上揚 */
-  50%   { transform: translate(285px, 0); }     /* 3000ms · 回歸水平 */
-  58.3% { transform: translate(285px, 0); }     /* 3500ms · 樹苗生長中、保持 */
-  75%   { transform: translate(0, 0); }         /* 4500ms · 推到左側落定 */
-  100%  { transform: translate(0, 0); }         /* 6000ms · 停頓 1.5s 至 fadeout 起 */
-}
-/* wordmark · 從 40% stage 右側推進來（距離 ≈ wordmark 寬 + ®）*/
-@keyframes cfTextSlide {
-  0%   { opacity: 0; transform: translateX(480px); }
-  20%  { opacity: 1; }
-  100% { opacity: 1; transform: translateX(0); }
-}
-/* 流動空氣 · 從左飄到右、淡入淡出（Monet 擾動）*/
-@keyframes cfWindDrift {
-  0%   { opacity: 0; transform: translateX(-30px); }
-  35%  { opacity: 1; }
-  70%  { opacity: 1; }
-  100% { opacity: 0; transform: translateX(30px); }
-}
-@keyframes cfSplashOut { to { opacity: 0; visibility: hidden; } }
-body.splash-locked { overflow: hidden; }
-/* splash 期間隱藏底層內容（不讓 generator 偷跑進視野）· 只留 splash 全螢幕 */
-html.splash-active body > .topbar,
-html.splash-active body > .wrap,
-html.splash-active body > .dot-nav,
-html.splash-active body > footer { visibility: hidden; }
-/* splash 結束 · 內容像換頁過場 fade in 700ms */
-@keyframes splashRevealContent {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-html.splash-revealed body > .wrap,
-html.splash-revealed body > .topbar {
-  animation: splashRevealContent 700ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-html.cf-splash-skip .cf-splash { display: none; }
-@media (prefers-reduced-motion: reduce) {
-  .cf-splash { display: none; }
-}
-@media (max-width: 600px) {
-  .cf-splash-stage { display: block; text-align: center; font-size: initial; }
-  .cf-splash-logo-wrap { display: block; margin: 0 auto 1rem; transform: none; }
-  .cf-splash-text { display: block; transform: none; }
-}
+/* 開場動畫 splash 已搬到獨立 splash.html · 此處不再保留任何 .cf-splash CSS */
 
 /* ===== Modal · 說明書 ===== */
 .modal-backdrop {
@@ -1648,39 +1405,6 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
 </style>
 </head>
 <body>
-
-<!-- 開場動畫 · CF Logo Splash · 4.5s · 樹苗第一版 + 拿掉風 -->
-<div class="cf-splash" id="cf-splash" aria-hidden="true">
-  <div class="cf-splash-stage">
-    <div class="cf-splash-logo-wrap">
-      <svg class="cf-logo-svg" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect x="1.5" y="1.5" width="37" height="37" rx="6" />
-        <path class="c-path" d="M 19.5 11 Q 10.5 11 10.5 20 Q 10.5 29 19.5 29" />
-        <path class="f-path" d="M 21.5 11 L 21.5 29 M 21.5 11 L 29.5 11 M 21.5 20 L 27.5 20" />
-      </svg>
-      <!-- 樹苗第一版 · 種子 + 主莖 + 雙枝 + 三葉（左/右側葉 + 頂葉）-->
-      <div class="cf-mascot cf-mascot-tree" aria-hidden="true">
-        <svg viewBox="0 0 24 30" xmlns="http://www.w3.org/2000/svg">
-          <!-- 種子 · 豌豆形（橢圓 · rx 2 ry 1.7 · 比原 r=1 大 2 倍）· 落在莖底（CF 框頂緣）-->
-          <ellipse class="cf-seed" cx="12" cy="28.3" rx="2" ry="1.7" />
-          <!-- 主莖 -->
-          <line class="cf-stem" x1="12" y1="30" x2="12" y2="13" />
-          <!-- 雙枝 -->
-          <path class="cf-branch cf-branch-left" d="M 12 22 Q 9 19 6 17" />
-          <path class="cf-branch cf-branch-right" d="M 12 22 Q 15 19 18 17" />
-          <!-- 三葉 -->
-          <ellipse class="cf-leaf cf-leaf-left" cx="6" cy="17" rx="2.5" ry="3.5" transform="rotate(-30 6 17)" />
-          <ellipse class="cf-leaf cf-leaf-right" cx="18" cy="17" rx="2.5" ry="3.5" transform="rotate(30 18 17)" />
-          <ellipse class="cf-leaf cf-leaf-top" cx="12" cy="10" rx="2.2" ry="3" />
-        </svg>
-      </div>
-    </div>
-    <div class="cf-splash-text">
-      <span class="cf-splash-name">Climax Forest<sup class="cf-splash-r">&reg;</sup></span>
-      <span class="cf-splash-pill">Research Preview</span>
-    </div>
-  </div>
-</div>
 
 <!-- 右側摘要圓點 · 章節快速跳轉 -->
 <nav class="dot-nav" id="dot-nav" aria-label="章節導覽">
@@ -2255,40 +1979,6 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
 </div>
 
 <script>
-/* ============================================================
-   開場動畫 splash · 鎖 body scroll · 動畫結束清掉 + 寫 sessionStorage
-============================================================ */
-(function(){
-  const splash = document.getElementById('cf-splash');
-  if (!splash) return;
-  if (document.documentElement.classList.contains('cf-splash-skip')) {
-    splash.remove();
-    return;
-  }
-  const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduced) {
-    splash.remove();
-    return;
-  }
-  // 鎖 scroll · 並先把頁面 scroll 到最上方（避免 splash 期間底層被滾動）
-  // splash 期間隱藏底層內容（讓 splash 是「完整乾淨全螢幕」、底層不偷跑）
-  document.body.classList.add('splash-locked');
-  document.documentElement.classList.add('splash-active');
-  window.scrollTo(0, 0);
-  setTimeout(() => {
-    splash.remove();
-    document.body.classList.remove('splash-locked');
-    document.documentElement.classList.remove('splash-active');
-    window.scrollTo(0, 0);
-    // 加跳轉感：操作頁從 opacity 0 fade in 700ms（像換頁過場）
-    document.documentElement.classList.add('splash-revealed');
-    setTimeout(() => {
-      document.documentElement.classList.remove('splash-revealed');
-    }, 800);
-    try { sessionStorage.setItem('cf_splash_seen', '1'); } catch (e) {}
-  }, 6100);
-})();
-
 /* ============================================================
    Superlost Prompt Generator
    讀林相 + 火種 → 組出完整 prompt，自動注入硬約束
@@ -3881,7 +3571,7 @@ const I18N = {
       body: '白話：點頂部「<strong>森林對話池</strong>」可以看訪客留下的林、領一點啟發走自己的路。<br/><br/>也可以把你做的林留下、給下一個園丁學。<br/><br/>是「<strong>池</strong>」、不是排行榜——人類在池裡共同生長。'
     },
     {
-      sel: null,
+      sel: '#btn-rand',
       title: '學完了 · 走自己的路',
       body: '你已經知道整個流程了。<br/><br/><ul><li>不確定？按「<strong>風吹一回</strong>」讓系統幫你選</li><li>想看別人的？點頂部「<strong>森林對話池</strong>」</li><li>重做？按「<strong>清空土地</strong>」</li></ul>這是工具、可以重複用。'
     }
@@ -3966,12 +3656,13 @@ const I18N = {
       const target = document.querySelector(s.sel);
       if (target) {
         // toolbar 元素（如 pool-link / tour-btn）在頁面頂部、用 start 才能確保滑到 viewport 內
+        // 用 instant scroll 而非 smooth · smooth 跨段距離長時 setTimeout 不可靠 · spotlight 會釘在過渡 rect 上
         const isTopbar = target.closest('.topbar');
         target.scrollIntoView({
-          behavior: 'smooth',
+          behavior: 'instant',
           block: isTopbar ? 'start' : 'center'
         });
-        setTimeout(() => placeSpot(target), 600); // 等 smooth scroll 完成
+        placeSpot(target);
         return;
       }
     }
@@ -4066,15 +3757,12 @@ const I18N = {
     if (hud.classList.contains('on')) show();
   });
 
-  // 自動啟動：第一次進入（無 localStorage flag）· 等 splash 結束才啟動
+  // 自動啟動：第一次進入（無 localStorage flag）· splash 已搬到獨立頁、進來時 splash 已結束
   function maybeAutoStart() {
     if (isDismissed()) return;
-    const splashSkipped = document.documentElement.classList.contains('cf-splash-skip');
-    const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const delay = (splashSkipped || reduced) ? 800 : 6500; // 跳過 splash → 0.8s · 完整 splash → 6.5s
     setTimeout(() => {
       if (!isDismissed()) start(); // 雙重檢查（萬一 user 在等待期間手動開過又關了）
-    }, delay);
+    }, 800);
   }
   // DOM ready 後評估
   if (document.readyState === 'loading') {

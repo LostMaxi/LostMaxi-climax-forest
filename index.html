@@ -899,8 +899,8 @@ body {
   justify-content: center;
   background: var(--deep);
   pointer-events: auto;
-  /* 4s sparse cut · 收尾 400ms · 延遲 3.6s 起 */
-  animation: cfSplashOut 400ms cubic-bezier(0.4, 0, 0.2, 1) 3600ms forwards;
+  /* 4.5s sparse cut · 收尾 500ms · 延遲 4s 起 */
+  animation: cfSplashOut 500ms cubic-bezier(0.4, 0, 0.2, 1) 4000ms forwards;
 }
 .cf-splash-stage {
   position: relative;
@@ -916,7 +916,7 @@ body {
   width: 110px;
   height: 110px;
   transform: translateX(280px);
-  animation: cfLogoShift 1300ms cubic-bezier(0.4, 0, 0.2, 1) 2200ms forwards;
+  animation: cfLogoShift 1500ms cubic-bezier(0.4, 0, 0.2, 1) 2500ms forwards;
 }
 .cf-splash .cf-logo-svg {
   width: 110px;
@@ -954,13 +954,14 @@ body {
   pointer-events: none;
 }
 
-/* --- 單葉樹 · cage 60×100 置於 CF 框上方 --- */
+/* --- 樹苗 · 播種 + 葉優雅長出 · cage 50×70 · 無中間線 --- */
 .cf-mascot-tree {
-  top: -95px;
+  /* cage 底緣對齊 CF 框頂 stroke 底（wrapper-y ≈ 5）· 高 70px */
+  top: -65px;
   left: 50%;
-  margin-left: -30px;
-  width: 60px;
-  height: 100px;
+  margin-left: -25px;
+  width: 50px;
+  height: 70px;
   overflow: visible;
 }
 .cf-mascot-tree svg {
@@ -968,23 +969,21 @@ body {
   width: 100%;
   height: 100%;
 }
-.cf-mascot-tree .cf-trunk {
-  stroke: var(--claude-orange);
-  stroke-width: 1.6;
-  stroke-linecap: round;
-  fill: none;
-  stroke-dasharray: 16;
-  stroke-dashoffset: 16;
-  animation: cfTreeTrunk 700ms cubic-bezier(0.4, 0, 0.2, 1) 1700ms forwards;
+/* 種子 · 小圓點淡入（播種狀態）*/
+.cf-mascot-tree .cf-seed {
+  fill: var(--claude-orange);
+  opacity: 0;
+  animation: cfSeedAppear 700ms cubic-bezier(0.4, 0, 0.2, 1) 2100ms forwards;
 }
+/* 葉 · 從種子點往上生長 · transform-origin 在底部尖點 */
 .cf-mascot-tree .cf-leaf {
   fill: var(--deep);
   stroke: var(--claude-orange);
   stroke-width: 1;
   stroke-linejoin: round;
   opacity: 0;
-  transform-origin: 18px 14px;
-  animation: cfLeafBloom 700ms cubic-bezier(0.4, 0, 0.2, 1) 2100ms forwards;
+  transform-origin: 18px 44px;
+  animation: cfLeafGrow 1400ms cubic-bezier(0.4, 0, 0.2, 1) 2400ms forwards;
 }
 
 /* --- 流動空氣 · 替代貓頭鷹 · Monet 的擾動 --- */
@@ -999,7 +998,7 @@ body {
   z-index: -1;
   opacity: 0;
   transform: translateX(-30px);
-  animation: cfWindDrift 1800ms cubic-bezier(0.4, 0, 0.4, 1) 2400ms forwards;
+  animation: cfWindDrift 2000ms cubic-bezier(0.4, 0, 0.4, 1) 2700ms forwards;
 }
 .cf-mascot-wind svg {
   width: 100%;
@@ -1022,7 +1021,7 @@ body {
   gap: 0.55rem;
   opacity: 0;
   transform: translateX(560px);
-  animation: cfTextSlide 1300ms cubic-bezier(0.4, 0, 0.2, 1) 2200ms forwards;
+  animation: cfTextSlide 1500ms cubic-bezier(0.4, 0, 0.2, 1) 2500ms forwards;
 }
 .cf-splash-name {
   /* 與 CF 框同高 · cap height ≈ 110px · clamp 5.5-9rem 響應式 */
@@ -1046,12 +1045,18 @@ body {
   opacity: 0;
   animation: cfFadeUp 900ms cubic-bezier(0.4, 0, 0.2, 1) 5800ms forwards;
 }
-/* sparse cut · 4s timeline · 簡化 keyframes */
+/* sparse cut · 4.5s timeline · 簡化 keyframes */
 @keyframes cfDraw { to { stroke-dashoffset: 0; } }
-@keyframes cfTreeTrunk { to { stroke-dashoffset: 0; } }
-/* 單葉浮現（scale 0 → 1）*/
-@keyframes cfLeafBloom {
-  0%   { opacity: 0; transform: scale(0.4); }
+/* 種子點亮 · 淡入後保留半透明（葉長出後仍隱約可見）*/
+@keyframes cfSeedAppear {
+  0%   { opacity: 0; transform: scale(0.6); }
+  60%  { opacity: 1; transform: scale(1); }
+  100% { opacity: 0.5; transform: scale(1); }
+}
+/* 葉優雅生長 · 從底部 0 到全尺 · 不彈不抖 · 沉靜 */
+@keyframes cfLeafGrow {
+  0%   { opacity: 0; transform: scale(0); }
+  20%  { opacity: 1; transform: scale(0.15); }
   100% { opacity: 1; transform: scale(1); }
 }
 /* CF logo wrap · 從 stage 中央位移到左側落定（讓 wordmark 進）*/
@@ -1449,11 +1454,13 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
         <path class="c-path" d="M 19.5 11 Q 10.5 11 10.5 20 Q 10.5 29 19.5 29" />
         <path class="f-path" d="M 21.5 11 L 21.5 29 M 21.5 11 L 29.5 11 M 21.5 20 L 27.5 20" />
       </svg>
-      <!-- 一片葉子 · 從 CF 框頂緣靜靜冒出 -->
+      <!-- 樹苗 · 種子 → 葉優雅長出（無中間線 · 從 CF 框頂緣場出來）-->
       <div class="cf-mascot cf-mascot-tree" aria-hidden="true">
-        <svg viewBox="0 0 36 30" xmlns="http://www.w3.org/2000/svg">
-          <line class="cf-trunk" x1="18" y1="30" x2="18" y2="14" />
-          <path class="cf-leaf" d="M 18 4 Q 25 14 18 24 Q 11 14 18 4 Z" />
+        <svg viewBox="0 0 36 50" xmlns="http://www.w3.org/2000/svg">
+          <!-- 種子 · 小圓點落在 CF 框頂邊緣 -->
+          <circle class="cf-seed" cx="18" cy="46" r="1.6" />
+          <!-- 葉 · 杏仁形 · 從種子點往上生長 -->
+          <path class="cf-leaf" d="M 18 4 Q 28 24 18 44 Q 8 24 18 4 Z" />
         </svg>
       </div>
     </div>
@@ -2054,7 +2061,7 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
     splash.remove();
     document.body.classList.remove('splash-locked');
     try { sessionStorage.setItem('cf_splash_seen', '1'); } catch (e) {}
-  }, 4100);
+  }, 4600);
 })();
 
 /* ============================================================

@@ -916,7 +916,7 @@ body {
   display: inline-block; /* baseline = bottom edge · 對齊字 baseline */
   width: 70px;
   height: 70px;
-  transform: translate(307px, 0);
+  transform: translate(279px, 0);
   animation: cfWrapMotion 6000ms cubic-bezier(0.4, 0, 0.4, 1) 0ms forwards;
 }
 .cf-splash .cf-logo-svg {
@@ -1028,14 +1028,14 @@ body {
   position: relative;
   display: block; /* 不用 column flex · 避免 baseline fallback 到 bottom */
   opacity: 0;
-  transform: translateX(620px);
+  transform: translateX(540px);
   animation: cfTextSlide 1100ms cubic-bezier(0.4, 0, 0.2, 1) 3500ms forwards;
 }
 .cf-splash-name {
-  /* cap height = CF 框高 70px · Playfair Display cap ratio 0.689 · font-size 6.3rem (100.8px) · cap top 69.5px ≈ 70 ✓ · 容忍 i-dot/l 略超框頂（Maxi 偏好平衡感） */
+  /* 實測校正：Playfair Display 瀏覽器渲染 visual cap ratio ≈ 0.87（不是規格 0.689）· font-size 70/0.87 ≈ 80px = 5rem · C 的 cap top ≈ 69.6 ≈ 框頂 70 ✓ · baseline 切框底（align-items: baseline） */
   display: block;
   font-family: 'Playfair Display', Georgia, 'Noto Serif TC', serif;
-  font-size: 6.3rem;
+  font-size: 5rem;
   font-weight: 500;
   color: var(--snow);
   line-height: 1;
@@ -1085,12 +1085,12 @@ body {
 }
 /* CF wrap 整段運動：viewport 中央 → 種子落下時反彈 → 推左 → 停頓 1 秒 */
 @keyframes cfWrapMotion {
-  0%    { transform: translate(307px, 0); }     /* 0ms · viewport 中心 */
-  40%   { transform: translate(307px, 0); }     /* 2400ms · 種子即將落下 */
-  43.3% { transform: translate(307px, 8px); }   /* 2600ms · 反彈下沉（8px 幅度）*/
-  46.7% { transform: translate(307px, -3px); }  /* 2800ms · 反彈上揚 */
-  50%   { transform: translate(307px, 0); }     /* 3000ms · 回歸水平 */
-  58.3% { transform: translate(307px, 0); }     /* 3500ms · 樹苗生長中、保持 */
+  0%    { transform: translate(279px, 0); }     /* 0ms · viewport 中心 */
+  40%   { transform: translate(279px, 0); }     /* 2400ms · 種子即將落下 */
+  43.3% { transform: translate(279px, 8px); }   /* 2600ms · 反彈下沉（8px 幅度）*/
+  46.7% { transform: translate(279px, -3px); }  /* 2800ms · 反彈上揚 */
+  50%   { transform: translate(279px, 0); }     /* 3000ms · 回歸水平 */
+  58.3% { transform: translate(279px, 0); }     /* 3500ms · 樹苗生長中、保持 */
   75%   { transform: translate(0, 0); }         /* 4500ms · 推到左側落定 */
   100%  { transform: translate(0, 0); }         /* 6000ms · 停頓 1.5s 至 fadeout 起 */
 }

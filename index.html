@@ -3965,12 +3965,21 @@ const I18N = {
     if (s.sel) {
       const target = document.querySelector(s.sel);
       if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        setTimeout(() => placeSpot(target), 320);
+        // toolbar 元素（如 pool-link / tour-btn）在頁面頂部、用 start 才能確保滑到 viewport 內
+        const isTopbar = target.closest('.topbar');
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: isTopbar ? 'start' : 'center'
+        });
+        setTimeout(() => placeSpot(target), 600); // 等 smooth scroll 完成
         return;
       }
     }
     // 無對應元素 · 居中模式 · 整片 mask 模糊
+    fallbackCenter();
+  }
+
+  function fallbackCenter() {
     spotlight.classList.add('center');
     spotlight.style.top = '50vh';
     spotlight.style.left = '50vw';
@@ -3981,15 +3990,28 @@ const I18N = {
   }
 
   function placeSpot(target) {
-    spotlight.classList.remove('center');
     const r = target.getBoundingClientRect();
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    // 防呆：元素在 viewport 外 / rect 異常 → fallback 整片 mask
+    if (r.bottom < 0 || r.top > vh || r.right < 0 || r.left > vw || r.width === 0 || r.height === 0) {
+      fallbackCenter();
+      return;
+    }
+    spotlight.classList.remove('center');
     const pad = 6;
-    spotlight.style.top = `${r.top - pad}px`;
-    spotlight.style.left = `${r.left - pad}px`;
-    spotlight.style.width = `${r.width + pad * 2}px`;
-    spotlight.style.height = `${r.height + pad * 2}px`;
-    updateMask(r); // 4-piece mask 留洞給 spotlight 圈內清晰
-    placeTooltip(r);
+    // clamp spotlight 在 viewport 內、避免 spotlight 超出 viewport 造成 mask 翻轉
+    const sTop = Math.max(0, r.top - pad);
+    const sLeft = Math.max(0, r.left - pad);
+    const sBottom = Math.min(vh, r.bottom + pad);
+    const sRight = Math.min(vw, r.right + pad);
+    spotlight.style.top = `${sTop}px`;
+    spotlight.style.left = `${sLeft}px`;
+    spotlight.style.width = `${sRight - sLeft}px`;
+    spotlight.style.height = `${sBottom - sTop}px`;
+    // mask 用 clamp 後的 rect 計算
+    updateMask({ top: sTop, bottom: sBottom, left: sLeft, right: sRight });
+    placeTooltip({ top: sTop, bottom: sBottom, left: sLeft, right: sRight });
   }
 
   function placeTooltip(r) {

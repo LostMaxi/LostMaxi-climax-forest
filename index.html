@@ -3722,15 +3722,16 @@ const I18N = {
       left = r.left - margin - tipW;
       top = Math.max(margin, Math.min(r.top, vh - tipH - margin));
     }
-    // 左右都不夠 · 上方（避開底部 sticky 按鈕區）
-    else if (r.top - margin - tipH > 0) {
-      left = Math.max(margin, Math.min((vw - tipW) / 2, vw - tipW - margin));
-      top = r.top - margin - tipH;
-    }
-    // 上方也放不下 · 下方
+    // 左右都不夠（spotlight 幾乎佔全寬）· 上方/下方 · tooltip 對齊 spotlight 左 1/4
+    // 留右半空間給 spotlight 內可能的 CTA 按鈕（如第 11 步 #sec-actions 的凝相/風吹一回/清空土地）
     else {
-      left = Math.max(margin, Math.min((vw - tipW) / 2, vw - tipW - margin));
-      top = Math.min(vh - tipH - margin, r.bottom + margin);
+      const targetCx = r.left + (r.right - r.left) * 0.25;
+      left = Math.max(margin, Math.min(targetCx - tipW / 2, vw - tipW - margin));
+      if (r.top - margin - tipH > 0) {
+        top = r.top - margin - tipH;
+      } else {
+        top = Math.min(vh - tipH - margin, r.bottom + margin);
+      }
     }
     tooltip.style.top = `${top}px`;
     tooltip.style.left = `${left}px`;

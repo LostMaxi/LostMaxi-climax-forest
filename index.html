@@ -914,14 +914,14 @@ body {
   position: relative;
   flex-shrink: 0;
   display: inline-block; /* baseline = bottom edge · 對齊字 baseline */
-  width: 60px;
-  height: 60px;
-  transform: translate(255px, 0);
+  width: 70px;
+  height: 70px;
+  transform: translate(279px, 0);
   animation: cfWrapMotion 5000ms cubic-bezier(0.4, 0, 0.4, 1) 0ms forwards;
 }
 .cf-splash .cf-logo-svg {
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   display: block;
 }
 /* draw 序列 · 反序：CF 字先（C → F）、框後 */
@@ -955,9 +955,9 @@ body {
   pointer-events: none;
 }
 
-/* --- 樹苗第一版 · 種子 + 主莖 + 雙枝 + 三葉 · cage 等比 % · 配合 CF 60px --- */
+/* --- 樹苗第一版 · 種子 + 主莖 + 雙枝 + 三葉 · cage 等比 % · 配合 CF 70px --- */
 .cf-mascot-tree {
-  /* cage 底緣對齊 CF 框頂 · top -67% = -40px when CF=60 */
+  /* cage 底緣對齊 CF 框頂 · top -67% = -47px when CF=70 */
   top: -67%;
   left: 50%;
   transform: translateX(-50%);
@@ -1028,14 +1028,14 @@ body {
   position: relative;
   display: block; /* 不用 column flex · 避免 baseline fallback 到 bottom */
   opacity: 0;
-  transform: translateX(510px);
+  transform: translateX(540px);
   animation: cfTextSlide 1100ms cubic-bezier(0.4, 0, 0.2, 1) 3500ms forwards;
 }
 .cf-splash-name {
-  /* cap height = CF 框高 60px · font-size = 60/0.72 ≈ 83px = 5.2rem · text section first baseline = name baseline */
+  /* ascender height = CF 框高 70px · Playfair Display ascender ratio 0.847 · font-size 5rem (80px) · ascender top 67.8px < 70 框內 ✓ */
   display: block;
   font-family: 'Playfair Display', Georgia, 'Noto Serif TC', serif;
-  font-size: 5.2rem;
+  font-size: 5rem;
   font-weight: 500;
   color: var(--snow);
   line-height: 1;
@@ -1085,12 +1085,12 @@ body {
 }
 /* CF wrap 整段運動：viewport 中央 → 種子落下時反彈 → 推左讓 wordmark 進 */
 @keyframes cfWrapMotion {
-  0%   { transform: translate(255px, 0); }     /* 0ms · viewport 中心（stage 寬 ~512 · CF 居中）*/
-  48%  { transform: translate(255px, 0); }     /* 2400ms · 種子即將落下 */
-  52%  { transform: translate(255px, 8px); }   /* 2600ms · 反彈下沉（重力 · 8px 幅度）*/
-  56%  { transform: translate(255px, -3px); }  /* 2800ms · 反彈上揚 */
-  60%  { transform: translate(255px, 0); }     /* 3000ms · 回歸水平 */
-  70%  { transform: translate(255px, 0); }     /* 3500ms · 樹苗生長中、保持 */
+  0%   { transform: translate(279px, 0); }     /* 0ms · viewport 中心（stage 寬 ~512 · CF 居中）*/
+  48%  { transform: translate(279px, 0); }     /* 2400ms · 種子即將落下 */
+  52%  { transform: translate(279px, 8px); }   /* 2600ms · 反彈下沉（重力 · 8px 幅度）*/
+  56%  { transform: translate(279px, -3px); }  /* 2800ms · 反彈上揚 */
+  60%  { transform: translate(279px, 0); }     /* 3000ms · 回歸水平 */
+  70%  { transform: translate(279px, 0); }     /* 3500ms · 樹苗生長中、保持 */
   90%  { transform: translate(0, 0); }         /* 4500ms · 推到左側落定 */
   100% { transform: translate(0, 0); }         /* 5000ms · 靜止 */
 }

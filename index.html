@@ -75,7 +75,33 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  /* 滾輪頓點吸附 · proximity 模式（user 接近 snap point 時才吸、長 section 內可正常自由捲）
+     Maxi 2026-04-26 指定：14+ 主點之間頓點移動、減少滾輪滑動負擔 */
+  scroll-snap-type: y proximity;
+}
+/* 15 個主 section 當 snap target · 含 hero + 13 dot-nav 章節 + abyss 結尾 */
+.hd,
+#sec-profile,
+#sec-s1, #sec-s2, #sec-s3, #sec-s4, #sec-s5, #sec-s6,
+#sec-spore,
+#sec-advanced,
+#sec-actions,
+#ambient-preview,
+#sec-ref,
+#sec-gallery,
+#sec-dna,
+.abyss {
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
+}
+/* 容忍：滑動到 section 頂部時、留 1rem 上邊距（避免 dot-nav 標籤剛好貼齊頂部） */
+.hd, #sec-profile, #sec-s1, #sec-s2, #sec-s3, #sec-s4, #sec-s5, #sec-s6,
+#sec-spore, #sec-advanced, #sec-actions, #ambient-preview,
+#sec-ref, #sec-gallery, #sec-dna, .abyss {
+  scroll-margin-top: 1rem;
+}
 
 body {
   background: var(--deep);

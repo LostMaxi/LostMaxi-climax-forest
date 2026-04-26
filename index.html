@@ -912,17 +912,20 @@ body {
 }
 #tour-hud.on { pointer-events: auto; }
 
-.tour-overlay {
+/* 4-piece 遮罩（top/bottom/left/right）· 中間留洞給 spotlight 圈內清晰可見 */
+.tour-mask-piece {
   position: absolute;
-  inset: 0;
-  /* 半透明 50% + 模糊 · 不全黑、不完全遮住 · 高級優雅 */
-  background: rgba(244, 237, 225, 0.4); /* 用品牌淡米色、半透明 */
+  background: rgba(244, 237, 225, 0.55); /* 品牌淡米半透 · 不全黑 */
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   pointer-events: auto;
+  transition: top 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              left 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
-:root[data-theme="dark"] .tour-overlay {
-  background: rgba(26, 26, 26, 0.4); /* dark mode · 半透明黑 */
+:root[data-theme="dark"] .tour-mask-piece {
+  background: rgba(26, 26, 26, 0.55);
 }
 
 .tour-spotlight {
@@ -1273,6 +1276,20 @@ body {
 }
 @keyframes cfSplashOut { to { opacity: 0; visibility: hidden; } }
 body.splash-locked { overflow: hidden; }
+/* splash 期間隱藏底層內容（不讓 generator 偷跑進視野）· 只留 splash 全螢幕 */
+html.splash-active body > .topbar,
+html.splash-active body > .wrap,
+html.splash-active body > .dot-nav,
+html.splash-active body > footer { visibility: hidden; }
+/* splash 結束 · 內容像換頁過場 fade in 700ms */
+@keyframes splashRevealContent {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+html.splash-revealed body > .wrap,
+html.splash-revealed body > .topbar {
+  animation: splashRevealContent 700ms cubic-bezier(0.4, 0, 0.2, 1);
+}
 html.cf-splash-skip .cf-splash { display: none; }
 @media (prefers-reduced-motion: reduce) {
   .cf-splash { display: none; }
@@ -2254,13 +2271,20 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
     return;
   }
   // 鎖 scroll · 並先把頁面 scroll 到最上方（避免 splash 期間底層被滾動）
+  // splash 期間隱藏底層內容（讓 splash 是「完整乾淨全螢幕」、底層不偷跑）
   document.body.classList.add('splash-locked');
+  document.documentElement.classList.add('splash-active');
   window.scrollTo(0, 0);
   setTimeout(() => {
     splash.remove();
     document.body.classList.remove('splash-locked');
-    // splash 結束後再次確認回到最上方（讓使用者從首頁第一段開始看）
+    document.documentElement.classList.remove('splash-active');
     window.scrollTo(0, 0);
+    // 加跳轉感：操作頁從 opacity 0 fade in 700ms（像換頁過場）
+    document.documentElement.classList.add('splash-revealed');
+    setTimeout(() => {
+      document.documentElement.classList.remove('splash-revealed');
+    }, 800);
     try { sessionStorage.setItem('cf_splash_seen', '1'); } catch (e) {}
   }, 6100);
 })();
@@ -3752,7 +3776,11 @@ const I18N = {
 
 <!-- ===== TOUR HUD START · 新手白話導覽 markup（不喜歡整段刪除即可）===== -->
 <div id="tour-hud" hidden>
-  <div class="tour-overlay" id="tour-overlay"></div>
+  <!-- 4-piece 遮罩：top/bottom/left/right 四塊獨立 blur · 中間留洞給 spotlight 清晰 -->
+  <div class="tour-mask-piece tour-mask-top" id="tour-mask-top"></div>
+  <div class="tour-mask-piece tour-mask-bottom" id="tour-mask-bottom"></div>
+  <div class="tour-mask-piece tour-mask-left" id="tour-mask-left"></div>
+  <div class="tour-mask-piece tour-mask-right" id="tour-mask-right"></div>
   <div class="tour-spotlight" id="tour-spotlight"></div>
   <div class="tour-tooltip" id="tour-tooltip">
     <div class="tour-progress" id="tour-progress">1 / 17</div>
@@ -3861,8 +3889,33 @@ const I18N = {
 
   let curr = 0;
   const hud = document.getElementById('tour-hud');
-  const overlay = document.getElementById('tour-overlay');
   const spotlight = document.getElementById('tour-spotlight');
+  const maskTop = document.getElementById('tour-mask-top');
+  const maskBottom = document.getElementById('tour-mask-bottom');
+  const maskLeft = document.getElementById('tour-mask-left');
+  const maskRight = document.getElementById('tour-mask-right');
+
+  function updateMask(r) {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    if (!r) {
+      // 整片模式（無 spotlight）· 只用 top piece 蓋整屏
+      maskTop.style.cssText = 'display:block;top:0;left:0;width:100%;height:100%;';
+      maskBottom.style.display = 'none';
+      maskLeft.style.display = 'none';
+      maskRight.style.display = 'none';
+      return;
+    }
+    const pad = 6;
+    const t = Math.max(0, r.top - pad);
+    const b = Math.min(vh, r.bottom + pad);
+    const l = Math.max(0, r.left - pad);
+    const ri = Math.min(vw, r.right + pad);
+    maskTop.style.cssText    = `display:block;top:0;left:0;width:100%;height:${t}px;`;
+    maskBottom.style.cssText = `display:block;top:${b}px;left:0;width:100%;height:${vh - b}px;`;
+    maskLeft.style.cssText   = `display:block;top:${t}px;left:0;width:${l}px;height:${b - t}px;`;
+    maskRight.style.cssText  = `display:block;top:${t}px;left:${ri}px;width:${vw - ri}px;height:${b - t}px;`;
+  }
   const tooltip = document.getElementById('tour-tooltip');
   const $progress = document.getElementById('tour-progress');
   const $title = document.getElementById('tour-title');
@@ -3917,21 +3970,25 @@ const I18N = {
         return;
       }
     }
-    // 無對應元素 · 居中模式
+    // 無對應元素 · 居中模式 · 整片 mask 模糊
     spotlight.classList.add('center');
     spotlight.style.top = '50vh';
     spotlight.style.left = '50vw';
+    spotlight.style.width = '0';
+    spotlight.style.height = '0';
+    updateMask(null);
     placeTooltipCenter();
   }
 
   function placeSpot(target) {
     spotlight.classList.remove('center');
     const r = target.getBoundingClientRect();
-    const pad = 8;
+    const pad = 6;
     spotlight.style.top = `${r.top - pad}px`;
     spotlight.style.left = `${r.left - pad}px`;
     spotlight.style.width = `${r.width + pad * 2}px`;
     spotlight.style.height = `${r.height + pad * 2}px`;
+    updateMask(r); // 4-piece mask 留洞給 spotlight 圈內清晰
     placeTooltip(r);
   }
 

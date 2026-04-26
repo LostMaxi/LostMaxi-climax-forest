@@ -1435,9 +1435,9 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
       <button type="button" class="tb-btn active" data-theme="light" id="theme-light" title="淺色">Light</button>
       <button type="button" class="tb-btn" data-theme="dark" id="theme-dark" title="深色">Dark</button>
     </div>
-    <a href="pool.html" class="tb-btn pool" id="pool-link" data-i18n="poolBtn" title="森林對話池 · 看訪客的林相 / 把你的林分享出去">森林對話池 · 訪客的種子</a>
+    <a href="pool.html" class="tb-btn pool" id="pool-link" data-i18n="poolBtn" data-title-i18n="poolLinkTitle">森林對話池 · 訪客的種子</a>
     <!-- ===== TOUR HUD START · 新手白話導覽（不喜歡整段刪除即可） ===== -->
-    <button type="button" class="tb-btn tour-trigger" id="tour-btn" title="新手導覽 · 整頁逐步白話說明">新手導覽</button>
+    <button type="button" class="tb-btn tour-trigger" id="tour-btn">新手導覽</button>
     <!-- ===== TOUR HUD END ===== -->
     <button type="button" class="tb-btn help" id="help-btn" data-i18n="helpBtn">? 怎麼用</button>
   </div>
@@ -1858,13 +1858,10 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
     </div>
     <pre id="prompt-output"></pre>
     <div class="share-pool" style="margin-top: 1rem; padding: 0.9rem 1rem; border: 1px dashed var(--ash); border-radius: 8px; font-size: 0.82rem; color: var(--smoke); display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap;">
-      <button class="btn ghost" id="btn-share-pool" type="button" disabled style="padding:0.4rem 0.85rem; font-size:0.72rem; opacity: 0.55; cursor: not-allowed;" title="對話池正在生根 · Supabase 接通後啟用">
+      <button class="btn ghost" id="btn-share-pool" type="button" disabled style="padding:0.4rem 0.85rem; font-size:0.72rem; opacity: 0.55; cursor: not-allowed;" data-i18n="shareToPoolBtn" data-title-i18n="shareToPoolDisabledTitle">
         分享到森林對話
       </button>
-      <span>
-        匿名 · 連 DNA 一起 · <a href="pool.html" style="color: var(--iris);">瀏覽對話池</a>
-        <span style="opacity:0.7; margin-left:0.4rem;">(對話池正在生根中)</span>
-      </span>
+      <span data-i18n="shareToPoolNote">匿名 · 連 DNA 一起 · <a href="pool.html" style="color: var(--iris);">瀏覽對話池</a> <span style="opacity:0.7; margin-left:0.4rem;">(對話池正在生根中)</span></span>
     </div>
   </section>
 
@@ -3141,7 +3138,41 @@ const I18N = {
     dnaIntro: '讀懂 Claude Design 官方 prompt 用什麼語彙觸發 AI 詮釋。八個維度，每個有例子。想自己寫 prompt 的時候，從這裡借一招。',
     // Abyss
     abyssLine: '林已成形，風仍在寫',
-    abyssSig: '— 林相 · ∞ —'
+    abyssSig: '— 林相 · ∞ —',
+    // Share
+    shareToPoolBtn: '分享到森林對話',
+    shareToPoolDisabledTitle: '對話池正在生根 · Supabase 接通後啟用',
+    shareToPoolNote: '匿名 · 連 DNA 一起 · <a href="pool.html" style="color: var(--iris);">瀏覽對話池</a> <span style="opacity:0.7; margin-left:0.4rem;">(對話池正在生根中)</span>',
+    // Tour HUD
+    tourTriggerLabel: '新手導覽',
+    tourTriggerTitle: '新手導覽 · 整頁逐步白話說明',
+    tourSkip: '略過 · SKIP',
+    tourSkipTitle: '只關掉這次、下次進入還會出現',
+    tourDismiss: '下次不再顯示',
+    tourDismissTitle: '永久關閉、下次不再自動跳出（仍可從頂部「新手導覽」手動開啟）',
+    tourPrev: '← 上一步',
+    tourNext: '下一步 →',
+    tourDone: '完成',
+    poolLinkTitle: '森林對話池 · 看訪客的林相 / 把你的林分享出去',
+    tourSteps: [
+      { sel: null, title: '歡迎 · 開始你的第一片林', body: '這是一個<strong>工具</strong>、不是 AI 平台、不是 SaaS。<br/><br/>它幫你準備一段給 <strong>Claude Design</strong> 用的文字、讓 Claude Design 生出<strong>屬於你的</strong>網頁。<br/><br/>完全不懂網站？沒關係。我們一起走過 17 個小步驟、每步都用白話告訴你在做什麼。' },
+      { sel: '#sec-profile', title: '印記 · 你的「光」是什麼', body: '所有網頁都需要：<br/>① <strong>品牌名</strong>——給網頁的名字<br/>② <strong>主色</strong>——你想要的主要顏色<br/>③ <strong>字型</strong>——文字長什麼樣子<br/><br/>這三樣 = 你帶進來的「光」。<br/>完全不懂？點頂部的「<strong>Maxi</strong>」按鈕看範例、再改成你想要的。' },
+      { sel: '#sec-s1', title: '第一題 · 你的網頁要做什麼？', body: '白話：你做這個網頁是為了什麼？<br/><br/>例如：<ul><li>賣東西（電商）</li><li>放作品集</li><li>講一個故事</li><li>給人預約服務</li><li>辦活動報名</li><li>放履歷</li></ul>從清單選一個最接近的就好。' },
+      { sel: '#sec-s2', title: '第二題 · 主角是什麼？', body: '白話：你網頁主要是「在介紹什麼」？<br/><br/>例如：<ul><li>實體商品（杯子、衣服）</li><li>軟體 App</li><li>人（你自己 / 名人）</li><li>團隊 / 工作室</li><li>客戶案例</li><li>抽象概念 / 活動</li></ul>主角不同、整個網頁長相會不一樣。' },
+      { sel: '#sec-s3', title: '第三題 · 你想要什麼氣質？', body: '白話：選一個最接近你想要的氣氛。<br/>常見對應：<ul><li><strong>苔林</strong> = Apple / 無印良品（安靜）</li><li><strong>雨林</strong> = Stripe / Linear（自由有機）</li><li><strong>竹林</strong> = Hermès / Bottega（精品）</li><li><strong>松林</strong> = IBM / Porsche（井然有序）</li><li><strong>野林</strong> = Nike / Spotify（動感）</li><li><strong>枯林</strong> = A24 / Brutalist（反常留白）</li></ul>' },
+      { sel: '#sec-s4', title: '第四題 · 內容怎麼排？', body: '白話：你網頁的內容怎麼分布？<br/><br/>最常用：<strong>垂直分段</strong>——往下捲一段一段(像 Apple 官網)。<br/><br/>也可以左右分欄、卡片網格、時間軸、地圖、便當格...。<br/><br/>不確定就選「<strong>Hero+Sections</strong>」(英雄區+內容段落)、最通用。' },
+      { sel: '#sec-s5', title: '第五題 · 字 vs 圖、誰當主角？', body: '白話：<ul><li><strong>字當主角</strong> = 像書、雜誌(多文字)</li><li><strong>圖當主角</strong> = 像 IG、Pinterest(多圖片)</li><li><strong>敘事</strong> = 像長文故事</li><li><strong>資料表</strong> = 表格資料</li></ul>下面還可以選中英文怎麼擺：<br/>A 主從(中文大、英文小) / B 並置 / C 融合 / 純中文' },
+      { sel: '#sec-s6', title: '第六題 · 要不要動效？', body: '白話：要不要動畫效果？<br/><br/><ul><li><strong>純靜態</strong> = 都不動、最快最輕</li><li><strong>CSS Hover</strong> = 滑過去有反應(最常見)</li><li><strong>簡動 Transitions</strong> = 切換有過場</li><li><strong>捲動觸發</strong> = 滑下去元素跳出</li></ul>後面選項越往下越複雜、需要更多資源(Canvas、WebGL)。' },
+      { sel: '#sec-spore', title: '選 0-3 個「創意火花」(可選可不選)', body: '白話：你可以從清單選 <strong>0-3 個</strong>額外的創意火花、給作品一些不可預期的小驚喜。<br/><br/><strong>完全不選也 OK</strong>、不會少什麼基本功。<br/><br/>看不懂火花名字？跳過就好、之後可以回來再選。' },
+      { sel: '#sec-advanced', title: '進階設計師模式(可全部跳過)', body: '白話：這區是給「<strong>懂一點 prompt 的人</strong>」玩的。<br/><br/><strong>完全不懂可以全部跳過</strong>、預設值已經能用。<br/><br/>看不懂的選項就不用動、不會影響結果。' },
+      { sel: '#sec-actions', title: '按下橘色大按鈕 · 把選擇變成 prompt', body: '白話：選好以上後、按橘色「<strong>凝相</strong>」按鈕。<br/>系統會把你所有選擇變成一段給 Claude Design 用的文字。<br/><br/>不確定要怎麼選？按「<strong>風吹一回</strong>」讓系統幫你隨機選六軸。<br/><br/>想重來？按「<strong>清空土地</strong>」回到預設值。' },
+      { sel: '#ambient-preview', title: '預覽你的氣質', body: '白話：凝相完成後、這裡會出現一張<strong>抽象氛圍圖</strong>——預覽你選擇的整體氣質感對不對。<br/><br/>氣氛不對？回去改一兩個選項、再凝相一次。' },
+      { sel: '#sec-ref', title: '四片參考林', body: '白話：這裡放了<strong>四個範例林</strong>讓你對照。<br/><br/>看別人怎麼搭配色彩、字型、六軸、孢子、最後生出什麼樣的網頁。<br/><br/>給你選擇方向時的靈感。' },
+      { sel: '#sec-gallery', title: '池魂 · Deep Pool', body: '白話：這裡是<strong>示範範例池</strong>——19 顆物理視覺現象當靈感(雙狹縫、Moiré、馬赫帶等)。<br/><br/>不需要懂這些、看圖找感覺就好。' },
+      { sel: '#sec-dna', title: 'DNA 指紋(可略過)', body: '白話：這是<strong>進階展示區</strong>。<br/><br/>給你看不同 prompt 配方做出的不同結果指紋。<br/><br/>完全可以略過、不影響你做你的網頁。' },
+      { sel: '#pool-link', title: '森林對話池 · 看別人的林', body: '白話：點頂部「<strong>森林對話池</strong>」可以看訪客留下的林、領一點啟發走自己的路。<br/><br/>也可以把你做的林留下、給下一個園丁學。<br/><br/>是「<strong>池</strong>」、不是排行榜——人類在池裡共同生長。' },
+      { sel: '#btn-rand', title: '學完了 · 走自己的路', body: '你已經知道整個流程了。<br/><br/><ul><li>不確定？按「<strong>風吹一回</strong>」讓系統幫你選</li><li>想看別人的？點頂部「<strong>森林對話池</strong>」</li><li>重做？按「<strong>清空土地</strong>」</li></ul>這是工具、可以重複用。' }
+    ]
   },
   en: {
     helpBtn: '? How to use',
@@ -3221,7 +3252,41 @@ const I18N = {
     dnaIntro: 'Read which vocabulary triggers AI interpretation in Claude Design official prompts. Eight dimensions, one example each. Borrow a move when writing your own.',
     // Abyss
     abyssLine: 'The forest has form · the wind is still writing',
-    abyssSig: '— climax forest · ∞ —'
+    abyssSig: '— climax forest · ∞ —',
+    // Share
+    shareToPoolBtn: 'Share to Forest Pool',
+    shareToPoolDisabledTitle: 'Pool is taking root · enabled when Supabase connects',
+    shareToPoolNote: 'Anonymous · DNA bundled · <a href="pool.html" style="color: var(--iris);">browse the pool</a> <span style="opacity:0.7; margin-left:0.4rem;">(pool is taking root)</span>',
+    // Tour HUD
+    tourTriggerLabel: 'Onboarding tour',
+    tourTriggerTitle: 'Onboarding tour · step-by-step plain-language walkthrough',
+    tourSkip: 'Skip',
+    tourSkipTitle: 'Just close this time · still pops up next visit',
+    tourDismiss: "Don't show again",
+    tourDismissTitle: 'Permanently dismiss · the top "Onboarding tour" button still opens it manually',
+    tourPrev: '← Back',
+    tourNext: 'Next →',
+    tourDone: 'Done',
+    poolLinkTitle: "Forest Pool · see visitors' forests / share yours",
+    tourSteps: [
+      { sel: null, title: 'Welcome · Start your first forest', body: "This is a <strong>tool</strong>, not an AI platform, not a SaaS.<br/><br/>It prepares a chunk of text for <strong>Claude Design</strong> so it can render <strong>your own</strong> webpage.<br/><br/>Total beginner with websites? No worries. We'll walk through 17 small steps, each in plain language." },
+      { sel: '#sec-profile', title: 'Mark · What is your "light"?', body: 'Every webpage needs:<br/>① <strong>brand name</strong> — the page\'s name<br/>② <strong>main color</strong> — the color you want<br/>③ <strong>font</strong> — what the text looks like<br/><br/>These three = the light you bring.<br/>Lost? Click the "<strong>Maxi</strong>" button at the top to see an example, then make it yours.' },
+      { sel: '#sec-s1', title: 'Question 1 · What is the page for?', body: 'Plain words: why are you making this page?<br/><br/>Examples:<ul><li>selling things (e-commerce)</li><li>portfolio</li><li>telling a story</li><li>booking service</li><li>event signup</li><li>resume</li></ul>Pick the closest one.' },
+      { sel: '#sec-s2', title: 'Question 2 · Who is the star?', body: 'Plain words: what is the page mainly "introducing"?<br/><br/>Examples:<ul><li>physical product (cup, clothes)</li><li>software / app</li><li>a person (yourself / public figure)</li><li>team / studio</li><li>client case</li><li>abstract idea / event</li></ul>Different stars give entirely different layouts.' },
+      { sel: '#sec-s3', title: 'Question 3 · What kind of feel?', body: 'Plain words: pick the closest mood.<br/>Common pairings:<ul><li><strong>Moss forest</strong> = Apple / Muji (quiet)</li><li><strong>Rainforest</strong> = Stripe / Linear (free, organic)</li><li><strong>Bamboo</strong> = Hermès / Bottega (luxe)</li><li><strong>Pine</strong> = IBM / Porsche (orderly)</li><li><strong>Wild</strong> = Nike / Spotify (kinetic)</li><li><strong>Withered</strong> = A24 / Brutalist (unconventional whitespace)</li></ul>' },
+      { sel: '#sec-s4', title: 'Question 4 · How is content arranged?', body: 'Plain words: how is your content distributed?<br/><br/>Most common: <strong>vertical sections</strong> — scroll down through them (like Apple\'s site).<br/><br/>Also: split columns, card grid, timeline, map, bento grid...<br/><br/>Unsure? Pick "<strong>Hero+Sections</strong>" (hero + content sections) — most universal.' },
+      { sel: '#sec-s5', title: 'Question 5 · Text vs image, who leads?', body: 'Plain words:<ul><li><strong>Text leads</strong> = like books, magazines (more text)</li><li><strong>Image leads</strong> = like IG, Pinterest (more images)</li><li><strong>Narrative</strong> = long-form story</li><li><strong>Data table</strong> = tabular data</li></ul>Below, also pick how Chinese & English coexist:<br/>A primary-secondary / B side-by-side / C fused / pure Chinese' },
+      { sel: '#sec-s6', title: 'Question 6 · Motion or none?', body: 'Plain words: do you want animation effects?<br/><br/><ul><li><strong>Pure static</strong> = nothing moves, fastest, lightest</li><li><strong>CSS Hover</strong> = reacts on hover (most common)</li><li><strong>Simple Transitions</strong> = transitions between states</li><li><strong>Scroll-triggered</strong> = elements pop in on scroll</li></ul>Lower options need more resources (Canvas, WebGL).' },
+      { sel: '#sec-spore', title: 'Pick 0-3 "creative spores" (optional)', body: "Plain words: pick <strong>0-3</strong> extra creative spores from the list — they add little surprises.<br/><br/><strong>Picking none is also OK</strong> — basics still hold.<br/><br/>Don't recognize a spore name? Skip it; come back later." },
+      { sel: '#sec-advanced', title: 'Advanced Designer Mode (skip entirely if you want)', body: 'Plain words: this section is for "<strong>folks who know some prompt stuff</strong>".<br/><br/><strong>Total beginner can skip the whole thing</strong> — defaults already work.<br/><br/>Don\'t touch options you don\'t recognize, no impact on result.' },
+      { sel: '#sec-actions', title: 'Hit the big orange button · turn picks into a prompt', body: 'Plain words: after picking the above, hit the orange "<strong>Form</strong>" button.<br/>The system turns all your choices into a chunk of text for Claude Design.<br/><br/>Unsure how to pick? Hit "<strong>Let Wind Decide</strong>" to randomly fill the six axes.<br/><br/>Want to redo? Hit "<strong>Clear the Land</strong>" to reset.' },
+      { sel: '#ambient-preview', title: 'Preview your mood', body: "Plain words: after you Form, an <strong>abstract mood image</strong> appears here — previewing whether your overall feel is right.<br/><br/>Mood off? Go back, change one or two options, hit Form again." },
+      { sel: '#sec-ref', title: 'Four reference forests', body: 'Plain words: <strong>four sample forests</strong> for comparison.<br/><br/>See how others paired colors, fonts, six axes, spores — and what kind of webpage came out.<br/><br/>Inspiration when picking your own direction.' },
+      { sel: '#sec-gallery', title: 'Pool Soul · Deep Pool', body: 'Plain words: this is the <strong>curated sample pool</strong> — 19 physical-optical phenomena as inspiration (double-slit, Moiré, Mach bands, etc.).<br/><br/>No need to understand them — just look and feel.' },
+      { sel: '#sec-dna', title: 'DNA Fingerprint (skippable)', body: 'Plain words: this is the <strong>advanced showcase</strong>.<br/><br/>Shows the fingerprints of different prompt recipes producing different results.<br/><br/>Totally skippable, no impact on your page.' },
+      { sel: '#pool-link', title: "Forest Pool · see others' forests", body: 'Plain words: click the top "<strong>Forest Pool</strong>" to see forests visitors left behind, take a hint, walk your own path.<br/><br/>You can also leave your forest for the next gardener.<br/><br/>It\'s a "<strong>pool</strong>", not a leaderboard — humans growing together in the pool.' },
+      { sel: '#btn-rand', title: 'Done · walk your own path', body: 'You know the whole flow now.<br/><br/><ul><li>Unsure? Hit "<strong>Let Wind Decide</strong>" to roll for you</li><li>Want to see others\'? Click top "<strong>Forest Pool</strong>"</li><li>Redo? Hit "<strong>Clear the Land</strong>"</li></ul>This is a tool — reuse it freely.' }
+    ]
   }
 };
 
@@ -3237,6 +3302,10 @@ const I18N = {
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
       if (dict[key] !== undefined) el.innerHTML = dict[key];
+    });
+    document.querySelectorAll('[data-title-i18n]').forEach(el => {
+      const key = el.getAttribute('data-title-i18n');
+      if (dict[key] !== undefined) el.title = dict[key];
     });
     langButtons.forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
     try { localStorage.setItem('superlost_lang', lang); } catch (e) {}
@@ -3258,6 +3327,8 @@ const I18N = {
       const activeTab = document.querySelector('.gallery-tab.active')?.dataset.filter || 'all';
       renderGallery(activeTab);
     }
+    // 廣播給 tour HUD（外部 IIFE 監聽）
+    document.dispatchEvent(new CustomEvent('cf:lang-changed', { detail: { lang } }));
   }
 
   langButtons.forEach(b => {
@@ -3488,93 +3559,10 @@ const I18N = {
 <script>
 /* ===== TOUR HUD JS · 新手白話導覽（對應右側 dot-nav 章節）===== */
 (function(){
-  const steps = [
-    {
-      sel: null,
-      title: '歡迎 · 開始你的第一片林',
-      body: '這是一個<strong>工具</strong>、不是 AI 平台、不是 SaaS。<br/><br/>它幫你準備一段給 <strong>Claude Design</strong> 用的文字、讓 Claude Design 生出<strong>屬於你的</strong>網頁。<br/><br/>完全不懂網站？沒關係。我們一起走過 17 個小步驟、每步都用白話告訴你在做什麼。'
-    },
-    {
-      sel: '#sec-profile',
-      title: '印記 · 你的「光」是什麼',
-      body: '所有網頁都需要：<br/>① <strong>品牌名</strong>——給網頁的名字<br/>② <strong>主色</strong>——你想要的主要顏色<br/>③ <strong>字型</strong>——文字長什麼樣子<br/><br/>這三樣 = 你帶進來的「光」。<br/>完全不懂？點頂部的「<strong>Maxi</strong>」按鈕看範例、再改成你想要的。'
-    },
-    {
-      sel: '#sec-s1',
-      title: '第一題 · 你的網頁要做什麼？',
-      body: '白話：你做這個網頁是為了什麼？<br/><br/>例如：<ul><li>賣東西（電商）</li><li>放作品集</li><li>講一個故事</li><li>給人預約服務</li><li>辦活動報名</li><li>放履歷</li></ul>從清單選一個最接近的就好。'
-    },
-    {
-      sel: '#sec-s2',
-      title: '第二題 · 主角是什麼？',
-      body: '白話：你網頁主要是「在介紹什麼」？<br/><br/>例如：<ul><li>實體商品（杯子、衣服）</li><li>軟體 App</li><li>人（你自己 / 名人）</li><li>團隊 / 工作室</li><li>客戶案例</li><li>抽象概念 / 活動</li></ul>主角不同、整個網頁長相會不一樣。'
-    },
-    {
-      sel: '#sec-s3',
-      title: '第三題 · 你想要什麼氣質？',
-      body: '白話：選一個最接近你想要的氣氛。<br/>常見對應：<ul><li><strong>苔林</strong> = Apple / 無印良品（安靜）</li><li><strong>雨林</strong> = Stripe / Linear（自由有機）</li><li><strong>竹林</strong> = Hermès / Bottega（精品）</li><li><strong>松林</strong> = IBM / Porsche（井然有序）</li><li><strong>野林</strong> = Nike / Spotify（動感）</li><li><strong>枯林</strong> = A24 / Brutalist（反常留白）</li></ul>'
-    },
-    {
-      sel: '#sec-s4',
-      title: '第四題 · 內容怎麼排？',
-      body: '白話：你網頁的內容怎麼分布？<br/><br/>最常用：<strong>垂直分段</strong>——往下捲一段一段（像 Apple 官網）。<br/><br/>也可以左右分欄、卡片網格、時間軸、地圖、便當格...。<br/><br/>不確定就選「<strong>Hero+Sections</strong>」（英雄區+內容段落）、最通用。'
-    },
-    {
-      sel: '#sec-s5',
-      title: '第五題 · 字 vs 圖、誰當主角？',
-      body: '白話：<ul><li><strong>字當主角</strong> = 像書、雜誌（多文字）</li><li><strong>圖當主角</strong> = 像 IG、Pinterest（多圖片）</li><li><strong>敘事</strong> = 像長文故事</li><li><strong>資料表</strong> = 表格資料</li></ul>下面還可以選中英文怎麼擺：<br/>A 主從（中文大、英文小）/ B 並置 / C 融合 / 純中文'
-    },
-    {
-      sel: '#sec-s6',
-      title: '第六題 · 要不要動效？',
-      body: '白話：要不要動畫效果？<br/><br/><ul><li><strong>純靜態</strong> = 都不動、最快最輕</li><li><strong>CSS Hover</strong> = 滑過去有反應（最常見）</li><li><strong>簡動 Transitions</strong> = 切換有過場</li><li><strong>捲動觸發</strong> = 滑下去元素跳出</li></ul>後面選項越往下越複雜、需要更多資源（Canvas、WebGL）。'
-    },
-    {
-      sel: '#sec-spore',
-      title: '選 0-3 個「創意火花」（可選可不選）',
-      body: '白話：你可以從清單選 <strong>0-3 個</strong>額外的創意火花、給作品一些不可預期的小驚喜。<br/><br/><strong>完全不選也 OK</strong>、不會少什麼基本功。<br/><br/>看不懂火花名字？跳過就好、之後可以回來再選。'
-    },
-    {
-      sel: '#sec-advanced',
-      title: '進階設計師模式（可全部跳過）',
-      body: '白話：這區是給「<strong>懂一點 prompt 的人</strong>」玩的。<br/><br/><strong>完全不懂可以全部跳過</strong>、預設值已經能用。<br/><br/>看不懂的選項就不用動、不會影響結果。'
-    },
-    {
-      sel: '#sec-actions',
-      title: '按下橘色大按鈕 · 把選擇變成 prompt',
-      body: '白話：選好以上後、按橘色「<strong>凝相</strong>」按鈕。<br/>系統會把你所有選擇變成一段給 Claude Design 用的文字。<br/><br/>不確定要怎麼選？按「<strong>風吹一回</strong>」讓系統幫你隨機選六軸。<br/><br/>想重來？按「<strong>清空土地</strong>」回到預設值。'
-    },
-    {
-      sel: '#ambient-preview',
-      title: '預覽你的氣質',
-      body: '白話：凝相完成後、這裡會出現一張<strong>抽象氛圍圖</strong>——預覽你選擇的整體氣質感對不對。<br/><br/>氣氛不對？回去改一兩個選項、再凝相一次。'
-    },
-    {
-      sel: '#sec-ref',
-      title: '四片參考林',
-      body: '白話：這裡放了<strong>四個範例林</strong>讓你對照。<br/><br/>看別人怎麼搭配色彩、字型、六軸、孢子、最後生出什麼樣的網頁。<br/><br/>給你選擇方向時的靈感。'
-    },
-    {
-      sel: '#sec-gallery',
-      title: '池魂 · Deep Pool',
-      body: '白話：這裡是<strong>示範範例池</strong>——19 顆物理視覺現象當靈感（雙狹縫、Moiré、馬赫帶等）。<br/><br/>不需要懂這些、看圖找感覺就好。'
-    },
-    {
-      sel: '#sec-dna',
-      title: 'DNA 指紋（可略過）',
-      body: '白話：這是<strong>進階展示區</strong>。<br/><br/>給你看不同 prompt 配方做出的不同結果指紋。<br/><br/>完全可以略過、不影響你做你的網頁。'
-    },
-    {
-      sel: '#pool-link',
-      title: '森林對話池 · 看別人的林',
-      body: '白話：點頂部「<strong>森林對話池</strong>」可以看訪客留下的林、領一點啟發走自己的路。<br/><br/>也可以把你做的林留下、給下一個園丁學。<br/><br/>是「<strong>池</strong>」、不是排行榜——人類在池裡共同生長。'
-    },
-    {
-      sel: '#btn-rand',
-      title: '學完了 · 走自己的路',
-      body: '你已經知道整個流程了。<br/><br/><ul><li>不確定？按「<strong>風吹一回</strong>」讓系統幫你選</li><li>想看別人的？點頂部「<strong>森林對話池</strong>」</li><li>重做？按「<strong>清空土地</strong>」</li></ul>這是工具、可以重複用。'
-    }
-  ];
+  // tour 內容改從 I18N dict 動態取（zh / en 在語言切換時即時更新）
+  const tourLang = () => document.documentElement.getAttribute('lang') === 'en' ? 'en' : 'zh';
+  const tourDict = () => I18N[tourLang()] || I18N.zh;
+  const getSteps = () => tourDict().tourSteps || I18N.zh.tourSteps;
 
   let curr = 0;
   const hud = document.getElementById('tour-hud');
@@ -3643,13 +3631,24 @@ const I18N = {
     }
   }
 
+  function syncTourChrome() {
+    const dict = tourDict();
+    if (btnSkip) { btnSkip.textContent = dict.tourSkip; btnSkip.title = dict.tourSkipTitle || ''; }
+    if (btnDismiss) { btnDismiss.textContent = dict.tourDismiss; btnDismiss.title = dict.tourDismissTitle || ''; }
+    if (btnPrev) btnPrev.textContent = dict.tourPrev;
+    if (btnTrigger) { btnTrigger.textContent = dict.tourTriggerLabel; btnTrigger.title = dict.tourTriggerTitle || ''; }
+  }
+
   function show() {
+    const steps = getSteps();
+    const dict = tourDict();
     const s = steps[curr];
     $progress.textContent = `${curr + 1} / ${steps.length}`;
     $title.textContent = s.title;
     $body.innerHTML = s.body;
     btnPrev.style.visibility = curr === 0 ? 'hidden' : 'visible';
-    btnNext.textContent = curr === steps.length - 1 ? '完成' : '下一步 →';
+    btnNext.textContent = curr === steps.length - 1 ? dict.tourDone : dict.tourNext;
+    syncTourChrome();
 
     if (s.sel) {
       const target = document.querySelector(s.sel);
@@ -3752,9 +3751,18 @@ const I18N = {
   });
   btnPrev?.addEventListener('click', () => { if (curr > 0) { curr--; show(); } });
   btnNext?.addEventListener('click', () => {
-    if (curr < steps.length - 1) { curr++; show(); }
+    const len = getSteps().length;
+    if (curr < len - 1) { curr++; show(); }
     else end();
   });
+
+  // 語言切換時即時更新 tour 文字（即使 hud 沒開、trigger 按鈕也要對齊）
+  document.addEventListener('cf:lang-changed', () => {
+    syncTourChrome();
+    if (hud.classList.contains('on')) show();
+  });
+  // 初次載入也對齊
+  syncTourChrome();
   // ESC 關閉（只當次、不 dismiss）
   document.addEventListener('keydown', (e) => {
     if (!hud.classList.contains('on')) return;

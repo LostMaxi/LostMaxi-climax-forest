@@ -1430,6 +1430,7 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
     <div class="lang-toggle" role="group" aria-label="language">
       <button type="button" class="tb-btn active" data-lang="zh" id="lang-zh">中</button>
       <button type="button" class="tb-btn" data-lang="en" id="lang-en">EN</button>
+      <button type="button" class="tb-btn" data-lang="ja" id="lang-ja">日</button>
     </div>
     <div class="lang-toggle" role="group" aria-label="theme">
       <button type="button" class="tb-btn active" data-theme="light" id="theme-light" title="淺色">Light</button>
@@ -1650,32 +1651,32 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
       <div class="label"><span class="no">三</span><span class="title" data-i18n="s3Title">林相 <em>這是什麼樣的森林？</em></span></div>
       <p class="hint" data-i18n="s3Hint">選一種為主林，再挑另一種當伴生——混林是靈魂</p>
       <div class="opts" data-axis="style_primary">
-        <label class="opt"><input type="radio" name="style_primary" value="α Restrained (Muji/Apple/Braun)" checked /><span data-en="Moss">苔林<span class="zh" data-en="quiet · green · slow">安靜 · 綠 · 慢</span></span></label>
-        <label class="opt"><input type="radio" name="style_primary" value="β Kando (Sony/Leica/B&O)" /><span data-en="Cypress">柏林<span class="zh" data-en="dense · deep · cold">緻密 · 沉 · 冷</span></span></label>
-        <label class="opt"><input type="radio" name="style_primary" value="γ Organic (Stripe/Linear/Vercel)" /><span data-en="Rainforest">雨林<span class="zh" data-en="tangled · alive · humid">糾纏 · 生機 · 濕</span></span></label>
-        <label class="opt"><input type="radio" name="style_primary" value="δ Luxury (Hermès/Bottega)" /><span data-en="Bamboo">竹林<span class="zh" data-en="still · resonant · empty">靜挺 · 韻 · 空</span></span></label>
-        <label class="opt"><input type="radio" name="style_primary" value="ε System (IBM/Porsche)" /><span data-en="Pine">松林<span class="zh" data-en="orderly · sequential · hard">整齊 · 秩序 · 硬</span></span></label>
-        <label class="opt"><input type="radio" name="style_primary" value="ζ Dynamic (Nike/Spotify)" /><span data-en="Wild">野林<span class="zh" data-en="fast · wild · lightning">快 · 狂 · 閃電過</span></span></label>
-        <label class="opt"><input type="radio" name="style_primary" value="η Anti-Algo (A24/Brutalist)" /><span data-en="Withered">枯林<span class="zh" data-en="anomalous · void · gray">反常 · 留白 · 灰</span></span></label>
-        <label class="opt"><input type="radio" name="style_primary" value="θ Ethereal (Cloud Forest · misty · liminal)" /><span data-en="Cloud Forest">雲霧林<span class="zh" data-en="mysterious · drifting · hazy">神秘 · 飄 · 濛</span></span></label>
-        <label class="opt"><input type="radio" name="style_primary" value="ι Liminal (Mangrove · interface · tidal)" /><span data-en="Mangrove">紅樹林<span class="zh" data-en="liminal · root-woven · tidal">交界 · 根錯 · 潮</span></span></label>
-        <label class="opt"><input type="radio" name="style_primary" value="κ Boreal (Silver Forest · austere · metallic cold)" /><span data-en="Silver">銀林<span class="zh" data-en="cold · high · metallic">寒 · 高 · 銀</span></span></label>
+        <label class="opt"><input type="radio" name="style_primary" value="α Restrained (Muji/Apple/Braun)" checked /><span data-en="Moss" data-ja="苔の林">苔林<span class="zh" data-en="quiet · green · slow" data-ja="静か · 緑 · ゆっくり">安靜 · 綠 · 慢</span></span></label>
+        <label class="opt"><input type="radio" name="style_primary" value="β Kando (Sony/Leica/B&O)" /><span data-en="Cypress" data-ja="ヒノキ林">柏林<span class="zh" data-en="dense · deep · cold" data-ja="緻密 · 沈静 · 冷">緻密 · 沉 · 冷</span></span></label>
+        <label class="opt"><input type="radio" name="style_primary" value="γ Organic (Stripe/Linear/Vercel)" /><span data-en="Rainforest" data-ja="雨林">雨林<span class="zh" data-en="tangled · alive · humid" data-ja="絡む · 生命 · 湿気">糾纏 · 生機 · 濕</span></span></label>
+        <label class="opt"><input type="radio" name="style_primary" value="δ Luxury (Hermès/Bottega)" /><span data-en="Bamboo" data-ja="竹林">竹林<span class="zh" data-en="still · resonant · empty" data-ja="静寂 · 響き · 空">靜挺 · 韻 · 空</span></span></label>
+        <label class="opt"><input type="radio" name="style_primary" value="ε System (IBM/Porsche)" /><span data-en="Pine" data-ja="松林">松林<span class="zh" data-en="orderly · sequential · hard" data-ja="整然 · 秩序 · 硬質">整齊 · 秩序 · 硬</span></span></label>
+        <label class="opt"><input type="radio" name="style_primary" value="ζ Dynamic (Nike/Spotify)" /><span data-en="Wild" data-ja="野生林">野林<span class="zh" data-en="fast · wild · lightning" data-ja="速い · 荒い · 雷">快 · 狂 · 閃電過</span></span></label>
+        <label class="opt"><input type="radio" name="style_primary" value="η Anti-Algo (A24/Brutalist)" /><span data-en="Withered" data-ja="枯林">枯林<span class="zh" data-en="anomalous · void · gray" data-ja="異形 · 余白 · 灰">反常 · 留白 · 灰</span></span></label>
+        <label class="opt"><input type="radio" name="style_primary" value="θ Ethereal (Cloud Forest · misty · liminal)" /><span data-en="Cloud Forest" data-ja="雲霧林">雲霧林<span class="zh" data-en="mysterious · drifting · hazy" data-ja="神秘 · 漂う · 霞">神秘 · 飄 · 濛</span></span></label>
+        <label class="opt"><input type="radio" name="style_primary" value="ι Liminal (Mangrove · interface · tidal)" /><span data-en="Mangrove" data-ja="マングローブ">紅樹林<span class="zh" data-en="liminal · root-woven · tidal" data-ja="境界 · 根の絡み · 潮">交界 · 根錯 · 潮</span></span></label>
+        <label class="opt"><input type="radio" name="style_primary" value="κ Boreal (Silver Forest · austere · metallic cold)" /><span data-en="Silver" data-ja="銀林">銀林<span class="zh" data-en="cold · high · metallic" data-ja="寒 · 高 · 金属">寒 · 高 · 銀</span></span></label>
       </div>
       <p class="hint" style="margin-top: 1rem;">伴生林（混林 · 可不選）</p>
       <div class="opts" data-axis="style_perturb">
-        <label class="opt"><input type="radio" name="style_perturb" value="none" checked /><span data-en="(pure)">(不混)<span class="zh" data-en="pure stand">純林</span></span></label>
-        <label class="opt"><input type="radio" name="style_perturb" value="α Restrained" /><span data-en="+ Moss">混點 苔林</span></label>
-        <label class="opt"><input type="radio" name="style_perturb" value="β Kando" /><span data-en="+ Cypress">混點 柏林</span></label>
-        <label class="opt"><input type="radio" name="style_perturb" value="γ Organic" /><span data-en="+ Rainforest">混點 雨林</span></label>
-        <label class="opt"><input type="radio" name="style_perturb" value="δ Luxury" /><span data-en="+ Bamboo">混點 竹林</span></label>
-        <label class="opt"><input type="radio" name="style_perturb" value="ε System" /><span data-en="+ Pine">混點 松林</span></label>
-        <label class="opt"><input type="radio" name="style_perturb" value="ζ Dynamic" /><span data-en="+ Wild">混點 野林</span></label>
-        <label class="opt"><input type="radio" name="style_perturb" value="η Anti-Algo" /><span data-en="+ Withered">混點 枯林</span></label>
-        <label class="opt"><input type="radio" name="style_perturb" value="θ Ethereal" /><span data-en="+ Cloud Forest">混點 雲霧林</span></label>
-        <label class="opt"><input type="radio" name="style_perturb" value="ι Liminal" /><span data-en="+ Mangrove">混點 紅樹林</span></label>
-        <label class="opt"><input type="radio" name="style_perturb" value="κ Boreal" /><span data-en="+ Silver">混點 銀林</span></label>
-        <label class="opt"><input type="radio" name="style_perturb" value="Barrenness (deliberate void)" /><span data-en="+ Barrenness">混點 荒蕪</span></label>
-        <label class="opt"><input type="radio" name="style_perturb" value="Ancient Grove (time depth)" /><span data-en="+ Ancient Grove">混點 古林</span></label>
+        <label class="opt"><input type="radio" name="style_perturb" value="none" checked /><span data-en="(pure)" data-ja="(混ぜない)">(不混)<span class="zh" data-en="pure stand" data-ja="純林">純林</span></span></label>
+        <label class="opt"><input type="radio" name="style_perturb" value="α Restrained" /><span data-en="+ Moss" data-ja="+ 苔の林">混點 苔林</span></label>
+        <label class="opt"><input type="radio" name="style_perturb" value="β Kando" /><span data-en="+ Cypress" data-ja="+ ヒノキ林">混點 柏林</span></label>
+        <label class="opt"><input type="radio" name="style_perturb" value="γ Organic" /><span data-en="+ Rainforest" data-ja="+ 雨林">混點 雨林</span></label>
+        <label class="opt"><input type="radio" name="style_perturb" value="δ Luxury" /><span data-en="+ Bamboo" data-ja="+ 竹林">混點 竹林</span></label>
+        <label class="opt"><input type="radio" name="style_perturb" value="ε System" /><span data-en="+ Pine" data-ja="+ 松林">混點 松林</span></label>
+        <label class="opt"><input type="radio" name="style_perturb" value="ζ Dynamic" /><span data-en="+ Wild" data-ja="+ 野生林">混點 野林</span></label>
+        <label class="opt"><input type="radio" name="style_perturb" value="η Anti-Algo" /><span data-en="+ Withered" data-ja="+ 枯林">混點 枯林</span></label>
+        <label class="opt"><input type="radio" name="style_perturb" value="θ Ethereal" /><span data-en="+ Cloud Forest" data-ja="+ 雲霧林">混點 雲霧林</span></label>
+        <label class="opt"><input type="radio" name="style_perturb" value="ι Liminal" /><span data-en="+ Mangrove" data-ja="+ マングローブ">混點 紅樹林</span></label>
+        <label class="opt"><input type="radio" name="style_perturb" value="κ Boreal" /><span data-en="+ Silver" data-ja="+ 銀林">混點 銀林</span></label>
+        <label class="opt"><input type="radio" name="style_perturb" value="Barrenness (deliberate void)" /><span data-en="+ Barrenness" data-ja="+ 荒蕪">混點 荒蕪</span></label>
+        <label class="opt"><input type="radio" name="style_perturb" value="Ancient Grove (time depth)" /><span data-en="+ Ancient Grove" data-ja="+ 古林">混點 古林</span></label>
       </div>
     </section>
 
@@ -3287,6 +3288,121 @@ const I18N = {
       { sel: '#pool-link', title: "Forest Pool · see others' forests", body: 'Plain words: click the top "<strong>Forest Pool</strong>" to see forests visitors left behind, take a hint, walk your own path.<br/><br/>You can also leave your forest for the next gardener.<br/><br/>It\'s a "<strong>pool</strong>", not a leaderboard — humans growing together in the pool.' },
       { sel: '#btn-rand', title: 'Done · walk your own path', body: 'You know the whole flow now.<br/><br/><ul><li>Unsure? Hit "<strong>Let Wind Decide</strong>" to roll for you</li><li>Want to see others\'? Click top "<strong>Forest Pool</strong>"</li><li>Redo? Hit "<strong>Clear the Land</strong>"</li></ul>This is a tool — reuse it freely.' }
     ]
+  },
+  ja: {
+    // Top bar + Modal
+    helpBtn: '? 使い方',
+    poolBtn: 'フォレスト・プール · 訪問者の種',
+    helpTitle: '4 ステップで初めてのページ',
+    helpSub: 'Four steps · your first website',
+    stepPoolTitle: 'フォレスト・プール <em>· あなたの林を残す、または他人の林を見る</em>',
+    stepPoolBody: '上部に「<strong>フォレスト・プール</strong>」の入口があります。訪問者が種を残す場所——一つの林がもう一つの林に育ち方を教えます。',
+    stepPoolMech: '<strong>共有のしくみ</strong>：凝相の後、もし望むなら「フォレスト・プールへ共有」を押すと、今回の選択と DNA（光、土、ブランド名、フォント、六軸の選択）が匿名で送られます。<strong>完全に任意</strong> · プロンプト本文と個人情報は送りません。',
+    stepPoolWhy: '<strong>なぜ共有するか</strong>：骨格は公開ですが、あなたが持ち込んだ光は複製不可能です。<strong>他人の林を読む</strong>のは一手を借りて自分の道を歩むこと；<strong>あなたの林を残す</strong>のは次の庭師にあなたの肩を貸すこと。機械はあなたの DNA を持ち去れません。',
+    step1Title: '自分のものを持ち込む',
+    step1Body: '上部の「<strong>あなたの印</strong>」は <strong>ブランド名・主色・フォント</strong>を入力する場所です。何を入れるか分からない？「Maxi の例」をクリックして他人がどう書いたか見てから、自分のものに変えてください。',
+    step1Tip: '靴を選ぶように——まず人のを試着してから、自分のを選ぶ。',
+    step2Title: '6 つの問いに答える',
+    step2Body: 'スクロールすると <strong>6 つの問い</strong>が出てきます：樹冠（何のため）、優勢種（誰が主役）、林相（どんな雰囲気）、林分（どう並べる）、葉形（文字がどう話す）、風と根（動くか動かないか）。',
+    step2Tip: '各問一つだけ選ぶ。迷ったら「風を一吹き」を押してシステムに任せる。',
+    step3Title: '「凝相」を押す',
+    step3Body: '下のオレンジ色の大きなボタン——押すと <strong>Claude Design に渡すテキスト</strong>（プロンプト）が生まれます。横に抽象的な雰囲気イメージも現れて、選択の感じが合っているか確認できます。',
+    step3Tip: '雰囲気がずれている？一つオプションを変えてもう一度押す。気に入らない？「土地を空ける」で最初からやり直す。',
+    step4Title: '持ち帰る → Claude Design に貼る',
+    step4Body: '「<strong>持ち帰る</strong>」を押してテキストをコピー、それから <strong>Claude Design</strong>（claude.ai/design）を開いて貼り付け、ウェブページの HTML が生成されるのを待ちます。',
+    step4Tip: '結果が気に入らない？戻ってオプションを変え、もう一度凝相する。これは道具——自由に再利用してください。',
+    stepFAQTitle: '他に知っておくこと？',
+    stepFAQ1: '<strong>アドバンスト・デザイナーモード</strong>はプロンプトを少し触ったことのある人向け——分からなくても無視して大丈夫。',
+    stepFAQ2: '<strong>胞子</strong>は任意のサプライズ——1-3 個加えるとちょっとした偶然が混ざります。加えなくても問題なし。',
+    stepFAQ3: 'これは <strong>道具</strong>であって完成品ではありません。デザイナーはあなたです。',
+    // Hero
+    heroH1: 'あなたのために用意された <em>極相林</em><br/>の骨格',
+    heroIntro: '一つの道具。あなたの陽光と土を持ち込めば、骨格はこちらが縫い合わせます。いくつかの問い、または風を一吹き、凝相を押してテキストを持ち帰り Claude Design に貼り付ける——専用ページが届きます。自然のルールが細部を守り、方向はあなたが決める。',
+    heroTaglineEn: 'architecture is the skeleton · the vision is yours',
+    heroTaglineZh: '速さの時代に · 遅い手のために · 素材には素材の声がある',
+    // Profile
+    profileTtl: 'Design DNA · デザイン DNA <em>· color 色 · font フォント · brand ブランド</em>',
+    presetYours: 'Custom · カスタム',
+    presetMaxi: 'Maxi',
+    presetMono: 'Monochrome · モノクロ',
+    presetPaper: 'Paper · 紙',
+    presetCyber: 'Cyber · サイバー',
+    profileHint: '別の庭師が自分の光を持ち込めば、まったく違う 100 の林が育ちます。<strong>あなたの光</strong> × 林の骨格 = あなただけの森。',
+    // Locked
+    lockedTtl: '自然のルール · すでに守ってあります',
+    lockedBody: 'コントラスト · 呼吸 · 余白 · 動きの節度 · アクセシビリティ——これらの細部は森が引き受けます。あなたは光がどこから来るかを決めるだけ。',
+    // Six sections
+    s1Title: '樹冠 <em>陽光はどこに当たる？</em>',
+    s1Hint: '林全体の輪郭を決める',
+    s2Title: '優勢種 <em>誰がこの林を支える？</em>',
+    s2Hint: '画面の重心',
+    s3Title: '林相 <em>どんな森？</em>',
+    s3Hint: '主林を一つ選び、もう一つを伴林に——混林が魂',
+    s4Title: '林分 <em>木はどう分布する？</em>',
+    s4Hint: '空間の秩序',
+    s5Title: '葉形 <em>どんな葉で呼吸する？</em>',
+    s5Hint: '文字の姿勢；二言語は別途',
+    s6Title: '風と根 <em>この林は動いている？</em>',
+    s6Hint: '見えるのは風、見えないのは根',
+    // Spore section
+    sporeTitle: '胞子 <em>風に偶然をいくつか混ぜる（0-3 個）</em>',
+    sporeHint: 'アドバンスト · 風が運ぶ種子から選ぶ · 予想しない姿勢を森に育てさせる',
+    // Buttons
+    btnSow: '凝相',
+    btnWind: '風を一吹き',
+    btnClear: '土地を空ける',
+    btnTake: '持ち帰る',
+    copyOk: '✓ 持ち帰り済み',
+    counterLabel: '可能な林相',
+    currentLabel: '現在',
+    outputTtl: '相が成った · 持ち帰って Claude Design に貼り付け',
+    // Gallery
+    galleryTtl: 'Deep Pool · 池魂',
+    galleryIntro: '単なるテンプレート集ではありません——<strong>システム厳選</strong>の視覚的逸品。それぞれが物理光学現象に触れています：干渉、残像、色収差、マッハ・バンド、ホログラフィ、コースティクス、キアロスクーロ、アナモルフィック...。優雅で、豊かで、唯一無二。互換不可、反復なし。どこに隠してあるかを読み解いてから、自分の道を歩んでください。',
+    tabAll: 'すべて',
+    tabClaude: 'Claude Design 原版',
+    tabForest: '池魂の逸品（物理視覚）',
+    tabMine: '私のラボ',
+    // DNA
+    dnaTtl: 'Prompt DNA フィンガープリント · サンプル 1-9 から抽出',
+    dnaIntro: 'Claude Design 公式プロンプトがどんな語彙で AI 解釈をトリガーしているかを読み解く。8 つの次元、それぞれに例。自分でプロンプトを書くとき、ここから一手を借りる。',
+    // Abyss
+    abyssLine: '林は形をなした、風はまだ書き続けている',
+    abyssSig: '— climax forest · ∞ —',
+    // Share
+    shareToPoolBtn: 'フォレスト・プールへ共有',
+    shareToPoolDisabledTitle: 'プールは根を張っているところ · Supabase 接続後に有効化',
+    shareToPoolNote: '匿名 · DNA 同梱 · <a href="pool.html" style="color: var(--iris);">プールを見る</a> <span style="opacity:0.7; margin-left:0.4rem;">(プールは根を張り中)</span>',
+    // Tour HUD
+    tourTriggerLabel: 'はじめてガイド',
+    tourTriggerTitle: 'はじめてガイド · 全ページの白話による段階的説明',
+    tourSkip: 'スキップ',
+    tourSkipTitle: '今回だけ閉じる · 次回もまた表示',
+    tourDismiss: '次回から表示しない',
+    tourDismissTitle: '永久に閉じる · 上部の「はじめてガイド」ボタンから手動で開けます',
+    tourPrev: '← 戻る',
+    tourNext: '次へ →',
+    tourDone: '完了',
+    poolLinkTitle: 'フォレスト・プール · 訪問者の林を見る / あなたの林を共有する',
+    tourSteps: [
+      { sel: null, title: 'ようこそ · 最初の林を始めよう', body: 'これは <strong>道具</strong>です——AI プラットフォームでも SaaS でもありません。<br/><br/><strong>Claude Design</strong> に渡すテキストを用意して、Claude Design に <strong>あなただけの</strong>ウェブページを生んでもらいます。<br/><br/>ウェブサイトのことが全然分からない？大丈夫。17 の小さなステップを一緒に歩きます、各ステップで何をしているかを白話でお伝えします。' },
+      { sel: '#sec-profile', title: '印 · あなたの「光」とは', body: 'すべてのウェブページに必要なもの：<br/>① <strong>ブランド名</strong>——ページの名前<br/>② <strong>主色</strong>——使いたい主な色<br/>③ <strong>フォント</strong>——文字の見た目<br/><br/>この三つ = あなたが持ち込む「光」。<br/>分からない？上部の「<strong>Maxi</strong>」ボタンを押して例を見て、自分のものに変えてください。' },
+      { sel: '#sec-s1', title: '問 1 · このページは何のため？', body: '白話：何のためにこのページを作りますか？<br/><br/>例：<ul><li>物を売る（EC）</li><li>ポートフォリオ</li><li>物語を語る</li><li>サービスの予約</li><li>イベント受付</li><li>履歴書</li></ul>リストから一番近いものを一つ選ぶだけ。' },
+      { sel: '#sec-s2', title: '問 2 · 主役は何？', body: '白話：このページが主に「紹介している」のは何？<br/><br/>例：<ul><li>物理商品（カップ、服）</li><li>ソフトウェア / アプリ</li><li>人（自分 / 著名人）</li><li>チーム / スタジオ</li><li>顧客事例</li><li>抽象概念 / イベント</li></ul>主役が違えば、ページ全体の見た目もまるで違います。' },
+      { sel: '#sec-s3', title: '問 3 · どんな雰囲気？', body: '白話：望む雰囲気に一番近いものを選ぶ。<br/>よくある対応：<ul><li><strong>苔林</strong> = Apple / 無印良品（静か）</li><li><strong>雨林</strong> = Stripe / Linear（自由・有機的）</li><li><strong>竹林</strong> = Hermès / Bottega（精品）</li><li><strong>松林</strong> = IBM / Porsche（秩序）</li><li><strong>野林</strong> = Nike / Spotify（躍動）</li><li><strong>枯林</strong> = A24 / Brutalist（異常な余白）</li></ul>' },
+      { sel: '#sec-s4', title: '問 4 · 内容はどう並べる？', body: '白話：ページの内容はどう分布しますか？<br/><br/>最もよく使う：<strong>縦のセクション</strong>——下にスクロールして区切られた段（Apple のサイトのように）。<br/><br/>左右の列、カードグリッド、タイムライン、地図、お弁当グリッドも可能。<br/><br/>迷ったら「<strong>Hero+Sections</strong>」（ヒーロー区+内容セクション）を選ぶ——最も汎用。' },
+      { sel: '#sec-s5', title: '問 5 · 文字 vs 画像、どちらが主役？', body: '白話：<ul><li><strong>文字主役</strong> = 本、雑誌のように（文字多め）</li><li><strong>画像主役</strong> = IG、Pinterest のように（画像多め）</li><li><strong>叙事</strong> = 長文の物語</li><li><strong>データ表</strong> = 表形式データ</li></ul>下では中英の並べ方も選べます：<br/>A 主従 / B 並置 / C 融合 / 純中文' },
+      { sel: '#sec-s6', title: '問 6 · 動きはあり？なし？', body: '白話：アニメーション効果は？<br/><br/><ul><li><strong>純静的</strong> = まったく動かない、最速最軽量</li><li><strong>CSS Hover</strong> = ホバーで反応（最もよくある）</li><li><strong>Simple Transitions</strong> = 状態切り替え時の遷移</li><li><strong>スクロールトリガー</strong> = スクロールで要素が現れる</li></ul>下のオプションほどリソースが必要（Canvas、WebGL）。' },
+      { sel: '#sec-spore', title: '0-3 個の「創意の火花」を選ぶ（任意）', body: '白話：リストから <strong>0-3 個</strong>の追加の創意の火花を選んで、作品に予想外の小さなサプライズを与えられます。<br/><br/><strong>選ばなくても OK</strong>——基本は揃っています。<br/><br/>火花の名前が分からない？スキップして、後で戻って選び直せます。' },
+      { sel: '#sec-advanced', title: 'アドバンスト・デザイナーモード（全てスキップ可）', body: '白話：このセクションは「<strong>プロンプトを少し触ったことのある人</strong>」向けです。<br/><br/><strong>分からなければ全てスキップして OK</strong>——デフォルト値で十分動きます。<br/><br/>分からないオプションには触らなくて大丈夫、結果に影響しません。' },
+      { sel: '#sec-actions', title: 'オレンジの大ボタンを押す · 選択をプロンプトに変える', body: '白話：上記を選び終えたら、オレンジの「<strong>凝相</strong>」ボタンを押す。<br/>システムが全ての選択を Claude Design に渡すテキストに変換します。<br/><br/>選び方が分からない？「<strong>風を一吹き</strong>」を押せば、システムが六軸をランダムに選びます。<br/><br/>やり直す？「<strong>土地を空ける</strong>」でデフォルトに戻ります。' },
+      { sel: '#ambient-preview', title: '雰囲気をプレビュー', body: '白話：凝相の後、ここに <strong>抽象的な雰囲気イメージ</strong>が現れます——選択全体の感じが合っているかをプレビューします。<br/><br/>雰囲気がずれている？戻ってオプションを 1-2 個変え、もう一度凝相する。' },
+      { sel: '#sec-ref', title: '4 つの参考林', body: '白話：ここには <strong>4 つの参考林</strong>を並べて比較できます。<br/><br/>他人がどう色・フォント・六軸・胞子を組み合わせて、どんなウェブページが生まれたかを見る。<br/><br/>方向を選ぶときのインスピレーション。' },
+      { sel: '#sec-gallery', title: '池魂 · Deep Pool', body: '白話：これは <strong>厳選サンプルプール</strong>——19 の物理視覚現象をインスピレーションに（二重スリット、Moiré、マッハ・バンドなど）。<br/><br/>これらを理解する必要はなし——画像を見て感じればよい。' },
+      { sel: '#sec-dna', title: 'DNA フィンガープリント（スキップ可）', body: '白話：これは <strong>アドバンスト展示</strong>です。<br/><br/>異なるプロンプトのレシピが生むフィンガープリントの違いを見せます。<br/><br/>完全にスキップ可能、ページ作りに影響なし。' },
+      { sel: '#pool-link', title: 'フォレスト・プール · 他人の林を見る', body: '白話：上部の「<strong>フォレスト・プール</strong>」を押すと訪問者が残した林を見られます、ヒントを得て自分の道を歩む。<br/><br/>あなたの林を残して、次の庭師に学ばせることもできます。<br/><br/>これは「<strong>プール</strong>」——ランキングではない、人々が共に育つ場所です。' },
+      { sel: '#btn-rand', title: '完了 · 自分の道を歩む', body: '全体の流れが分かりましたね。<br/><br/><ul><li>迷ったら？「<strong>風を一吹き</strong>」でシステムに任せる</li><li>他人のを見たい？上部の「<strong>フォレスト・プール</strong>」を押す</li><li>やり直す？「<strong>土地を空ける</strong>」を押す</li></ul>これは道具——何度でも使えます。' }
+    ]
   }
 };
 
@@ -3294,10 +3410,16 @@ const I18N = {
   // 關鍵 fix：用 [data-lang] 屬性精準抓 lang buttons · 避免誤抓到 theme toggle 的按鈕
   // （theme toggle 和 lang toggle 共用 .lang-toggle class · 但 theme 按鈕有 data-theme 沒 data-lang）
   const langButtons = document.querySelectorAll('.topbar [data-lang]');
-  const currentLang = () => document.documentElement.getAttribute('lang') === 'en' ? 'en' : 'zh';
+  const currentLang = () => {
+    const l = document.documentElement.getAttribute('lang');
+    if (l === 'en') return 'en';
+    if (l === 'ja') return 'ja';
+    return 'zh';
+  };
 
   function applyLang(lang) {
-    document.documentElement.setAttribute('lang', lang === 'en' ? 'en' : 'zh-Hant');
+    const langAttr = lang === 'en' ? 'en' : (lang === 'ja' ? 'ja' : 'zh-Hant');
+    document.documentElement.setAttribute('lang', langAttr);
     const dict = I18N[lang] || I18N.zh;
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
@@ -3316,7 +3438,10 @@ const I18N = {
         const firstText = [...el.childNodes].find(n => n.nodeType === 3 && n.textContent.trim());
         el.dataset._origZh = firstText ? firstText.textContent : el.textContent;
       }
-      const target = (lang === 'en') ? el.dataset.en : el.dataset._origZh;
+      let target;
+      if (lang === 'en') target = el.dataset.en;
+      else if (lang === 'ja') target = el.dataset.ja || el.dataset.en; // ja fallback en（未填日譯時用英譯）
+      else target = el.dataset._origZh;
       // 只改第一個 text node 的內容，保留內部子元素如 .zh
       const firstText = [...el.childNodes].find(n => n.nodeType === 3);
       if (firstText) firstText.textContent = target;
@@ -3338,7 +3463,7 @@ const I18N = {
   // 初始化：從 localStorage 讀取
   try {
     const saved = localStorage.getItem('superlost_lang');
-    if (saved === 'en') applyLang('en');
+    if (saved === 'en' || saved === 'ja') applyLang(saved);
   } catch (e) {}
 })();
 
@@ -3559,8 +3684,13 @@ const I18N = {
 <script>
 /* ===== TOUR HUD JS · 新手白話導覽（對應右側 dot-nav 章節）===== */
 (function(){
-  // tour 內容改從 I18N dict 動態取（zh / en 在語言切換時即時更新）
-  const tourLang = () => document.documentElement.getAttribute('lang') === 'en' ? 'en' : 'zh';
+  // tour 內容改從 I18N dict 動態取（zh / en / ja 在語言切換時即時更新）
+  const tourLang = () => {
+    const l = document.documentElement.getAttribute('lang');
+    if (l === 'en') return 'en';
+    if (l === 'ja') return 'ja';
+    return 'zh';
+  };
   const tourDict = () => I18N[tourLang()] || I18N.zh;
   const getSteps = () => tourDict().tourSteps || I18N.zh.tourSteps;
 

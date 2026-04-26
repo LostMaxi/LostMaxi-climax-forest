@@ -920,7 +920,7 @@ body {
   display: inline-block; /* baseline = bottom edge · 對齊字 baseline */
   width: 70px;
   height: 70px;
-  transform: translate(215px, 0);
+  transform: translate(278px, 0);
   animation: cfWrapMotion 6000ms cubic-bezier(0.4, 0, 0.4, 1) 0ms forwards;
 }
 .cf-splash .cf-logo-svg {
@@ -1032,14 +1032,14 @@ body {
   position: relative;
   display: block; /* 不用 column flex · 避免 baseline fallback 到 bottom */
   opacity: 0;
-  transform: translateX(430px);
+  transform: translateX(560px);
   animation: cfTextSlide 1100ms cubic-bezier(0.4, 0, 0.2, 1) 3500ms forwards;
 }
 .cf-splash-name {
-  /* 從 Maxi 截圖直接反推（不靠規格表）：100px 時 C visual ≈ 框 × 1.4 → 縮 1/1.4 = 71% → font-size 70px = CF 框等高 · 接受 Playfair Display 實際 visual cap 接近 1.0 × font-size 的事實 */
+  /* Maxi Illustrator 精確量測（2026-04-26）：CF 框 41.4px vs C 32.3px → 真實 visual cap ratio = 0.78 · 反推 font-size = 70 / 0.78 = 89.7 → 用 90px · 預測 cap = 90 × 0.78 = 70.2 ≈ 框 70 ✓ */
   display: block;
   font-family: 'Playfair Display', Georgia, 'Noto Serif TC', serif;
-  font-size: 70px;
+  font-size: 90px;
   font-weight: 500;
   color: var(--snow);
   line-height: 1;
@@ -1089,12 +1089,12 @@ body {
 }
 /* CF wrap 整段運動：viewport 中央 → 種子落下時反彈 → 推左 → 停頓 1 秒 */
 @keyframes cfWrapMotion {
-  0%    { transform: translate(215px, 0); }     /* 0ms · viewport 中心 */
-  40%   { transform: translate(215px, 0); }     /* 2400ms · 種子即將落下 */
-  43.3% { transform: translate(215px, 8px); }   /* 2600ms · 反彈下沉（8px 幅度）*/
-  46.7% { transform: translate(215px, -3px); }  /* 2800ms · 反彈上揚 */
-  50%   { transform: translate(215px, 0); }     /* 3000ms · 回歸水平 */
-  58.3% { transform: translate(215px, 0); }     /* 3500ms · 樹苗生長中、保持 */
+  0%    { transform: translate(278px, 0); }     /* 0ms · viewport 中心 */
+  40%   { transform: translate(278px, 0); }     /* 2400ms · 種子即將落下 */
+  43.3% { transform: translate(278px, 8px); }   /* 2600ms · 反彈下沉（8px 幅度）*/
+  46.7% { transform: translate(278px, -3px); }  /* 2800ms · 反彈上揚 */
+  50%   { transform: translate(278px, 0); }     /* 3000ms · 回歸水平 */
+  58.3% { transform: translate(278px, 0); }     /* 3500ms · 樹苗生長中、保持 */
   75%   { transform: translate(0, 0); }         /* 4500ms · 推到左側落定 */
   100%  { transform: translate(0, 0); }         /* 6000ms · 停頓 1.5s 至 fadeout 起 */
 }

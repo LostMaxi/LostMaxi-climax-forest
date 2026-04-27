@@ -1,91 +1,91 @@
 ---
 kit: opal-product
 name: Opal Hardware Product Kit
-mood: Apple 產品頁 minimalism · 全屏攝影 · sticky cart · 中性灰
-best_for: 硬體 / 物件 / 新品發表 / 工業設計作品 / 高端消費品
+mood: Apple-product-page minimalism · full-bleed photography · sticky cart · neutral gray
+best_for: hardware / objects / new-product launches / industrial design work / premium consumer goods
 status: skeleton
 version: 0.1.0
 ---
 
 # Opal Hardware Product Kit
 
-對標：[opalcamera.com/opal-tadpole](https://opalcamera.com/opal-tadpole) · Apple 產品頁式 hardware showcase。
+Reference: [opalcamera.com/opal-tadpole](https://opalcamera.com/opal-tadpole) — Apple-style hardware product showcase.
 
 ## Mood
 
-> 「物品本身就是英雄 · 一張照片頂萬字 · 訂購卡始終在角落」
+> "The object is the hero · one photo speaks louder than ten thousand words · the purchase card never leaves the corner."
 
-留白量大 · 中性灰底襯產品攝影 · sticky persistent purchase card · 規格頁逐一 reveal。
+Generous whitespace · neutral gray backdrop carrying product photography · sticky persistent purchase card · spec page revealed one by one.
 
 ## Anchor
 
-- Full-bleed product photography（每 section 一張）
-- Hand-as-scale shots（人手持物 · 給尺寸感）
-- Sticky purchase card 恆在右上 / 右下角（不消失）
-- Spec reveal scroll（材質 / 重量 / 顏色 / 對比 ladder）
-- Watch-style stat blocks（45g / 47 Parts / 8 Materials）
+- Full-bleed product photography (one image per section)
+- Hand-as-scale shots (a hand holding the object · gives a sense of size)
+- Sticky purchase card pinned to top-right / bottom-right (never disappears)
+- Spec reveal scroll (material / weight / colors / contrast ladder)
+- Watch-style stat blocks (45g / 47 Parts / 8 Materials)
 
 ## Palette
 
-| 角色 | 色 | 用途 |
+| Role | Color | Use |
 |---|---|---|
-| Base | `#1F2026` / `#2A2C30` | 暗模式底（規格頁）|
-| Light Base | `#F5F5F4` / `#FAFAF8` | 明模式底（hero）|
-| Subject | 中性灰 `#4C4E56` ~ `#818387` | 產品配色 / 文字主色 |
-| Accent | `#FFE08A` / `#FDDA25` (warm yellow circle) | ONE 高光點 · 不超過畫面 1% |
+| Base | `#1F2026` / `#2A2C30` | dark mode base (spec pages) |
+| Light Base | `#F5F5F4` / `#FAFAF8` | light mode base (hero) |
+| Subject | neutral gray `#4C4E56` ~ `#818387` | product palette / primary text |
+| Accent | `#FFE08A` / `#FDDA25` (warm yellow circle) | the ONE highlight · ≤1% of frame |
 | Mute | `rgba(0,0,0,0.55)` / `rgba(255,255,255,0.45)` | meta |
 
-中性灰 ≥85% / 對比強光 ≤10% / Accent ≤1%。
+Neutral gray ≥85% / strong-contrast highlight ≤10% / accent ≤1%.
 
 ## Typography
 
-- Display: SF Pro Display / Inter · 600 wt · 中等尺寸（48-96px）· 鬆 letter-spacing 0
-- Body: SF Pro Text / Inter · 400 wt · 行高 1.5
-- Spec label: Inter · 11-13px · 中性灰 · `letter-spacing: 0.04em`
-- Type-Centric: weights 收一個層級（通常 600 + 400 兩級即可）
+- Display: SF Pro Display / Inter · 600 wt · medium scale (48-96px) · loose letter-spacing 0
+- Body: SF Pro Text / Inter · 400 wt · line-height 1.5
+- Spec label: Inter · 11-13px · neutral gray · `letter-spacing: 0.04em`
+- Type-Centric: weight set tightened to one tier (typically 600 + 400 only)
 
 ## Composition
 
-- Vertical scroll sections（不是 fixed 全屏）
-- Hero: full-bleed 產品照片 + 短文 overlay 左上
-- Sticky 購買卡: top-right · 永不消失 · semi-transparent backdrop blur
-- Spec section: 暗模式 · 兩欄 grid · 數字大字
-- Comparison: photo grid · 横向 ladder
-- Lifestyle shot: 人手 + 環境 + 物件 in context
+- Vertical scroll sections (not fixed full-screen)
+- Hero: full-bleed product photo + short overlay text top-left
+- Sticky purchase card: top-right · never disappears · semi-transparent backdrop blur
+- Spec section: dark mode · two-column grid · oversized numerals
+- Comparison: photo grid · horizontal ladder
+- Lifestyle shot: hand + environment + object in context
 
 ## Motion / Transition
 
-- 純 scroll · 無 GSAP timeline
-- CSS transition only（300ms ease-out）
+- Pure scroll · no GSAP timeline
+- CSS transition only (300ms ease-out)
 - Image fade-in on enter viewport
-- Sticky card stays · 不淡入淡出
+- Sticky card stays · no fade in/out
 
 ## Tech Stack
 
-- 純 HTML + CSS + 少量 vanilla JS（不需 Three.js）
+- Pure HTML + CSS + a little vanilla JS (no Three.js needed)
 - IntersectionObserver for fade-in
 - Sticky positioning + backdrop-filter
-- Optimized images（webp / responsive sizes）
-- 無外部依賴除 fonts
+- Optimized images (webp / responsive sizes)
+- No external deps beyond fonts
 
 ## Voice Register
 
-- 英文簡短 + 數字主導
-- Tagline: 物件 + 一個動詞（"A new species of webcam"）
-- Spec：用 「Tiny」「Premium」「Painted」這類 evocative adjective
-- 不講「revolutionary」「game-changing」這類 buzzword
+- Short English + numerals dominant
+- Tagline: object + one verb ("A new species of webcam")
+- Specs: evocative adjectives like "Tiny", "Premium", "Painted"
+- Avoid buzzwords like "revolutionary", "game-changing"
 
 ## Anti-pattern
 
-- 禁止 3D scene（這個 Kit 純 2D 攝影）
-- 禁止 cinematic dark mode hero（Apple-style 是亮的、暗模式只用於 spec 頁）
-- 禁止 emoji
-- 禁止 Lottie animation（保持靜態攝影感）
+- No 3D scene (this Kit is purely 2D photography)
+- No cinematic dark-mode hero (Apple-style hero is light; dark mode reserved for spec pages)
+- No emoji
+- No Lottie animation (preserve still-photography feel)
 
 ## Reference Frames
 
-`reference/` 收 Opal Tadpole / Apple product page / 高端硬體 reference。
+`reference/` collects Opal Tadpole / Apple product page / premium hardware references.
 
 ## Starter Prompt
 
-見 [starter-prompt.md](./starter-prompt.md)（待補）。
+See [starter-prompt.md](./starter-prompt.md) (TBD).

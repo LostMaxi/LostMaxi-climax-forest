@@ -1,121 +1,120 @@
 ---
 kit: ig-commercial
 name: IG / Threads Commercial Poster Kit
-mood: 商業海報 · 主角 70%+ · 1 秒抓眼 · 平台投放 ready
-best_for: IG / Threads / FB 廣告 / EDM / 商業 banner / 電商首頁
+mood: commercial poster · subject 70%+ · grabs attention in 1 second · platform-ready
+best_for: IG / Threads / FB ads / EDM / commercial banners / e-commerce hero
 status: skeleton
 version: 0.1.0
 ---
 
 # IG / Threads Commercial Poster Kit
 
-對標：IG carousel 商業教學體系（A 主視覺 / B 橫幅 / C 社群 / D 系列 / E 禮盒 / F 特寫 / G 促銷 / H 生活）8 種版型架構。
+Reference: IG carousel commercial layout system (A Hero / B Banner / C Social / D Series / E Gift / F Close-up / G Promo / H Lifestyle) — eight sub-flavors.
 
 ## Mood
 
-> 「1 秒抓眼 · 主角自己說話 · 文字最少」
+> "Grab the eye in 1 second · let the subject speak · use the fewest words possible."
 
-主視覺占畫面 70%+ · 文字區 ≤30% · 用強烈攝影 + 短標 + ONE accent 在零點幾秒內抓住注意力。
+Subject takes 70%+ of the frame · text area ≤30% · use strong photography + a short headline + ONE accent to lock attention in a fraction of a second.
 
 ## Anchor
 
-- 主角:文字 = 70:30（黃金比例）
-- ONE strong product photo 占畫面主導
-- Tagline ≤7 字繁中 / ≤5 words 英文
-- Platform-ready framing：4:5（IG post）/ 1:1（square）/ 9:16（Reels / Stories）
-- 中央/三分點放置主角
-- 留白給 tagline 呼吸（少字、強視覺）
+- Subject : text = 70 : 30 (the golden ratio)
+- ONE strong product photo dominates the frame
+- Tagline ≤5 words
+- Platform-ready framing: 4:5 (IG post) / 1:1 (square) / 9:16 (Reels / Stories)
+- Subject placed at center or rule-of-thirds intersection
+- Whitespace gives the tagline room to breathe (few words, strong image)
 
-## 8 種子版型
+## Eight Sub-flavors
 
-選一個作為 prompt sub-flavor：
+Pick one as the prompt sub-flavor:
 
-| Code | 名 | 用途 |
+| Code | Name | Use |
 |:-:|---|---|
-| A | 主視覺版 / Hero | 抓眼第一張 · 全 platform 適用 |
-| B | 橫幅版 / Banner | website hero / EDM 標題 / 廣告 banner |
-| C | 社群版 / Social | IG / Threads 純 post |
-| D | 系列版 / Series | 3-4 件並列 · 系列作 / 多品 |
-| E | 禮盒版 / Gift | 包裝展示 · 禮盒 / 套組 |
-| F | 特寫版 / Close-up | 細節 / 質感 |
-| G | 促銷版 / Promo | 折扣 / 限時 / CTA 強 |
-| H | 生活版 / Lifestyle | 物件 in context · 情境照 |
+| A | Hero | first-impression image · works on every platform |
+| B | Banner | website hero / EDM headline / ad banner |
+| C | Social | IG / Threads post |
+| D | Series | 3-4 items aligned · series releases / multi-product |
+| E | Gift | packaging display · gift sets / bundles |
+| F | Close-up | detail / texture |
+| G | Promo | discount / limited-time / strong CTA |
+| H | Lifestyle | object in context · scenario shot |
 
 ## Palette
 
-依照產品本身定 palette · Kit 不鎖死。但建議：
+Palette follows the product itself · the Kit does not lock it down. Recommendations:
 
-- 主背景：與產品形成反差（深品 → 淺底；淺品 → 深底）
-- ONE accent：產品身上原有的色（不另創）
-- 文字：最高對比（白 on 暗 / 黑 on 亮）
+- Background: contrast against the product (dark product → light base; light product → dark base)
+- ONE accent: a color already on the product (do not invent a new one)
+- Text: maximum contrast (white on dark / black on light)
 
 ## Typography
 
-- Display: Bold sans-serif（Inter / Helvetica / Anton）· 大字 · 占畫面 15-25%
-- Tagline: 短句 · 有節奏 · 可大小寫混排
-- Label: small + uppercase · 角落用
-- 中文：思源黑體 Bold / 蒙納繁中黑 / Noto Sans TC 700
-- 不超過 2 個字型族
+- Display: Bold sans-serif (Inter / Helvetica / Anton) · large · 15-25% of frame
+- Tagline: short phrase · with rhythm · case-mix permitted
+- Label: small + uppercase · used in corners
+- No more than 2 type families
 
-## Composition (per 8 sub-flavor)
+## Composition (per sub-flavor)
 
-### A · 主視覺版
-主角 80% · 上下留白 + tagline 浮在主角附近 / 角落
+### A · Hero
+Subject at 80% · whitespace top and bottom + tagline floating near the subject or in a corner.
 
-### B · 橫幅版
-主角 90% 橫向延展 · tagline 對齊主角邊緣 + sub-headline 12px
+### B · Banner
+Subject 90% horizontal extension · tagline aligned to the subject's edge + 12px sub-headline.
 
-### C · 社群版
-主角 70% · 大留白 · tagline ≤5 字 · 用「品牌名 + 品名」二行
-適用 IG / Threads · 4:5 或 1:1
+### C · Social
+Subject 70% · large whitespace · tagline ≤5 words · "brand name + product name" on two lines.
+Suited to IG / Threads · 4:5 or 1:1.
 
-### D · 系列版
-3-4 件並列 grid · 每件下方一句話 · 整體統一光線方向
+### D · Series
+3-4 items in a grid · one short line below each · unified light direction.
 
-### E · 禮盒版
-高角度俯拍 · 包裝展開 · 留白給「附贈說明」
+### E · Gift
+High-angle top-down shot · packaging laid open · whitespace for "what's included".
 
-### F · 特寫版
-微距 macro · 質感放大 · 文字角落 minimal
+### F · Close-up
+Macro · texture amplified · text minimal in a corner.
 
-### G · 促銷版
-大折扣數字（80% / 8 折）+ 主角 + 限時 deadline
-**警告**：本款最易踩 AI 老套（黃底紅字）· 改用 brand color + 反差
+### G · Promo
+Big discount numerals (80% / 8 off) + subject + time-bound deadline.
+**Warning**: this sub-flavor is the most prone to AI clichés (yellow base, red text) · use brand color + contrast instead.
 
-### H · 生活版
-人物 + 物件 in context · 生活情境 · 文字輕
+### H · Lifestyle
+Person + object in context · scenario · light text overlay.
 
 ## Motion / Transition
 
-- 純靜態 · 無動畫（這是海報、不是網頁）
-- 如做成 web 版：scroll 進場 fade + 微 translateY · 300ms ease-out
-- 不用 Lottie / GSAP timeline / Three.js
+- Pure static · no animation (this is a poster, not a webpage)
+- For web rendition: scroll-enter fade + small translateY · 300ms ease-out
+- No Lottie / GSAP timeline / Three.js
 
 ## Tech Stack
 
-- 純 HTML + CSS（無 JS 也可）
-- 或直接出靜態圖片（PNG / JPG / WebP）走 Canvas / SVG export
-- 對位 IG / Threads 平台規範
+- Pure HTML + CSS (JS optional)
+- Or export static images (PNG / JPG / WebP) via Canvas / SVG
+- Comply with IG / Threads platform specs
 
 ## Voice Register
 
-- 短句 · 動詞開頭
-- "Tasteful chocolate · 流心布朗尼 · 剛剛好"
-- 不用「最」「第一」「唯一」這類絕對詞（容易 cliché）
-- 中英可混 · 但要有節奏
+- Short phrases · verb-first
+- "Tasteful chocolate · molten brownie · just right"
+- Avoid absolutes like "best", "first", "only" (cliché-prone)
+- Bilingual is permitted in source projects, but this Kit speaks English
 
 ## Anti-pattern
 
-- 禁止 cinematic 3D scene（破海報 flat 感）
-- 禁止 GSAP scrollytelling（這是靜態海報）
-- 禁止 emoji
-- 禁止 多個 accent color（守 ONE）
-- 禁止 主角 < 50%（畫面被文字占滿失敗）
+- No cinematic 3D scene (breaks the flat poster feel)
+- No GSAP scrollytelling (this is a static poster)
+- No emoji
+- No multiple accent colors (hold the line on ONE)
+- No subject < 50% (text-heavy frame defeats the format)
 
 ## Reference Frames
 
-`reference/` 收 IG / Threads 商業教學 carousel 系列（如 brownie 8 版型示範）+ 高水準產品攝影。
+`reference/` collects IG / Threads commercial carousel series (e.g. brownie 8-flavor demo) + premium product photography.
 
 ## Starter Prompt
 
-見 [starter-prompt.md](./starter-prompt.md)（待補 · 須選 sub-flavor A-H 之一）。
+See [starter-prompt.md](./starter-prompt.md) (TBD · pick one of sub-flavors A-H).

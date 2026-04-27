@@ -1,0 +1,276 @@
+/* ===== Kit Viewer · shared styles for kits/{slug}/index.html and kits/index.html ===== */
+
+:root {
+  --bg: #1A1612;
+  --bg-2: #23201C;
+  --fg: #F4EDE1;
+  --fg-mute: #B8AE9C;
+  --rule: #3A332C;
+  --orange: #C2765A;
+  --iris: #8384BD;
+  --code-bg: #2A2520;
+  --serif: 'Playfair Display', Georgia, 'Noto Serif TC', serif;
+  --sans: 'Inter', -apple-system, 'Noto Sans TC', sans-serif;
+  --mono: ui-monospace, 'SF Mono', Menlo, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--sans);
+  line-height: 1.65;
+  padding: 2rem 1.5rem 6rem;
+  min-height: 100vh;
+}
+
+.kit-shell {
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+/* Header bar */
+.kit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px dashed var(--rule);
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.kit-header .back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--fg-mute);
+  text-decoration: none;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.kit-header .back:hover { color: var(--orange); }
+.kit-header .meta {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--fg-mute);
+  text-transform: uppercase;
+}
+
+/* Loading state */
+.kit-loading {
+  text-align: center;
+  padding: 4rem 0;
+  color: var(--fg-mute);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+}
+
+/* Kit content rendered from KIT.md */
+.kit-body h1 {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 500;
+  line-height: 1.15;
+  margin: 0 0 0.4rem;
+  letter-spacing: -0.01em;
+}
+.kit-body h2 {
+  font-family: var(--serif);
+  font-size: clamp(1.35rem, 2.5vw, 1.65rem);
+  font-weight: 500;
+  margin: 3rem 0 0.9rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+  letter-spacing: -0.005em;
+}
+.kit-body h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 1.6rem 0 0.6rem;
+  color: var(--orange);
+}
+.kit-body p {
+  margin: 0.6rem 0 1.1rem;
+  color: var(--fg);
+  font-size: 0.95rem;
+}
+.kit-body p + p { margin-top: 0; }
+.kit-body a {
+  color: var(--iris);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(131, 132, 189, 0.3);
+  transition: 0.2s;
+}
+.kit-body a:hover {
+  color: var(--orange);
+  border-bottom-color: var(--orange);
+}
+.kit-body strong { color: var(--fg); font-weight: 600; }
+.kit-body em { color: var(--orange); }
+.kit-body ul, .kit-body ol {
+  margin: 0.6rem 0 1.2rem 1.4rem;
+  font-size: 0.92rem;
+}
+.kit-body li {
+  margin-bottom: 0.4rem;
+  color: var(--fg);
+}
+.kit-body li::marker { color: var(--fg-mute); }
+.kit-body code {
+  font-family: var(--mono);
+  font-size: 0.86em;
+  background: var(--code-bg);
+  padding: 0.12em 0.42em;
+  border-radius: 3px;
+  color: var(--orange);
+  white-space: nowrap;
+}
+.kit-body pre {
+  background: var(--code-bg);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 1.1rem 1.3rem;
+  overflow-x: auto;
+  margin: 1rem 0 1.4rem;
+  font-size: 0.85rem;
+}
+.kit-body pre code {
+  background: none;
+  padding: 0;
+  color: var(--fg);
+  white-space: pre;
+}
+.kit-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.2rem 0 1.6rem;
+  font-size: 0.86rem;
+}
+.kit-body th, .kit-body td {
+  text-align: left;
+  padding: 0.55rem 0.75rem;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+}
+.kit-body th {
+  font-weight: 600;
+  color: var(--fg-mute);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--orange);
+}
+.kit-body td code {
+  font-size: 0.82em;
+  white-space: nowrap;
+}
+.kit-body hr {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 2.5rem 0;
+}
+
+/* ===== Rainbow summary · 摘要區彩虹動態 ===== */
+/* Applies to the first <blockquote> in the rendered KIT.md (the Mood / opening line). */
+.kit-body blockquote.rainbow-summary {
+  margin: 2rem 0 2.5rem;
+  padding: 1.6rem 1.8rem;
+  font-family: var(--serif);
+  font-size: clamp(1.2rem, 2.4vw, 1.7rem);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: -0.005em;
+  background: linear-gradient(
+    90deg,
+    #ff6b9d 0%,
+    #ffa45e 14%,
+    #ffd96b 28%,
+    #6bff9d 42%,
+    #6bd4ff 56%,
+    #a45eff 70%,
+    #ff6bd4 84%,
+    #ff6b9d 100%
+  );
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: rainbowFlow 7s linear infinite;
+  position: relative;
+  border-left: 3px solid;
+  border-image: linear-gradient(180deg, #ff6b9d, #ffa45e, #ffd96b, #6bff9d, #6bd4ff, #a45eff, #ff6bd4) 1;
+}
+.kit-body blockquote.rainbow-summary p {
+  margin: 0;
+  background: inherit;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.kit-body blockquote.rainbow-summary strong,
+.kit-body blockquote.rainbow-summary em {
+  background: inherit;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+@keyframes rainbowFlow {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+
+/* Reduced-motion: stop the flow but keep the gradient color */
+@media (prefers-reduced-motion: reduce) {
+  .kit-body blockquote.rainbow-summary {
+    animation: none;
+  }
+}
+
+/* Plain blockquote (any subsequent ones, if a kit ever has more) */
+.kit-body blockquote:not(.rainbow-summary) {
+  margin: 1.2rem 0;
+  padding: 0.8rem 1.2rem;
+  border-left: 2px solid var(--rule);
+  color: var(--fg-mute);
+  font-style: italic;
+}
+
+/* Footer */
+.kit-footer {
+  margin-top: 4rem;
+  padding-top: 1.5rem;
+  border-top: 1px dashed var(--rule);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-mute);
+}
+.kit-footer a {
+  color: var(--fg-mute);
+  text-decoration: none;
+  transition: 0.2s;
+}
+.kit-footer a:hover { color: var(--orange); }
+
+@media (max-width: 600px) {
+  body { padding: 1.5rem 1rem 4rem; }
+  .kit-body h2 { margin-top: 2.2rem; }
+  .kit-body table { font-size: 0.78rem; }
+  .kit-body th, .kit-body td { padding: 0.4rem 0.5rem; }
+}

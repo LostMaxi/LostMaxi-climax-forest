@@ -5,11 +5,10 @@
   const $meta = document.getElementById('kit-meta');
   if (!$body) return;
 
-  // Detect which file to load:
-  // - kits/index.html (overview)         → ./README.md
-  // - kits/{slug}/index.html (per-kit)   → ./KIT.md
-  const isOverview = document.documentElement.dataset.kit === 'overview';
-  const sourceFile = isOverview ? './README.md' : './KIT.md';
+  // Source file: explicit absolute path injected by each HTML page
+  // (relative paths break under Vercel cleanUrls + trailingSlash:false)
+  const sourceFile = window.KIT_MD || './KIT.md';
+  const isOverview = !!window.KIT_OVERVIEW;
 
   function parseFrontmatter(text) {
     const m = text.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);

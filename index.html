@@ -190,57 +190,34 @@ body {
 }
 .nav-tools .item {
   display: flex;
-  align-items: stretch;
-  border: 1px solid var(--ash);
-  background: transparent;
-  transition: border-color var(--dur) var(--ease);
-}
-.nav-tools .item:hover { border-color: var(--claude-orange); }
-.nav-tools .item .enter {
-  flex: 1 1 auto;
-  display: flex;
   flex-direction: column;
   gap: 0.15rem;
   padding: 0.55rem 0.8rem;
+  border: 1px solid var(--ash);
+  background: transparent;
   text-decoration: none;
   color: var(--bone);
   font-family: var(--f-en);
   font-size: 0.78rem;
   letter-spacing: 0.04em;
+  transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease);
 }
-.nav-tools .item .enter .zh {
+.nav-tools .item .zh {
   font-family: var(--f-zh);
   font-size: 0.72rem;
   color: var(--smoke);
   letter-spacing: 0.03em;
 }
-.nav-tools .item .enter:hover { color: var(--claude-orange); }
-.nav-tools .item .enter:hover .zh { color: var(--claude-orange-dim); }
-.nav-tools .item .manual {
-  flex: 0 0 auto;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 0.7rem;
-  border-left: 1px solid var(--ash);
-  text-decoration: none;
-  color: var(--smoke);
-  font-family: var(--f-zh);
-  font-size: 0.72rem;
-  letter-spacing: 0.05em;
-  white-space: nowrap;
-  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+.nav-tools .item:hover {
+  border-color: var(--claude-orange);
+  color: var(--claude-orange);
 }
-.nav-tools .item .manual:hover {
-  background: var(--claude-orange);
-  color: #FFFFFF;
-}
-.nav-tools .item.solo .enter { padding-right: 0.8rem; }
-.nav-tools .kit-row .enter {
+.nav-tools .item:hover .zh { color: var(--claude-orange-dim); }
+.nav-tools .kit-row .item {
   font-family: var(--f-zh);
   font-size: 0.74rem;
 }
-.nav-tools .kit-row .enter .en {
+.nav-tools .kit-row .item .en {
   font-family: var(--f-en);
   font-size: 0.66rem;
   letter-spacing: 0.1em;
@@ -1633,39 +1610,16 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
         <span class="zh" data-i18n="navToolsZh">工具入口</span>
       </div>
       <div class="row">
-        <div class="item">
-          <a class="enter" href="judge/" data-i18n="navJudge">A · Judge UI<span class="zh">林相評審</span></a>
-          <a class="manual" href="judge/README.md" data-i18n="navManual" title="說明手冊">說明手冊</a>
-        </div>
-        <div class="item">
-          <a class="enter" href="spine/" data-i18n="navSpine">B · Spine Compiler<span class="zh">骨架編譯</span></a>
-          <a class="manual" href="spine/README.md" data-i18n="navManual" title="說明手冊">說明手冊</a>
-        </div>
-        <div class="item solo">
-          <a class="enter" href="kits/README.md" data-i18n="navKits">C · Kits<span class="zh">五式套件總覽</span></a>
-        </div>
+        <a class="item enter" href="judge/" data-i18n="navJudge">A · Judge UI<span class="zh">林相評審</span></a>
+        <a class="item enter" href="spine/" data-i18n="navSpine">B · Spine Compiler<span class="zh">骨架編譯</span></a>
+        <a class="item enter" href="kits/README.md" data-i18n="navKits">C · Kits<span class="zh">五式套件總覽</span></a>
       </div>
       <div class="row kit-row">
-        <div class="item">
-          <a class="enter" href="kits/lusion-cinematic/KIT.md" data-i18n="navKitLusion">Lusion · Cinematic<span class="en">Cinematic</span></a>
-          <a class="manual" href="kits/lusion-cinematic/KIT.md" data-i18n="navManual" title="說明手冊">說明手冊</a>
-        </div>
-        <div class="item">
-          <a class="enter" href="kits/opal-product/KIT.md" data-i18n="navKitOpal">Opal · Product<span class="en">Product</span></a>
-          <a class="manual" href="kits/opal-product/KIT.md" data-i18n="navManual" title="說明手冊">說明手冊</a>
-        </div>
-        <div class="item">
-          <a class="enter" href="kits/hall-villeneuve/KIT.md" data-i18n="navKitHall">Hall · Villeneuve<span class="en">Villeneuve</span></a>
-          <a class="manual" href="kits/hall-villeneuve/KIT.md" data-i18n="navManual" title="說明手冊">說明手冊</a>
-        </div>
-        <div class="item">
-          <a class="enter" href="kits/swiss-pulse/KIT.md" data-i18n="navKitSwiss">Swiss · Pulse<span class="en">Swiss Pulse</span></a>
-          <a class="manual" href="kits/swiss-pulse/KIT.md" data-i18n="navManual" title="說明手冊">說明手冊</a>
-        </div>
-        <div class="item">
-          <a class="enter" href="kits/ig-commercial/KIT.md" data-i18n="navKitIg">IG · Commercial<span class="en">IG Commercial</span></a>
-          <a class="manual" href="kits/ig-commercial/KIT.md" data-i18n="navManual" title="說明手冊">說明手冊</a>
-        </div>
+        <a class="item enter" href="kits/lusion-cinematic/KIT.md" data-i18n="navKitLusion">Lusion · Cinematic<span class="en">Cinematic</span></a>
+        <a class="item enter" href="kits/opal-product/KIT.md" data-i18n="navKitOpal">Opal · Product<span class="en">Product</span></a>
+        <a class="item enter" href="kits/hall-villeneuve/KIT.md" data-i18n="navKitHall">Hall · Villeneuve<span class="en">Villeneuve</span></a>
+        <a class="item enter" href="kits/swiss-pulse/KIT.md" data-i18n="navKitSwiss">Swiss · Pulse<span class="en">Swiss Pulse</span></a>
+        <a class="item enter" href="kits/ig-commercial/KIT.md" data-i18n="navKitIg">IG · Commercial<span class="en">IG Commercial</span></a>
       </div>
     </nav>
   </header>
@@ -3231,7 +3185,6 @@ const I18N = {
     // Tools nav
     navToolsEn: 'Tools',
     navToolsZh: '工具入口 · 五式套件',
-    navManual: '說明手冊',
     navJudge: 'A · Judge UI<span class="zh">林相評審</span>',
     navSpine: 'B · Spine Compiler<span class="zh">骨架編譯</span>',
     navKits: 'C · Kits<span class="zh">五式套件總覽</span>',
@@ -3372,7 +3325,6 @@ const I18N = {
     // Tools nav
     navToolsEn: 'Tools',
     navToolsZh: 'tools · five kits',
-    navManual: 'Manual',
     navJudge: 'A · Judge UI<span class="zh">forest review</span>',
     navSpine: 'B · Spine Compiler<span class="zh">skeleton compile</span>',
     navKits: 'C · Kits<span class="zh">five kits overview</span>',
@@ -3514,7 +3466,6 @@ const I18N = {
     // Tools nav
     navToolsEn: 'Tools',
     navToolsZh: 'ツール入口 · 五式キット',
-    navManual: '取扱説明',
     navJudge: 'A · Judge UI<span class="zh">林相レビュー</span>',
     navSpine: 'B · Spine Compiler<span class="zh">骨格コンパイル</span>',
     navKits: 'C · Kits<span class="zh">五式キット総覧</span>',

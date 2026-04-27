@@ -968,7 +968,7 @@ body {
   .dot-nav { display: none; }
 }
 
-/* ===== TOUR HUD START · 新手白話導覽（不喜歡整段刪除即可 · 對應右側 dot-nav 章節）===== */
+/* ===== TOUR HUD START · 寬版細長頂條 · 不遮畫面（v2 · 2026-04-27） ===== */
 .tb-btn.tour-trigger {
   border-color: var(--iris-tint);
   color: var(--iris-tint);
@@ -978,150 +978,192 @@ body {
   color: var(--deep);
 }
 
+/* HUD 容器 · 永遠固定在 viewport top · 全寬 · 不遮 dot-nav / sticky actions / content */
 #tour-hud {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 9000;
   pointer-events: none;
   font-family: var(--f-zh), var(--f-en);
+  transform: translateY(-100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
-#tour-hud.on { pointer-events: auto; }
-
-/* 4-piece 遮罩（top/bottom/left/right）· 中間留洞給 spotlight 圈內清晰可見 */
-.tour-mask-piece {
-  position: absolute;
-  background: rgba(244, 237, 225, 0.55); /* 品牌淡米半透 · 不全黑 */
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+#tour-hud.on {
   pointer-events: auto;
-  transition: top 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              left 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-:root[data-theme="dark"] .tour-mask-piece {
-  background: rgba(26, 26, 26, 0.55);
+  transform: translateY(0);
 }
 
-.tour-spotlight {
-  position: absolute;
-  border-radius: 12px;
-  /* 紫色邊框標示當前焦點 · 不做圈內清晰（避免 mask 複雜度）*/
-  border: 3px solid var(--iris-tint);
-  box-shadow: 0 0 24px rgba(131, 132, 189, 0.4);
-  background: transparent;
-  pointer-events: none;
-  transition: top 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              left 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+/* 主條 · 三欄 grid：左 step+title / 中 body / 右 actions */
+.tour-bar {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(11rem, 16rem) 1fr auto;
+  gap: 1.1rem;
+  align-items: center;
+  padding: 0.6rem 1.1rem;
+  background: var(--deep-2);
+  border-bottom: 1px solid var(--ash);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.10);
 }
-.tour-spotlight.center {
-  /* 無對應元素時、隱藏 spotlight */
-  box-shadow: none;
-  background: transparent;
-  width: 0; height: 0;
+:root[data-theme="dark"] .tour-bar {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
 }
 
-.tour-tooltip {
+/* 進度條 · 2px 細線 · 對應 18 步走到哪 */
+.tour-progress-line {
   position: absolute;
+  bottom: -1px;
+  left: 0;
+  height: 2px;
+  background: var(--claude-orange);
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 左欄：step + title */
+.tour-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+.tour-step-num {
+  font-family: var(--f-en);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--claude-orange);
+}
+.tour-title {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--bone);
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 中欄：body · 預設 2 行截斷 · 滑鼠移上展開（內部 scroll） */
+.tour-body-wrap {
+  min-width: 0;
+  position: relative;
+}
+.tour-body {
+  font-size: 0.78rem;
+  color: var(--smoke);
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  max-height: 2.5em;
+  transition: max-height 0.3s ease;
+}
+.tour-body-wrap:hover .tour-body,
+.tour-body.expanded {
+  -webkit-line-clamp: unset;
+  display: block;
+  max-height: 50vh;
+  overflow-y: auto;
+  padding: 0.5rem 0.7rem;
+  margin: -0.5rem -0.7rem;
   background: var(--deep);
   border: 1px solid var(--ash);
-  border-radius: 14px;
-  padding: 1.6rem 1.8rem;
-  max-width: 420px;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-  pointer-events: auto;
-  transition: top 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 6px;
+  position: relative;
+  z-index: 2;
 }
-.tour-tooltip .tour-progress {
-  font-family: var(--f-en);
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
-  color: var(--smoke);
-  text-transform: uppercase;
-  margin-bottom: 0.4rem;
-}
-.tour-tooltip .tour-title {
-  font-family: var(--f-ser);
-  font-style: italic;
-  font-weight: 500;
-  font-size: 1.4rem;
-  color: var(--bone);
-  margin-bottom: 0.8rem;
-  line-height: 1.3;
-}
-.tour-tooltip .tour-body {
-  font-size: 0.92rem;
-  color: var(--bone);
-  line-height: 1.7;
-  margin-bottom: 1.2rem;
-}
-.tour-tooltip .tour-body strong {
+.tour-body strong {
   color: var(--iris-tint);
   font-weight: 500;
 }
-.tour-tooltip .tour-body ul {
-  margin: 0.6rem 0 0 0;
-  padding-left: 1.2rem;
+.tour-body ul {
+  margin: 0.3rem 0 0 0;
+  padding-left: 1rem;
 }
-.tour-tooltip .tour-body li {
-  margin-bottom: 0.3rem;
-  font-size: 0.86rem;
+.tour-body li {
+  margin-bottom: 0.15rem;
+  font-size: 0.74rem;
   color: var(--smoke);
 }
-.tour-tooltip .tour-actions {
+
+/* 右欄：actions · prev / next / skip / dismiss */
+.tour-actions {
   display: flex;
-  gap: 0.6rem;
+  gap: 0.4rem;
   align-items: center;
+  flex-wrap: nowrap;
 }
-.tour-tooltip .tour-actions .spacer { flex: 1; }
-.tour-tooltip .tour-btn {
-  padding: 0.5rem 0.95rem;
-  border-radius: 8px;
+.tour-btn {
+  padding: 0.35rem 0.7rem;
+  border-radius: 4px;
   border: 1px solid var(--ash);
   background: transparent;
   color: var(--bone);
-  font-family: var(--f-zh), var(--f-en);
-  font-size: 0.82rem;
+  font-family: var(--f-en);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
   cursor: pointer;
   transition: 0.15s;
+  white-space: nowrap;
 }
-.tour-tooltip .tour-btn:hover {
+.tour-btn:hover {
   border-color: var(--iris-tint);
   color: var(--iris-tint);
 }
-.tour-tooltip .tour-btn.primary {
+.tour-btn.primary {
   background: var(--iris-tint);
   color: var(--deep);
   border-color: var(--iris-tint);
+  font-weight: 500;
 }
-.tour-tooltip .tour-btn.primary:hover {
+.tour-btn.primary:hover {
   background: var(--claude-orange);
   border-color: var(--claude-orange);
+  color: #FFFFFF;
 }
-.tour-tooltip .tour-skip {
+.tour-skip {
   background: transparent;
   border: none;
   color: var(--smoke);
-  font-size: 0.78rem;
+  font-size: 0.7rem;
+  font-family: var(--f-zh), var(--f-en);
   cursor: pointer;
   text-decoration: underline;
+  padding: 0.35rem 0.4rem;
+  white-space: nowrap;
 }
-.tour-tooltip .tour-skip:hover { color: var(--claude-orange); }
-.tour-tooltip .tour-skip.dismiss { font-style: italic; }
-.tour-tooltip .tour-skip.dismiss:hover { color: var(--iris-tint); }
-.tour-tooltip .tour-actions { flex-wrap: wrap; row-gap: 0.5rem; }
+.tour-skip:hover { color: var(--claude-orange); }
+.tour-skip.dismiss { font-style: italic; }
+.tour-skip.dismiss:hover { color: var(--iris-tint); }
 
-@media (max-width: 700px) {
-  .tour-tooltip {
-    max-width: 92vw;
-    left: 4vw !important;
-    right: 4vw !important;
-    bottom: 1rem !important;
-    top: auto !important;
+/* 焦點高亮 · 取代原本的 spotlight 遮罩 · 純元素 outline + 微脈動 */
+.tour-target-active {
+  outline: 2px solid var(--iris-tint);
+  outline-offset: 6px;
+  border-radius: 6px;
+  animation: tourPulse 1.6s ease-in-out infinite;
+  scroll-margin-top: 96px; /* 滾動時自動避開 HUD bar 高度 */
+}
+@keyframes tourPulse {
+  0%, 100% { outline-color: var(--iris-tint); }
+  50% { outline-color: var(--claude-orange); }
+}
+
+/* HUD on 時 · body 加 padding 避免內容被頂條遮住 */
+body.tour-on { padding-top: 90px !important; }
+
+@media (max-width: 900px) {
+  .tour-bar {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    padding: 0.55rem 0.8rem;
   }
+  .tour-actions { justify-content: flex-end; }
+  .tour-title { white-space: normal; }
+  body.tour-on { padding-top: 140px !important; }
 }
 /* ===== TOUR HUD END ===== */
 
@@ -3861,32 +3903,29 @@ const I18N = {
   }
 </script>
 
-<!-- ===== TOUR HUD START · 新手白話導覽 markup（不喜歡整段刪除即可）===== -->
+<!-- ===== TOUR HUD START · 寬版細長頂條 markup（不喜歡整段刪除即可）===== -->
 <div id="tour-hud" hidden>
-  <!-- 4-piece 遮罩：top/bottom/left/right 四塊獨立 blur · 中間留洞給 spotlight 清晰 -->
-  <div class="tour-mask-piece tour-mask-top" id="tour-mask-top"></div>
-  <div class="tour-mask-piece tour-mask-bottom" id="tour-mask-bottom"></div>
-  <div class="tour-mask-piece tour-mask-left" id="tour-mask-left"></div>
-  <div class="tour-mask-piece tour-mask-right" id="tour-mask-right"></div>
-  <div class="tour-spotlight" id="tour-spotlight"></div>
-  <div class="tour-tooltip" id="tour-tooltip">
-    <div class="tour-progress" id="tour-progress">1 / 17</div>
-    <h3 class="tour-title" id="tour-title"></h3>
-    <div class="tour-body" id="tour-body"></div>
+  <div class="tour-bar" role="dialog" aria-label="Tour HUD">
+    <div class="tour-meta">
+      <span class="tour-step-num" id="tour-progress">STEP 01 / 18</span>
+      <span class="tour-title" id="tour-title"></span>
+    </div>
+    <div class="tour-body-wrap" title="hover to expand">
+      <div class="tour-body" id="tour-body"></div>
+    </div>
     <div class="tour-actions">
-      <button type="button" class="tour-skip" id="tour-skip" title="只關掉這次、下次進入還會出現">略過 · SKIP</button>
-      <button type="button" class="tour-skip dismiss" id="tour-dismiss" title="永久關閉、下次不再自動跳出（仍可從頂部「✨ 新手導覽」手動開啟）">下次不再顯示</button>
-      <span class="spacer"></span>
       <button type="button" class="tour-btn" id="tour-prev">← 上一步</button>
       <button type="button" class="tour-btn primary" id="tour-next">下一步 →</button>
+      <button type="button" class="tour-skip" id="tour-skip" title="只關掉這次、下次進入還會出現">略過 · SKIP</button>
+      <button type="button" class="tour-skip dismiss" id="tour-dismiss" title="永久關閉、下次不再自動跳出（仍可從頂部「新手導覽」手動開啟）">下次不再顯示</button>
     </div>
+    <div class="tour-progress-line" id="tour-progress-line"></div>
   </div>
 </div>
 
 <script>
-/* ===== TOUR HUD JS · 新手白話導覽（對應右側 dot-nav 章節）===== */
+/* ===== TOUR HUD JS · 寬版細長頂條 v2 · 不遮畫面 · 元素 outline 高亮 ===== */
 (function(){
-  // tour 內容改從 I18N dict 動態取（zh / en / ja 在語言切換時即時更新）
   const tourLang = () => {
     const l = document.documentElement.getAttribute('lang');
     if (l === 'en') return 'en';
@@ -3897,36 +3936,11 @@ const I18N = {
   const getSteps = () => tourDict().tourSteps || I18N.zh.tourSteps;
 
   let curr = 0;
-  const hud = document.getElementById('tour-hud');
-  const spotlight = document.getElementById('tour-spotlight');
-  const maskTop = document.getElementById('tour-mask-top');
-  const maskBottom = document.getElementById('tour-mask-bottom');
-  const maskLeft = document.getElementById('tour-mask-left');
-  const maskRight = document.getElementById('tour-mask-right');
+  let lastTarget = null;
 
-  function updateMask(r) {
-    const vw = window.innerWidth;
-    const vh = window.innerHeight;
-    if (!r) {
-      // 整片模式（無 spotlight）· 只用 top piece 蓋整屏
-      maskTop.style.cssText = 'display:block;top:0;left:0;width:100%;height:100%;';
-      maskBottom.style.display = 'none';
-      maskLeft.style.display = 'none';
-      maskRight.style.display = 'none';
-      return;
-    }
-    const pad = 6;
-    const t = Math.max(0, r.top - pad);
-    const b = Math.min(vh, r.bottom + pad);
-    const l = Math.max(0, r.left - pad);
-    const ri = Math.min(vw, r.right + pad);
-    maskTop.style.cssText    = `display:block;top:0;left:0;width:100%;height:${t}px;`;
-    maskBottom.style.cssText = `display:block;top:${b}px;left:0;width:100%;height:${vh - b}px;`;
-    maskLeft.style.cssText   = `display:block;top:${t}px;left:0;width:${l}px;height:${b - t}px;`;
-    maskRight.style.cssText  = `display:block;top:${t}px;left:${ri}px;width:${vw - ri}px;height:${b - t}px;`;
-  }
-  const tooltip = document.getElementById('tour-tooltip');
+  const hud = document.getElementById('tour-hud');
   const $progress = document.getElementById('tour-progress');
+  const $progressLine = document.getElementById('tour-progress-line');
   const $title = document.getElementById('tour-title');
   const $body = document.getElementById('tour-body');
   const btnPrev = document.getElementById('tour-prev');
@@ -3943,19 +3957,26 @@ const I18N = {
     try { localStorage.setItem(DISMISS_KEY, '1'); } catch (e) {}
   };
 
+  function clearHighlight() {
+    if (lastTarget) {
+      lastTarget.classList.remove('tour-target-active');
+      lastTarget = null;
+    }
+  }
+
   function start() {
     curr = 0;
     hud.hidden = false;
-    hud.classList.add('on');
-    document.body.style.overflow = 'hidden';
+    document.body.classList.add('tour-on');
+    requestAnimationFrame(() => hud.classList.add('on'));
     show();
   }
 
   function end() {
     hud.classList.remove('on');
-    hud.hidden = true;
-    document.body.style.overflow = '';
-    // 結束後跳回首頁上方（避免 user 卡在某個 section 不知道在哪）
+    document.body.classList.remove('tour-on');
+    clearHighlight();
+    setTimeout(() => { hud.hidden = true; }, 400);
     try {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (e) {
@@ -3975,109 +3996,32 @@ const I18N = {
     const steps = getSteps();
     const dict = tourDict();
     const s = steps[curr];
-    $progress.textContent = `${curr + 1} / ${steps.length}`;
+    const total = steps.length;
+    $progress.textContent = `STEP ${String(curr + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
+    $progressLine.style.width = `${((curr + 1) / total) * 100}%`;
     $title.textContent = s.title;
     $body.innerHTML = s.body;
     btnPrev.style.visibility = curr === 0 ? 'hidden' : 'visible';
-    btnNext.textContent = curr === steps.length - 1 ? dict.tourDone : dict.tourNext;
+    btnNext.textContent = curr === total - 1 ? dict.tourDone : dict.tourNext;
     syncTourChrome();
 
+    clearHighlight();
     if (s.sel) {
       const target = document.querySelector(s.sel);
       if (target) {
-        // toolbar 元素（如 pool-link / tour-btn）在頁面頂部、用 start 才能確保滑到 viewport 內
-        // 用 instant scroll 而非 smooth · smooth 跨段距離長時 setTimeout 不可靠 · spotlight 會釘在過渡 rect 上
-        const isTopbar = target.closest('.topbar');
-        target.scrollIntoView({
-          behavior: 'instant',
-          block: isTopbar ? 'start' : 'center'
-        });
-        placeSpot(target);
+        target.classList.add('tour-target-active');
+        lastTarget = target;
+        // scroll-margin-top 在 CSS 已處理 90px HUD 高度；smooth 平滑捲動到目標
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         return;
       }
     }
-    // 無對應元素 · 居中模式 · 整片 mask 模糊
-    fallbackCenter();
+    // 無對應元素（welcome / 結尾）· 不高亮、不滾動 · HUD 條本身就是焦點
   }
 
-  function fallbackCenter() {
-    spotlight.classList.add('center');
-    spotlight.style.top = '50vh';
-    spotlight.style.left = '50vw';
-    spotlight.style.width = '0';
-    spotlight.style.height = '0';
-    updateMask(null);
-    placeTooltipCenter();
-  }
-
-  function placeSpot(target) {
-    const r = target.getBoundingClientRect();
-    const vw = window.innerWidth;
-    const vh = window.innerHeight;
-    // 防呆：元素在 viewport 外 / rect 異常 → fallback 整片 mask
-    if (r.bottom < 0 || r.top > vh || r.right < 0 || r.left > vw || r.width === 0 || r.height === 0) {
-      fallbackCenter();
-      return;
-    }
-    spotlight.classList.remove('center');
-    const pad = 6;
-    // clamp spotlight 在 viewport 內、避免 spotlight 超出 viewport 造成 mask 翻轉
-    const sTop = Math.max(0, r.top - pad);
-    const sLeft = Math.max(0, r.left - pad);
-    const sBottom = Math.min(vh, r.bottom + pad);
-    const sRight = Math.min(vw, r.right + pad);
-    spotlight.style.top = `${sTop}px`;
-    spotlight.style.left = `${sLeft}px`;
-    spotlight.style.width = `${sRight - sLeft}px`;
-    spotlight.style.height = `${sBottom - sTop}px`;
-    // mask 用 clamp 後的 rect 計算
-    updateMask({ top: sTop, bottom: sBottom, left: sLeft, right: sRight });
-    placeTooltip({ top: sTop, bottom: sBottom, left: sLeft, right: sRight });
-  }
-
-  function placeTooltip(r) {
-    const tipW = tooltip.offsetWidth || 420;
-    const tipH = tooltip.offsetHeight || 280;
-    const vw = window.innerWidth;
-    const vh = window.innerHeight;
-    const margin = 24;
-
-    let top, left;
-    // 優先右側（Maxi 2026-04-26 指定）
-    if (r.right + margin + tipW < vw) {
-      left = r.right + margin;
-      top = Math.max(margin, Math.min(r.top, vh - tipH - margin));
-    }
-    // 右側放不下 · 嘗試左側（不退到右邊內側、避免擋住 spotlight 元素）
-    else if (r.left - margin - tipW > 0) {
-      left = r.left - margin - tipW;
-      top = Math.max(margin, Math.min(r.top, vh - tipH - margin));
-    }
-    // 左右都不夠（spotlight 幾乎佔全寬）· 上方/下方 · tooltip 對齊 spotlight 左 1/4
-    // 留右半空間給 spotlight 內可能的 CTA 按鈕（如第 11 步 #sec-actions 的凝相/風吹一回/清空土地）
-    else {
-      const targetCx = r.left + (r.right - r.left) * 0.25;
-      left = Math.max(margin, Math.min(targetCx - tipW / 2, vw - tipW - margin));
-      if (r.top - margin - tipH > 0) {
-        top = r.top - margin - tipH;
-      } else {
-        top = Math.min(vh - tipH - margin, r.bottom + margin);
-      }
-    }
-    tooltip.style.top = `${top}px`;
-    tooltip.style.left = `${left}px`;
-  }
-
-  function placeTooltipCenter() {
-    const tipW = tooltip.offsetWidth || 420;
-    const tipH = tooltip.offsetHeight || 280;
-    tooltip.style.top = `${(window.innerHeight - tipH) / 2}px`;
-    tooltip.style.left = `${(window.innerWidth - tipW) / 2}px`;
-  }
-
-  btnTrigger?.addEventListener('click', start); // 手動觸發 · 不論 dismissed 都可開
-  btnSkip?.addEventListener('click', end); // 略過 · 不寫 localStorage、下次自動啟動還會跳
-  btnDismiss?.addEventListener('click', () => { // 下次不再顯示 · 寫 localStorage 永久關閉
+  btnTrigger?.addEventListener('click', start);
+  btnSkip?.addEventListener('click', end);
+  btnDismiss?.addEventListener('click', () => {
     setDismissed();
     end();
   });
@@ -4088,33 +4032,28 @@ const I18N = {
     else end();
   });
 
-  // 語言切換時即時更新 tour 文字（即使 hud 沒開、trigger 按鈕也要對齊）
   document.addEventListener('cf:lang-changed', () => {
     syncTourChrome();
     if (hud.classList.contains('on')) show();
   });
-  // 初次載入也對齊
   syncTourChrome();
-  // ESC 關閉（只當次、不 dismiss）
+
   document.addEventListener('keydown', (e) => {
     if (!hud.classList.contains('on')) return;
+    // 不攔截 input / textarea 內的鍵盤事件
+    const tag = (e.target && e.target.tagName) || '';
+    if (tag === 'INPUT' || tag === 'TEXTAREA') return;
     if (e.key === 'Escape') end();
     if (e.key === 'ArrowRight') btnNext.click();
     if (e.key === 'ArrowLeft') btnPrev.click();
   });
-  // 視窗 resize 重算位置
-  window.addEventListener('resize', () => {
-    if (hud.classList.contains('on')) show();
-  });
 
-  // 自動啟動：第一次進入（無 localStorage flag）· splash 已搬到獨立頁、進來時 splash 已結束
   function maybeAutoStart() {
     if (isDismissed()) return;
     setTimeout(() => {
-      if (!isDismissed()) start(); // 雙重檢查（萬一 user 在等待期間手動開過又關了）
+      if (!isDismissed()) start();
     }, 800);
   }
-  // DOM ready 後評估
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', maybeAutoStart);
   } else {

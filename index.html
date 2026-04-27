@@ -157,6 +157,100 @@ body {
   line-height: 1.75;
 }
 
+/* Tools nav · 工具入口（Judge / Spine / Kits）*/
+.nav-tools {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px dashed var(--ash);
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+.nav-tools .nav-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  font-family: var(--f-en);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--claude-orange);
+}
+.nav-tools .nav-head .zh {
+  font-family: var(--f-zh);
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  text-transform: none;
+  color: var(--smoke);
+}
+.nav-tools .row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 0.55rem;
+}
+.nav-tools .item {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid var(--ash);
+  background: transparent;
+  transition: border-color var(--dur) var(--ease);
+}
+.nav-tools .item:hover { border-color: var(--claude-orange); }
+.nav-tools .item .enter {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.55rem 0.8rem;
+  text-decoration: none;
+  color: var(--bone);
+  font-family: var(--f-en);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+}
+.nav-tools .item .enter .zh {
+  font-family: var(--f-zh);
+  font-size: 0.72rem;
+  color: var(--smoke);
+  letter-spacing: 0.03em;
+}
+.nav-tools .item .enter:hover { color: var(--claude-orange); }
+.nav-tools .item .enter:hover .zh { color: var(--claude-orange-dim); }
+.nav-tools .item .manual {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.7rem;
+  border-left: 1px solid var(--ash);
+  text-decoration: none;
+  color: var(--smoke);
+  font-family: var(--f-zh);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.nav-tools .item .manual:hover {
+  background: var(--claude-orange);
+  color: #FFFFFF;
+}
+.nav-tools .item.solo .enter { padding-right: 0.8rem; }
+.nav-tools .kit-row .enter {
+  font-family: var(--f-zh);
+  font-size: 0.74rem;
+}
+.nav-tools .kit-row .enter .en {
+  font-family: var(--f-en);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  color: var(--smoke);
+  text-transform: uppercase;
+}
+@media (max-width: 560px) {
+  .nav-tools .row { grid-template-columns: 1fr; }
+}
+
 /* Dimension section */
 .dim {
   margin-bottom: 2.75rem;
@@ -1532,6 +1626,48 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
     <p style="margin-top: 0.35rem; font-family: var(--f-zh); font-size: 0.82rem; color: var(--smoke); letter-spacing: 0.05em;" data-i18n="heroTaglineZh">
       在速度飛快的時代 · 為慢手而生 · 材料有它的聲音
     </p>
+
+    <nav class="nav-tools" id="nav-tools" aria-label="Tools navigation">
+      <div class="nav-head">
+        <span data-i18n="navToolsEn">Tools</span>
+        <span class="zh" data-i18n="navToolsZh">工具入口</span>
+      </div>
+      <div class="row">
+        <div class="item">
+          <a class="enter" href="judge/" data-i18n="navJudge">A · Judge UI<span class="zh">林相評審</span></a>
+          <a class="manual" href="judge/README.md" data-i18n="navManual" title="說明手冊">說明手冊</a>
+        </div>
+        <div class="item">
+          <a class="enter" href="spine/" data-i18n="navSpine">B · Spine Compiler<span class="zh">骨架編譯</span></a>
+          <a class="manual" href="spine/README.md" data-i18n="navManual" title="說明手冊">說明手冊</a>
+        </div>
+        <div class="item solo">
+          <a class="enter" href="kits/README.md" data-i18n="navKits">C · Kits<span class="zh">五式套件總覽</span></a>
+        </div>
+      </div>
+      <div class="row kit-row">
+        <div class="item">
+          <a class="enter" href="kits/lusion-cinematic/KIT.md" data-i18n="navKitLusion">Lusion · Cinematic<span class="en">Cinematic</span></a>
+          <a class="manual" href="kits/lusion-cinematic/KIT.md" data-i18n="navManual" title="說明手冊">說明手冊</a>
+        </div>
+        <div class="item">
+          <a class="enter" href="kits/opal-product/KIT.md" data-i18n="navKitOpal">Opal · Product<span class="en">Product</span></a>
+          <a class="manual" href="kits/opal-product/KIT.md" data-i18n="navManual" title="說明手冊">說明手冊</a>
+        </div>
+        <div class="item">
+          <a class="enter" href="kits/hall-villeneuve/KIT.md" data-i18n="navKitHall">Hall · Villeneuve<span class="en">Villeneuve</span></a>
+          <a class="manual" href="kits/hall-villeneuve/KIT.md" data-i18n="navManual" title="說明手冊">說明手冊</a>
+        </div>
+        <div class="item">
+          <a class="enter" href="kits/swiss-pulse/KIT.md" data-i18n="navKitSwiss">Swiss · Pulse<span class="en">Swiss Pulse</span></a>
+          <a class="manual" href="kits/swiss-pulse/KIT.md" data-i18n="navManual" title="說明手冊">說明手冊</a>
+        </div>
+        <div class="item">
+          <a class="enter" href="kits/ig-commercial/KIT.md" data-i18n="navKitIg">IG · Commercial<span class="en">IG Commercial</span></a>
+          <a class="manual" href="kits/ig-commercial/KIT.md" data-i18n="navManual" title="說明手冊">說明手冊</a>
+        </div>
+      </div>
+    </nav>
   </header>
 
   <!-- 你帶來的陽光與土（使用者元素 · 你是主角）-->
@@ -3092,6 +3228,18 @@ const I18N = {
     heroIntro: '一把工具。帶進你的陽光和土壤，系統把骨架縫妥。幾個問題，或風吹一回，按下凝相，帶走那段文字貼給 Claude Design——收專屬網頁。自然規律已守住瑣事，你決定方向。',
     heroTaglineEn: 'architecture is the skeleton · the vision is yours',
     heroTaglineZh: '在速度飛快的時代 · 為慢手而生 · 材料有它的聲音',
+    // Tools nav
+    navToolsEn: 'Tools',
+    navToolsZh: '工具入口 · 五式套件',
+    navManual: '說明手冊',
+    navJudge: 'A · Judge UI<span class="zh">林相評審</span>',
+    navSpine: 'B · Spine Compiler<span class="zh">骨架編譯</span>',
+    navKits: 'C · Kits<span class="zh">五式套件總覽</span>',
+    navKitLusion: 'Lusion · 電影感<span class="en">Cinematic</span>',
+    navKitOpal: 'Opal · 產品聚焦<span class="en">Product</span>',
+    navKitHall: 'Hall · 維倫紐瓦<span class="en">Villeneuve</span>',
+    navKitSwiss: 'Swiss · 脈動排版<span class="en">Swiss Pulse</span>',
+    navKitIg: 'IG · 商業敘事<span class="en">IG Commercial</span>',
     // Profile
     profileTtl: 'Design DNA · 設計 DNA <em>· color 色彩 · font 字型 · brand 品牌</em>',
     presetYours: 'Custom · 自訂',
@@ -3221,6 +3369,18 @@ const I18N = {
     heroIntro: "A tool. Bring the light and soil — the skeleton is stitched for you. A few questions, or let the wind decide. Hit Form, take the text, paste to Claude Design — a webpage arrives. Natural rules already handle the fuss; you decide the direction.",
     heroTaglineEn: 'architecture is the skeleton · the vision is yours',
     heroTaglineZh: 'made for slow hands in a fast world · materials have their own voice',
+    // Tools nav
+    navToolsEn: 'Tools',
+    navToolsZh: 'tools · five kits',
+    navManual: 'Manual',
+    navJudge: 'A · Judge UI<span class="zh">forest review</span>',
+    navSpine: 'B · Spine Compiler<span class="zh">skeleton compile</span>',
+    navKits: 'C · Kits<span class="zh">five kits overview</span>',
+    navKitLusion: 'Lusion · Cinematic<span class="en">Cinematic</span>',
+    navKitOpal: 'Opal · Product<span class="en">Product</span>',
+    navKitHall: 'Hall · Villeneuve<span class="en">Villeneuve</span>',
+    navKitSwiss: 'Swiss · Pulse<span class="en">Swiss Pulse</span>',
+    navKitIg: 'IG · Commercial<span class="en">IG Commercial</span>',
     // Profile
     profileTtl: 'Design DNA · 設計 DNA <em>· color 色彩 · font 字型 · brand 品牌</em>',
     presetYours: 'Custom · 自訂',
@@ -3351,6 +3511,18 @@ const I18N = {
     heroIntro: '一つの道具。あなたの陽光と土を持ち込めば、骨格はこちらが縫い合わせます。いくつかの問い、または風を一吹き、凝相を押してテキストを持ち帰り Claude Design に貼り付ける——専用ページが届きます。自然のルールが細部を守り、方向はあなたが決める。',
     heroTaglineEn: 'architecture is the skeleton · the vision is yours',
     heroTaglineZh: '速さの時代に · 遅い手のために · 素材には素材の声がある',
+    // Tools nav
+    navToolsEn: 'Tools',
+    navToolsZh: 'ツール入口 · 五式キット',
+    navManual: '取扱説明',
+    navJudge: 'A · Judge UI<span class="zh">林相レビュー</span>',
+    navSpine: 'B · Spine Compiler<span class="zh">骨格コンパイル</span>',
+    navKits: 'C · Kits<span class="zh">五式キット総覧</span>',
+    navKitLusion: 'Lusion · 映画的<span class="en">Cinematic</span>',
+    navKitOpal: 'Opal · プロダクト<span class="en">Product</span>',
+    navKitHall: 'Hall · ヴィルヌーヴ<span class="en">Villeneuve</span>',
+    navKitSwiss: 'Swiss · パルス<span class="en">Swiss Pulse</span>',
+    navKitIg: 'IG · コマーシャル<span class="en">IG Commercial</span>',
     // Profile
     profileTtl: 'Design DNA · デザイン DNA <em>· color 色 · font フォント · brand ブランド</em>',
     presetYours: 'Custom · カスタム',

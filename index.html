@@ -1558,6 +1558,18 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
       </div>
 
       <div class="step">
+        <div class="num">★</div>
+        <div>
+          <h3 data-i18n="stepToolsTitle">工具入口 <em>· 進階八鍵 · 不需要也能跳過</em></h3>
+          <p data-i18n="stepToolsIntro">頁首 hero 下方多了一條<strong>工具入口</strong>橫條（虛線分隔）。三個主鍵 + 五個套件、每個都是直接連往對應頁面或檔案。</p>
+          <p data-i18n="stepToolsJudge"><strong>A · Judge UI（林相評審）</strong> · 把你產的網頁 HTML 拖進去、系統用 5 維（協調 / 風格 / 2D / 3D / 獨創）打 1-10 星 · 屬客觀判斷、最終決策仍在你手上。</p>
+          <p data-i18n="stepToolsSpine"><strong>B · Spine Compiler（骨架編譯）</strong> · 互動式編譯器、邊調 Kit 與 OPEN 軸邊看 prompt 預覽、按一鍵 copy。比主頁的「凝相」更細緻、給已經懂 prompt 結構的人。</p>
+          <p data-i18n="stepToolsKits"><strong>C · Kits（五式套件）</strong> · 五張預先寫好的「骨架食譜」KIT.md：Lusion 電影感 / Opal 產品聚焦 / Hall 維倫紐瓦 / Swiss 脈動排版 / IG 商業敘事。直接讀整張卡、學會結構、再回來自己組。</p>
+          <p data-i18n="stepToolsNote">主流程（凝相 → 帶走 → 貼 Claude Design）<strong>完全不需要這些工具也能完成</strong>。它們是給想多走一步的人。</p>
+        </div>
+      </div>
+
+      <div class="step">
         <div class="num">+</div>
         <div>
           <h3 data-i18n="stepPoolTitle">森林對話池 <em>· 把你的林留下，或看別人的</em></h3>
@@ -3157,6 +3169,12 @@ const I18N = {
     poolBtn: '森林對話池 · 訪客的種子',
     helpTitle: '四步，做出你的網頁',
     helpSub: 'Four steps · your first website',
+    stepToolsTitle: '工具入口 <em>· 進階八鍵 · 不需要也能跳過</em>',
+    stepToolsIntro: '頁首 hero 下方多了一條<strong>工具入口</strong>橫條（虛線分隔）。三個主鍵 + 五個套件、每個都是直接連往對應頁面或檔案。',
+    stepToolsJudge: '<strong>A · Judge UI（林相評審）</strong> · 把你產的網頁 HTML 拖進去、系統用 5 維（協調 / 風格 / 2D / 3D / 獨創）打 1-10 星 · 屬客觀判斷、最終決策仍在你手上。',
+    stepToolsSpine: '<strong>B · Spine Compiler（骨架編譯）</strong> · 互動式編譯器、邊調 Kit 與 OPEN 軸邊看 prompt 預覽、按一鍵 copy。比主頁的「凝相」更細緻、給已經懂 prompt 結構的人。',
+    stepToolsKits: '<strong>C · Kits（五式套件）</strong> · 五張預先寫好的「骨架食譜」KIT.md：Lusion 電影感 / Opal 產品聚焦 / Hall 維倫紐瓦 / Swiss 脈動排版 / IG 商業敘事。直接讀整張卡、學會結構、再回來自己組。',
+    stepToolsNote: '主流程（凝相 → 帶走 → 貼 Claude Design）<strong>完全不需要這些工具也能完成</strong>。它們是給想多走一步的人。',
     stepPoolTitle: '森林對話池 <em>· 把你的林留下，或看別人的</em>',
     stepPoolBody: '頂端有「<strong>森林對話池</strong>」入口。那是訪客留下種子的地方——一片林教另一片林怎麼長。',
     stepPoolMech: '<strong>分享機制</strong>：凝相之後若你願意，按「分享到森林對話」把這次的選擇與 DNA（光、土壤、品牌名、字型、六軸選擇）匿名送進去。<strong>純自願</strong> · 不送 prompt 文字、不送個資。',
@@ -3273,7 +3291,7 @@ const I18N = {
     tourDone: '完成',
     poolLinkTitle: '森林對話池 · 看訪客的林相 / 把你的林分享出去',
     tourSteps: [
-      { sel: null, title: '歡迎 · 開始你的第一片林', body: '這是一個<strong>工具</strong>、不是 AI 平台、不是 SaaS。<br/><br/>它幫你準備一段給 <strong>Claude Design</strong> 用的文字、讓 Claude Design 生出<strong>屬於你的</strong>網頁。<br/><br/>完全不懂網站？沒關係。我們一起走過 17 個小步驟、每步都用白話告訴你在做什麼。' },
+      { sel: null, title: '歡迎 · 開始你的第一片林', body: '這是一個<strong>工具</strong>、不是 AI 平台、不是 SaaS。<br/><br/>它幫你準備一段給 <strong>Claude Design</strong> 用的文字、讓 Claude Design 生出<strong>屬於你的</strong>網頁。<br/><br/>完全不懂網站？沒關係。我們一起走過 18 個小步驟、每步都用白話告訴你在做什麼。' },
       { sel: '#sec-profile', title: '印記 · 你的「光」是什麼', body: '所有網頁都需要：<br/>① <strong>品牌名</strong>——給網頁的名字<br/>② <strong>主色</strong>——你想要的主要顏色<br/>③ <strong>字型</strong>——文字長什麼樣子<br/><br/>這三樣 = 你帶進來的「光」。<br/>完全不懂？點頂部的「<strong>Maxi</strong>」按鈕看範例、再改成你想要的。' },
       { sel: '#sec-s1', title: '第一題 · 你的網頁要做什麼？', body: '白話：你做這個網頁是為了什麼？<br/><br/>例如：<ul><li>賣東西（電商）</li><li>放作品集</li><li>講一個故事</li><li>給人預約服務</li><li>辦活動報名</li><li>放履歷</li></ul>從清單選一個最接近的就好。' },
       { sel: '#sec-s2', title: '第二題 · 主角是什麼？', body: '白話：你網頁主要是「在介紹什麼」？<br/><br/>例如：<ul><li>實體商品（杯子、衣服）</li><li>軟體 App</li><li>人（你自己 / 名人）</li><li>團隊 / 工作室</li><li>客戶案例</li><li>抽象概念 / 活動</li></ul>主角不同、整個網頁長相會不一樣。' },
@@ -3288,6 +3306,7 @@ const I18N = {
       { sel: '#sec-ref', title: '四片參考林', body: '白話：這裡放了<strong>四個範例林</strong>讓你對照。<br/><br/>看別人怎麼搭配色彩、字型、六軸、孢子、最後生出什麼樣的網頁。<br/><br/>給你選擇方向時的靈感。' },
       { sel: '#sec-gallery', title: '池魂 · Deep Pool', body: '白話：這裡是<strong>示範範例池</strong>——19 顆物理視覺現象當靈感(雙狹縫、Moiré、馬赫帶等)。<br/><br/>不需要懂這些、看圖找感覺就好。' },
       { sel: '#sec-dna', title: 'DNA 指紋(可略過)', body: '白話：這是<strong>進階展示區</strong>。<br/><br/>給你看不同 prompt 配方做出的不同結果指紋。<br/><br/>完全可以略過、不影響你做你的網頁。' },
+      { sel: '#nav-tools', title: '工具入口 · 進階八鍵（可全部跳過）', body: '頁首下方多了一條<strong>工具入口</strong>。<br/><br/>三主鍵：<ul><li><strong>A · Judge UI</strong>——把產出的 HTML 拖進去、5 維打分</li><li><strong>B · Spine Compiler</strong>——更細緻的 prompt 編譯器</li><li><strong>C · Kits</strong>——五張預寫骨架卡的總覽</li></ul>五個 Kit：Lusion / Opal / Hall / Swiss / IG。<br/><br/>主流程不需要這些、給想多走一步的人。' },
       { sel: '#pool-link', title: '森林對話池 · 看別人的林', body: '白話：點頂部「<strong>森林對話池</strong>」可以看訪客留下的林、領一點啟發走自己的路。<br/><br/>也可以把你做的林留下、給下一個園丁學。<br/><br/>是「<strong>池</strong>」、不是排行榜——人類在池裡共同生長。' },
       { sel: '#btn-rand', title: '學完了 · 走自己的路', body: '你已經知道整個流程了。<br/><br/><ul><li>不確定？按「<strong>風吹一回</strong>」讓系統幫你選</li><li>想看別人的？點頂部「<strong>森林對話池</strong>」</li><li>重做？按「<strong>清空土地</strong>」</li></ul>這是工具、可以重複用。' }
     ]
@@ -3297,6 +3316,12 @@ const I18N = {
     poolBtn: 'Forest Pool · visitors\' seeds',
     helpTitle: 'Four steps to your first page',
     helpSub: 'Four steps · your first website',
+    stepToolsTitle: 'Tools <em>· eight extra entries · skippable</em>',
+    stepToolsIntro: 'A <strong>Tools</strong> strip sits below the hero (dashed divider). Three primary keys + five kits, each a direct link to its page or file.',
+    stepToolsJudge: '<strong>A · Judge UI</strong> · drop your generated HTML in; the system rates 5 dimensions (coherence / style / 2D / 3D / originality) on a 1-10 scale. Objective scoring; final call stays with you.',
+    stepToolsSpine: '<strong>B · Spine Compiler</strong> · interactive editor — tweak Kit and OPEN axes while previewing the prompt, copy with one click. Finer-grained than the home-page Form, for folks who already know prompt structure.',
+    stepToolsKits: '<strong>C · Kits</strong> · five pre-written "skeleton recipes" (KIT.md): Lusion cinematic / Opal product / Hall Villeneuve / Swiss Pulse / IG Commercial. Read a card, learn the structure, then come back and compose your own.',
+    stepToolsNote: 'The main flow (Form → Take → paste to Claude Design) <strong>works fully without these tools</strong>. They\'re for those who want one extra step.',
     stepPoolTitle: 'Forest Pool <em>· leave yours, or read others</em>',
     stepPoolBody: 'Up top, the "<strong>Forest Pool</strong>" entry. That\'s where visitors leave seeds — one forest teaches another how to grow.',
     stepPoolMech: '<strong>How sharing works</strong>: after you Form, if you wish, hit "Share to Forest Pool" — your choices and DNA (light, soil, brand name, font, six-axis picks) go in anonymously. <strong>Fully voluntary</strong> · prompt text and personal data stay out.',
@@ -3413,7 +3438,7 @@ const I18N = {
     tourDone: 'Done',
     poolLinkTitle: "Forest Pool · see visitors' forests / share yours",
     tourSteps: [
-      { sel: null, title: 'Welcome · Start your first forest', body: "This is a <strong>tool</strong>, not an AI platform, not a SaaS.<br/><br/>It prepares a chunk of text for <strong>Claude Design</strong> so it can render <strong>your own</strong> webpage.<br/><br/>Total beginner with websites? No worries. We'll walk through 17 small steps, each in plain language." },
+      { sel: null, title: 'Welcome · Start your first forest', body: "This is a <strong>tool</strong>, not an AI platform, not a SaaS.<br/><br/>It prepares a chunk of text for <strong>Claude Design</strong> so it can render <strong>your own</strong> webpage.<br/><br/>Total beginner with websites? No worries. We'll walk through 18 small steps, each in plain language." },
       { sel: '#sec-profile', title: 'Mark · What is your "light"?', body: 'Every webpage needs:<br/>① <strong>brand name</strong> — the page\'s name<br/>② <strong>main color</strong> — the color you want<br/>③ <strong>font</strong> — what the text looks like<br/><br/>These three = the light you bring.<br/>Lost? Click the "<strong>Maxi</strong>" button at the top to see an example, then make it yours.' },
       { sel: '#sec-s1', title: 'Question 1 · What is the page for?', body: 'Plain words: why are you making this page?<br/><br/>Examples:<ul><li>selling things (e-commerce)</li><li>portfolio</li><li>telling a story</li><li>booking service</li><li>event signup</li><li>resume</li></ul>Pick the closest one.' },
       { sel: '#sec-s2', title: 'Question 2 · Who is the star?', body: 'Plain words: what is the page mainly "introducing"?<br/><br/>Examples:<ul><li>physical product (cup, clothes)</li><li>software / app</li><li>a person (yourself / public figure)</li><li>team / studio</li><li>client case</li><li>abstract idea / event</li></ul>Different stars give entirely different layouts.' },
@@ -3428,6 +3453,7 @@ const I18N = {
       { sel: '#sec-ref', title: 'Four reference forests', body: 'Plain words: <strong>four sample forests</strong> for comparison.<br/><br/>See how others paired colors, fonts, six axes, spores — and what kind of webpage came out.<br/><br/>Inspiration when picking your own direction.' },
       { sel: '#sec-gallery', title: 'Pool Soul · Deep Pool', body: 'Plain words: this is the <strong>curated sample pool</strong> — 19 physical-optical phenomena as inspiration (double-slit, Moiré, Mach bands, etc.).<br/><br/>No need to understand them — just look and feel.' },
       { sel: '#sec-dna', title: 'DNA Fingerprint (skippable)', body: 'Plain words: this is the <strong>advanced showcase</strong>.<br/><br/>Shows the fingerprints of different prompt recipes producing different results.<br/><br/>Totally skippable, no impact on your page.' },
+      { sel: '#nav-tools', title: 'Tools · eight extra entries (skippable)', body: 'A <strong>Tools</strong> strip sits below the hero.<br/><br/>Three primary keys:<ul><li><strong>A · Judge UI</strong> — drop in your HTML, get scored across 5 axes</li><li><strong>B · Spine Compiler</strong> — finer-grained prompt editor</li><li><strong>C · Kits</strong> — overview of five pre-written skeleton recipes</li></ul>Five kits: Lusion / Opal / Hall / Swiss / IG.<br/><br/>The main flow doesn\'t need these. They\'re for one extra step.' },
       { sel: '#pool-link', title: "Forest Pool · see others' forests", body: 'Plain words: click the top "<strong>Forest Pool</strong>" to see forests visitors left behind, take a hint, walk your own path.<br/><br/>You can also leave your forest for the next gardener.<br/><br/>It\'s a "<strong>pool</strong>", not a leaderboard — humans growing together in the pool.' },
       { sel: '#btn-rand', title: 'Done · walk your own path', body: 'You know the whole flow now.<br/><br/><ul><li>Unsure? Hit "<strong>Let Wind Decide</strong>" to roll for you</li><li>Want to see others\'? Click top "<strong>Forest Pool</strong>"</li><li>Redo? Hit "<strong>Clear the Land</strong>"</li></ul>This is a tool — reuse it freely.' }
     ]
@@ -3438,6 +3464,12 @@ const I18N = {
     poolBtn: 'フォレスト・プール · 訪問者の種',
     helpTitle: '4 ステップで初めてのページ',
     helpSub: 'Four steps · your first website',
+    stepToolsTitle: 'ツール入口 <em>· 八つの追加エントリ · 飛ばしても OK</em>',
+    stepToolsIntro: 'ヒーロー下に<strong>ツール入口</strong>の帯（破線で区切り）。主キー三つ + キット五つ、それぞれ対応ページやファイルへの直リンク。',
+    stepToolsJudge: '<strong>A · Judge UI（林相レビュー）</strong> · 生成した HTML をドロップすると、5 軸（調和 / スタイル / 2D / 3D / オリジナリティ）を 1-10 の星で評価。客観的な採点、最終判断はあなた。',
+    stepToolsSpine: '<strong>B · Spine Compiler（骨格コンパイル）</strong> · 対話型エディタ。Kit と OPEN 軸を調整しながらプロンプトをプレビュー、ワンクリックでコピー。トップの「凝相」より細やか、プロンプト構造を分かっている人向け。',
+    stepToolsKits: '<strong>C · Kits（五式キット）</strong> · 5 枚の「骨格レシピ」KIT.md：Lusion 映画的 / Opal プロダクト / Hall ヴィルヌーヴ / Swiss パルス / IG コマーシャル。一枚通読して構造を学び、戻って自分で組む。',
+    stepToolsNote: 'メインの流れ（凝相 → 持ち帰り → Claude Design に貼る）は<strong>これらのツールなしでも完結</strong>します。一歩踏み込みたい人のためのもの。',
     stepPoolTitle: 'フォレスト・プール <em>· あなたの林を残す、または他人の林を見る</em>',
     stepPoolBody: '上部に「<strong>フォレスト・プール</strong>」の入口があります。訪問者が種を残す場所——一つの林がもう一つの林に育ち方を教えます。',
     stepPoolMech: '<strong>共有のしくみ</strong>：凝相の後、もし望むなら「フォレスト・プールへ共有」を押すと、今回の選択と DNA（光、土、ブランド名、フォント、六軸の選択）が匿名で送られます。<strong>完全に任意</strong> · プロンプト本文と個人情報は送りません。',
@@ -3554,7 +3586,7 @@ const I18N = {
     tourDone: '完了',
     poolLinkTitle: 'フォレスト・プール · 訪問者の林を見る / あなたの林を共有する',
     tourSteps: [
-      { sel: null, title: 'ようこそ · 最初の林を始めよう', body: 'これは <strong>道具</strong>です——AI プラットフォームでも SaaS でもありません。<br/><br/><strong>Claude Design</strong> に渡すテキストを用意して、Claude Design に <strong>あなただけの</strong>ウェブページを生んでもらいます。<br/><br/>ウェブサイトのことが全然分からない？大丈夫。17 の小さなステップを一緒に歩きます、各ステップで何をしているかを白話でお伝えします。' },
+      { sel: null, title: 'ようこそ · 最初の林を始めよう', body: 'これは <strong>道具</strong>です——AI プラットフォームでも SaaS でもありません。<br/><br/><strong>Claude Design</strong> に渡すテキストを用意して、Claude Design に <strong>あなただけの</strong>ウェブページを生んでもらいます。<br/><br/>ウェブサイトのことが全然分からない？大丈夫。18 の小さなステップを一緒に歩きます、各ステップで何をしているかを白話でお伝えします。' },
       { sel: '#sec-profile', title: '印 · あなたの「光」とは', body: 'すべてのウェブページに必要なもの：<br/>① <strong>ブランド名</strong>——ページの名前<br/>② <strong>主色</strong>——使いたい主な色<br/>③ <strong>フォント</strong>——文字の見た目<br/><br/>この三つ = あなたが持ち込む「光」。<br/>分からない？上部の「<strong>Maxi</strong>」ボタンを押して例を見て、自分のものに変えてください。' },
       { sel: '#sec-s1', title: '問 1 · このページは何のため？', body: '白話：何のためにこのページを作りますか？<br/><br/>例：<ul><li>物を売る（EC）</li><li>ポートフォリオ</li><li>物語を語る</li><li>サービスの予約</li><li>イベント受付</li><li>履歴書</li></ul>リストから一番近いものを一つ選ぶだけ。' },
       { sel: '#sec-s2', title: '問 2 · 主役は何？', body: '白話：このページが主に「紹介している」のは何？<br/><br/>例：<ul><li>物理商品（カップ、服）</li><li>ソフトウェア / アプリ</li><li>人（自分 / 著名人）</li><li>チーム / スタジオ</li><li>顧客事例</li><li>抽象概念 / イベント</li></ul>主役が違えば、ページ全体の見た目もまるで違います。' },
@@ -3569,6 +3601,7 @@ const I18N = {
       { sel: '#sec-ref', title: '4 つの参考林', body: '白話：ここには <strong>4 つの参考林</strong>を並べて比較できます。<br/><br/>他人がどう色・フォント・六軸・胞子を組み合わせて、どんなウェブページが生まれたかを見る。<br/><br/>方向を選ぶときのインスピレーション。' },
       { sel: '#sec-gallery', title: '池魂 · Deep Pool', body: '白話：これは <strong>厳選サンプルプール</strong>——19 の物理視覚現象をインスピレーションに（二重スリット、Moiré、マッハ・バンドなど）。<br/><br/>これらを理解する必要はなし——画像を見て感じればよい。' },
       { sel: '#sec-dna', title: 'DNA フィンガープリント（スキップ可）', body: '白話：これは <strong>アドバンスト展示</strong>です。<br/><br/>異なるプロンプトのレシピが生むフィンガープリントの違いを見せます。<br/><br/>完全にスキップ可能、ページ作りに影響なし。' },
+      { sel: '#nav-tools', title: 'ツール入口 · 八つの追加エントリ（飛ばしても OK）', body: 'ヒーロー下に<strong>ツール入口</strong>の帯。<br/><br/>主キー三つ：<ul><li><strong>A · Judge UI</strong>——HTML をドロップして 5 軸で採点</li><li><strong>B · Spine Compiler</strong>——より細かいプロンプトエディタ</li><li><strong>C · Kits</strong>——5 枚の骨格レシピ総覧</li></ul>5 つのキット：Lusion / Opal / Hall / Swiss / IG。<br/><br/>メインの流れには不要、一歩踏み込みたい人向け。' },
       { sel: '#pool-link', title: 'フォレスト・プール · 他人の林を見る', body: '白話：上部の「<strong>フォレスト・プール</strong>」を押すと訪問者が残した林を見られます、ヒントを得て自分の道を歩む。<br/><br/>あなたの林を残して、次の庭師に学ばせることもできます。<br/><br/>これは「<strong>プール</strong>」——ランキングではない、人々が共に育つ場所です。' },
       { sel: '#btn-rand', title: '完了 · 自分の道を歩む', body: '全体の流れが分かりましたね。<br/><br/><ul><li>迷ったら？「<strong>風を一吹き</strong>」でシステムに任せる</li><li>他人のを見たい？上部の「<strong>フォレスト・プール</strong>」を押す</li><li>やり直す？「<strong>土地を空ける</strong>」を押す</li></ul>これは道具——何度でも使えます。' }
     ]

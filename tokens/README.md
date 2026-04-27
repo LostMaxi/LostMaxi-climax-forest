@@ -107,7 +107,7 @@ OPEN AXES（從詞彙庫抽 token）:
   camera_path:    [...]
   composition:    [...]
   typography:     [...]
-  aesthetic_anchor: [Villeneuve quiet awe / Zumthor material density / Ive precision]
+  aesthetic_anchor: [Villeneuve quiet awe / monumental architectural density / Ive precision]
 ```
 
 ---

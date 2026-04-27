@@ -1733,6 +1733,7 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
         <label class="opt"><input type="radio" name="bilingual" value="A Hierarchy (zh primary + en secondary)" checked /><span>A 主從<span class="zh">zh 主 en 副</span></span></label>
         <label class="opt"><input type="radio" name="bilingual" value="B Parallel (side-by-side)" /><span>B 並置<span class="zh">左右對照</span></span></label>
         <label class="opt"><input type="radio" name="bilingual" value="C Fused (inline mixed)" /><span>C 融合<span class="zh">同句混排</span></span></label>
+        <label class="opt"><input type="radio" name="bilingual" value="D Hierarchy (zh primary + ja secondary)" /><span>D 主從 (ja)<span class="zh">zh 主 ja 副</span></span></label>
         <label class="opt"><input type="radio" name="bilingual" value="zh-only" /><span>zh only<span class="zh">純繁中</span></span></label>
       </div>
     </section>
@@ -1811,7 +1812,7 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
             <option value="fun+fidget">fun + fidget · 玩心撥弄</option>
             <option value="quiet+dense">quiet + dense · 靜緻</option>
             <option value="wild+electric">wild + electric · 狂野電感</option>
-            <option value="slow+deep">slow + deep · 緩慢深厚（Zumthor 味）</option>
+            <option value="slow+deep">slow + deep · 緩慢深厚</option>
           </select>
         </div>
         <div class="adv-field">
@@ -1832,8 +1833,8 @@ html[lang="en"] .opt span { letter-spacing: 0.02em; }
           <input type="range" id="s-density" min="0" max="100" value="50" />
         </div>
         <div class="adv-slider">
-          <label>留白比 <span class="val" id="s-void-val">5%</span></label>
-          <input type="range" id="s-void" min="0" max="30" value="5" />
+          <label>留白比 <span class="val" id="s-void-val">45%</span></label>
+          <input type="range" id="s-void" min="30" max="60" value="45" />
         </div>
         <div class="adv-slider">
           <label>色相擴散 <span class="val" id="s-hue-val">中</span></label>
@@ -2249,7 +2250,8 @@ function buildPrompt(d) {
   const sliderHints = [];
   if (adv.density < 30) sliderHints.push('particle density: sparse · 稀疏克制');
   else if (adv.density > 70) sliderHints.push('particle density: dense · 茂密');
-  if (adv.voidRatio > 15) sliderHints.push(`void ratio: ${adv.voidRatio}% · 多留白`);
+  if (adv.voidRatio >= 50) sliderHints.push(`void ratio: ${adv.voidRatio}% · 多留白`);
+  else if (adv.voidRatio < 35) sliderHints.push(`void ratio: ${adv.voidRatio}% · 緊湊節制`);
   if (adv.hue > 60) sliderHints.push('hue spread: wide · 色相散得開');
   else if (adv.hue < 20) sliderHints.push('hue spread: narrow · 色相聚攏');
 
@@ -2270,7 +2272,7 @@ ${openingText}**單檔${adjText} HTML prototype**${contextText}，符合以下�
 - 主色        : ${p.primary}
 - 深底        : ${p.deep}
 - 紫色/強調   : ${p.tint}
-- 使用比例    : 冷色 ≥80% / 跳色 ≤15% / 留白 ~5%
+- 使用比例    : 冷色 ≥80% / 跳色 ≤15% / 留白 ~${adv.voidRatio}%
 - CTA 策略    : ${p.cta}
 
 ### 字型（使用者鎖定）
@@ -2295,10 +2297,9 @@ ${openingText}**單檔${adjText} HTML prototype**${contextText}，符合以下�
 ### 非典型擾動（0-3 顆 · 讓系統不太完美）
 ${seedsBlock}
 
-### 架構誠實（硬約束 · 不讓 AI 跳過）
-- 禁用詞     : 做完了 / 完成了 / 閉環 / 100% / 已全部搞定 / 終於搞定
-- 最高描述   : 「95% 已建好 · 5% 永遠開放」
-- @abyss 5% : 頁尾或某區必須留一段視覺空白（刻意未完成）
+### 語氣（硬約束）
+- 採持續性語氣 · 避免完成式宣告
+- 頁尾或某區留一段視覺空白作為呼吸（刻意未完成）
 
 ### 無障礙（硬約束）
 - @media (prefers-reduced-motion: reduce) 必須包含
@@ -2719,7 +2720,7 @@ const GALLERY_SEEDS = [
   { tag: '銀林 · 全像虹彩', tagEn: 'Silver · Holographic', type: 'forest', title: 'Holographic Card Tilt', titleZh: '全像虹彩卡', desc: '全像 iridescence · 卡面隨視角變色 · 光柵衍射模擬', descEn: 'Holographic iridescence · card shifts hue on tilt · diffraction grating simulation', prompt: 'Create a product card (single hero object) that exhibits holographic iridescence on mouse tilt. Track the pointer over the card (as tilt proxy), then apply a CSS conic-gradient that rotates based on tilt angle, layered with a noise texture. The gradient cycles through violet → cyan → lime → amber → violet. Implement with a custom shader via WebGL if possible, or fallback to CSS filter + conic-gradient. Dark background lets the holographic surface glow.', keywords: ['iridescence','hologram','tilt'] },
   { tag: '苔林 · 次表面散射', tagEn: 'Moss · Subsurface Scatter', type: 'forest', title: 'Subsurface Scattering Loader', titleZh: '次表面散射 Loader', desc: '光漫射 · 像皮膚/蠟/玉石的半透光 · 苔的生物光', descEn: 'Subsurface light scatter · skin/wax/jade translucency · bio-luminescent moss', prompt: 'Prototype a loading indicator 220×220, a single soft dot exhibiting subsurface-scattering simulation. The dot is a radial gradient with 3 layers: core (bright green-white), mid (soft moss green with slight blur), outer (deep charcoal halo). The layers pulse asynchronously (1.8s, 2.4s, 3.6s periods) to feel like biological light seeping through translucent material.', keywords: ['subsurface','bioluminescence','loader'] },
   { tag: '雨林 · 焦散光柵', tagEn: 'Rainforest · Caustics', type: 'forest', title: 'Caustic Water Light', titleZh: '焦散光網', desc: '焦散光柵 · 水面折射的光網投影 · 熱帶雨林底層光', descEn: 'Caustic refraction · net of light through water · rainforest understory glow', prompt: 'Create a full-bleed hero whose background is animated caustic light patterns (like sunlight through pool water onto sand). Use Canvas 2D with a moving sum-of-sines displacement field: causticIntensity(x,y,t) = |sin(x/40 + t/2) + sin(y/35 + t/3) + sin((x+y)/50 + t/5)|^3. Color the result as warm yellow-green on deep bronze. Heading is white, positioned slightly off-center where caustic brightness pools.', keywords: ['caustic','refraction','sum-of-sines'] },
-  { tag: '柏林 · chiaroscuro', tagEn: 'Cypress · Chiaroscuro', type: 'forest', title: 'Zumthor Volumetric Light', titleZh: 'Zumthor 光柱', desc: 'Chiaroscuro 光束 · 建築級光影 · 空間的重量', descEn: 'Chiaroscuro beam · architectural god-rays · the weight of space', prompt: "Create a full-screen manifesto page with a single vertical column of light descending from the top-center. The light beam is a radial-gradient cone fading from warm white (top) through cream to charcoal (bottom), with subtle god-ray sub-beams flickering at 0.5Hz. The entire page is 85% in shadow. Text appears only within the light column — 3 sentences, serif display, each in a different light position. Feel: Zumthor's Bruder Klaus chapel interior.", keywords: ['chiaroscuro','volumetric','Zumthor'] },
+  { tag: '柏林 · chiaroscuro', tagEn: 'Cypress · Chiaroscuro', type: 'forest', title: 'Volumetric Light Column', titleZh: '光柱', desc: 'Chiaroscuro 光束 · 建築級光影 · 空間的重量', descEn: 'Chiaroscuro beam · architectural god-rays · the weight of space', prompt: "Create a full-screen manifesto page with a single vertical column of light descending from the top-center. The light beam is a radial-gradient cone fading from warm white (top) through cream to charcoal (bottom), with subtle god-ray sub-beams flickering at 0.5Hz. The entire page is 85% in shadow. Text appears only within the light column — 3 sentences, serif display, each in a different light position. Feel: a sacred chapel interior with single vertical descending light · architectural intimacy.", keywords: ['chiaroscuro','volumetric','sacred-beam'] },
   { tag: '枯林 · Anamorphic',           tagEn: 'Withered · Anamorphic',          type: 'forest', title: 'Anamorphic Distortion',        titleZh: 'Anamorphic 錯視字型',  desc: '透視扭曲 · 從特定角度才看得懂的字',                                 descEn: 'Perspective warp · legible only at specific angle',                prompt: 'Create a single-page anamorphic type experiment. A large headline is rendered with CSS 3D transform: perspective(600px) rotateX(65deg) scaleY(3.2) — unreadable from normal angle but legible if the user tilts. Below: "tilt to read". A toggle restores the text for comparison.', keywords: ['anamorphic','perspective','3d-transform'] },
   { tag: '枯林 · Penrose 不可能',       tagEn: 'Withered · Penrose',              type: 'forest', title: 'Penrose Impossible Triangle',  titleZh: '彭羅斯三角',           desc: '不可能幾何 · 3D 錯視在 2D 平面 · Escher 式邏輯陷阱',                 descEn: 'Impossible geometry · 3D illusion on 2D plane · Escher logic trap',prompt: 'Design an identity page featuring an SVG Penrose impossible triangle as the central visual. Soft gray shading enhances 3D illusion. Slowly rotates (8s period). Brand name in Playfair serif, tagline "build what cannot exist". Pure monochrome. Architectural feel.', keywords: ['penrose','impossible','escher'] },
   { tag: '松林 · 正負形',              tagEn: 'Pine · Figure-Ground',             type: 'forest', title: 'Figure-Ground Reversal',       titleZh: '正負形互換',           desc: 'Rubin 花瓶錯覺 · 圖底互換 · 雙重辨識',                               descEn: "Rubin's vase illusion · figure/ground reversal · dual recognition", prompt: 'Create a hero with a Rubin-vase-style figure-ground reversal: the black silhouette could be read as either a vase or two faces. Subtle animation highlights one interpretation every 4 seconds. Tagline: "what you see depends on where you look."', keywords: ['figure-ground','rubin','duality'] },

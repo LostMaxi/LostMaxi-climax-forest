@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Judge · 系統協助判定 · Climax Forest</title>
+<meta name="theme-color" content="#4C4E56">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#4C4E56;
+  --bg-2:#63666A;
+  --bg-3:#818387;
+  --fg-mute:#D9D9D6;
+  --fg:#FFFFFF;
+  --iris-soft:#DFCEEA;
+  --iris:#A78BFA;
+  --hairline:rgba(255,255,255,0.10);
+  --hairline-mid:rgba(255,255,255,0.18);
+  --font-en:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  --font-zh:'Noto Sans TC','PingFang TC','Yu Gothic',sans-serif;
+  --tr-cap:0.18em;
+  --tr-wide:0.28em;
+  --ease:cubic-bezier(0.2,0,0,1);
+  --dur:280ms;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font-family:var(--font-zh);line-height:1.7;-webkit-font-smoothing:antialiased;}
+body{min-height:100vh;display:flex;flex-direction:column;}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+header.bar{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding:24px 40px;border-bottom:1px solid var(--hairline);
+}
+header.bar .brand{font-family:var(--font-en);font-size:18px;letter-spacing:0.04em;color:var(--iris-soft);}
+header.bar .brand a{color:inherit;text-decoration:none;}
+header.bar .crumb{font-family:var(--font-en);font-size:10px;letter-spacing:var(--tr-cap);color:var(--fg-mute);text-transform:uppercase;}
+header.bar .crumb b{color:var(--fg);font-weight:500;margin-left:8px;}
+
+main{flex:1;padding:48px 40px 80px;max-width:1080px;margin:0 auto;width:100%;}
+
+.h-block{margin-bottom:40px;}
+.h-zh{font-family:var(--font-zh);font-weight:300;font-size:clamp(32px,4vw,52px);line-height:1.15;margin:0 0 12px;letter-spacing:-0.005em;}
+.h-en{font-family:var(--font-en);font-size:11px;letter-spacing:var(--tr-wide);text-transform:uppercase;color:var(--fg-mute);}
+.h-lede{font-size:14px;color:var(--fg-mute);margin-top:18px;max-width:580px;line-height:1.85;}
+
+.input-area{
+  background:rgba(0,0,0,0.18);border:1px dashed var(--hairline-mid);border-radius:0;
+  padding:36px;margin-bottom:24px;
+  transition:border-color var(--dur) var(--ease),background var(--dur);
+}
+.input-area.dragover{border-color:var(--iris);background:rgba(167,139,250,0.08);}
+.input-row{display:flex;flex-direction:column;gap:18px;}
+.input-row label{font-family:var(--font-en);font-size:10px;letter-spacing:var(--tr-cap);color:var(--iris-soft);text-transform:uppercase;}
+.input-row textarea{
+  background:rgba(0,0,0,0.25);border:1px solid var(--hairline);color:var(--fg);
+  font-family:'SF Mono','Menlo','Consolas',monospace;font-size:12px;line-height:1.6;
+  padding:16px;min-height:160px;resize:vertical;width:100%;
+}
+.input-row textarea::placeholder{color:var(--fg-mute);opacity:0.55;}
+.input-row .file-line{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.input-row .file-line input[type=file]{display:none;}
+.input-row .file-line .file-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  background:transparent;border:1px solid var(--hairline-mid);color:var(--fg);
+  font-family:var(--font-en);font-size:11px;letter-spacing:var(--tr-cap);text-transform:uppercase;
+  padding:10px 18px;cursor:pointer;transition:border-color var(--dur),color var(--dur);
+}
+.input-row .file-line .file-btn:hover{border-color:var(--iris);color:var(--iris-soft);}
+.input-row .file-line .file-name{font-family:var(--font-en);font-size:11px;color:var(--fg-mute);}
+.input-row .hint{font-size:11px;color:var(--fg-mute);margin-top:-4px;}
+
+.action-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:32px;}
+.btn-primary{
+  background:var(--iris);color:#1a1530;border:none;
+  font-family:var(--font-en);font-size:11px;letter-spacing:var(--tr-cap);text-transform:uppercase;font-weight:500;
+  padding:14px 28px;cursor:pointer;transition:background var(--dur),transform var(--dur);
+}
+.btn-primary:hover{background:var(--iris-soft);}
+.btn-primary:disabled{opacity:0.4;cursor:not-allowed;}
+.btn-ghost{
+  background:transparent;border:1px solid var(--hairline-mid);color:var(--fg-mute);
+  font-family:var(--font-en);font-size:11px;letter-spacing:var(--tr-cap);text-transform:uppercase;
+  padding:14px 24px;cursor:pointer;transition:border-color var(--dur),color var(--dur);
+}
+.btn-ghost:hover{border-color:var(--fg);color:var(--fg);}
+
+.report{
+  background:rgba(0,0,0,0.30);border:1px solid var(--hairline-mid);
+  padding:36px;display:none;
+}
+.report.show{display:block;}
+.report-head{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--hairline);padding-bottom:18px;margin-bottom:28px;}
+.report-head .ttl{font-family:var(--font-zh);font-weight:300;font-size:24px;}
+.report-head .ttl .glyph{color:var(--iris);margin-right:8px;}
+.report-head .meta{font-family:var(--font-en);font-size:10px;letter-spacing:var(--tr-cap);color:var(--fg-mute);text-transform:uppercase;}
+
+.dim-row{display:grid;grid-template-columns:140px 1fr 70px;gap:18px;align-items:center;padding:14px 0;border-bottom:1px solid var(--hairline);}
+.dim-row:last-of-type{border-bottom:none;}
+.dim-row .dim-name{font-family:var(--font-zh);font-size:14px;color:var(--fg);}
+.dim-row .dim-name .en{display:block;font-family:var(--font-en);font-size:9px;letter-spacing:var(--tr-cap);color:var(--fg-mute);text-transform:uppercase;margin-top:3px;}
+.dim-row .stars{font-family:var(--font-en);font-size:18px;letter-spacing:0.04em;color:var(--iris);}
+.dim-row .stars .empty{color:var(--bg-2);}
+.dim-row .score{font-family:var(--font-en);font-size:13px;color:var(--fg);text-align:right;}
+.dim-row .score .max{color:var(--fg-mute);}
+.dim-row.na .stars{color:var(--bg-2);font-size:11px;letter-spacing:var(--tr-cap);}
+.dim-row.na .score{color:var(--bg-2);}
+
+.composite{
+  margin-top:24px;padding:18px 0;border-top:2px solid var(--iris-soft);border-bottom:2px solid var(--iris-soft);
+  display:flex;justify-content:space-between;align-items:baseline;
+}
+.composite .label{font-family:var(--font-en);font-size:11px;letter-spacing:var(--tr-cap);color:var(--iris-soft);text-transform:uppercase;}
+.composite .value{font-family:var(--font-en);font-weight:500;font-size:24px;color:var(--fg);}
+.composite .value .max{color:var(--fg-mute);font-size:14px;font-weight:300;}
+
+.notes{margin-top:24px;}
+.notes h4{font-family:var(--font-en);font-size:10px;letter-spacing:var(--tr-cap);color:var(--iris-soft);text-transform:uppercase;margin:0 0 12px;}
+.notes ul{list-style:none;padding:0;margin:0;}
+.notes li{padding:8px 0;font-size:13px;color:var(--fg-mute);border-bottom:1px solid var(--hairline);}
+.notes li:last-child{border-bottom:none;}
+.notes li::before{content:'· ';color:var(--iris);}
+
+.disclaimer{
+  margin-top:32px;padding-top:18px;border-top:1px solid var(--hairline);
+  font-family:var(--font-en);font-size:10px;letter-spacing:0.04em;color:var(--fg-mute);
+}
+.disclaimer .glyph{color:var(--iris);}
+
+.signals-toggle{
+  margin-top:18px;
+  font-family:var(--font-en);font-size:10px;letter-spacing:var(--tr-cap);color:var(--fg-mute);
+  text-transform:uppercase;cursor:pointer;text-decoration:none;
+  display:inline-flex;align-items:center;gap:6px;
+}
+.signals-toggle:hover{color:var(--iris-soft);}
+.signals{display:none;margin-top:14px;font-family:'SF Mono','Menlo',monospace;font-size:11px;color:var(--fg-mute);background:rgba(0,0,0,0.2);padding:14px;line-height:1.8;}
+.signals.show{display:block;}
+
+footer{padding:24px 40px;border-top:1px solid var(--hairline);font-family:var(--font-en);font-size:10px;letter-spacing:var(--tr-cap);color:var(--fg-mute);text-transform:uppercase;}
+footer a{color:var(--iris-soft);text-decoration:none;}
+footer a:hover{color:var(--fg);}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="brand"><a href="/">Climax Forest</a></div>
+  <div class="crumb">Section <b>Judge · 評分台</b></div>
+</header>
+
+<main>
+  <div class="h-block">
+    <h1 class="h-zh">系統協助判定</h1>
+    <div class="h-en">Quality Rubric · Five-Dimensional Star Score</div>
+    <p class="h-lede">把產出貼進來、系統依規則表跑分、輸出 1-10 星卡。屬客觀判斷、創作者保留所有最終決策權。</p>
+  </div>
+
+  <div class="input-area" id="dropzone">
+    <div class="input-row">
+      <label>1 · 拖入 .html / 或選檔</label>
+      <div class="file-line">
+        <label class="file-btn" for="file-input">Choose file</label>
+        <input type="file" id="file-input" accept=".html,.htm,text/html">
+        <span class="file-name" id="file-name">尚未選檔</span>
+      </div>
+      <div class="hint">支援拖曳到本區、或點 Choose file 選檔。</div>
+
+      <label style="margin-top:18px;">2 · 或直接貼 HTML 原始碼</label>
+      <textarea id="paste-input" placeholder="貼進 &lt;!doctype html&gt; 開頭的整段 HTML..."></textarea>
+    </div>
+  </div>
+
+  <div class="action-row">
+    <button class="btn-primary" id="run-btn">跑分 · Run Rubric</button>
+    <button class="btn-ghost" id="clear-btn">清空</button>
+  </div>
+
+  <section class="report" id="report">
+    <div class="report-head">
+      <div class="ttl"><span class="glyph">◎</span>系統協助判定</div>
+      <div class="meta" id="report-meta">—</div>
+    </div>
+
+    <div id="dims"></div>
+
+    <div class="composite">
+      <div class="label">綜合存活 · Composite</div>
+      <div class="value" id="composite-value">—<span class="max"> / 10</span></div>
+    </div>
+
+    <div class="notes">
+      <h4>注記 · Notes</h4>
+      <ul id="notes-list"></ul>
+    </div>
+
+    <a class="signals-toggle" id="signals-toggle" href="#">▸ 顯示原始 signals（debug）</a>
+    <pre class="signals" id="signals"></pre>
+
+    <div class="disclaimer">
+      <span class="glyph">◎</span> 客觀判斷 · 不代表創作意圖 · 創作者保留最終決策權
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>◎ Climax Forest · Judge v0.1 · 5 dimensions / 1-10 stars · </span>
+  <a href="../skills/quality-rubric/SKILL.md">完整規則 SKILL.md</a>
+</footer>
+
+<script>
+'use strict';
+
+const dimensions = [
+  {key:'cohesion',     zh:'協調性',     en:'Cohesion'},
+  {key:'consistency',  zh:'風格一致',   en:'Style Consistency'},
+  {key:'visual2d',     zh:'2D 視覺力', en:'2D Visual Strength'},
+  {key:'visual3d',     zh:'3D 視覺力', en:'3D Visual Strength'},
+  {key:'originality',  zh:'獨創性',     en:'Originality'},
+];
+
+function $(id){return document.getElementById(id);}
+
+function makeStars(n,total){
+  if(n==null)return '<span style="color:var(--bg-2);font-size:11px;letter-spacing:0.18em;">N / A</span>';
+  const filled = Math.round(n);
+  const empty = total - filled;
+  return '★'.repeat(filled) + '<span class="empty">' + '☆'.repeat(empty) + '</span>';
+}
+
+// ─── Heuristic scorer ────────────────────────────────
+function scoreHTML(html){
+  const sig = analyzeSignals(html);
+  const scores = {};
+  const notes = [];
+
+  // 1. 協調性 / Cohesion
+  // signals: font family count, color count, z-index spread, body element count
+  let cohesion = 10;
+  if(sig.fontFamilies > 5) {cohesion -= 3; notes.push('協調性：偵測到 ' + sig.fontFamilies + ' 種 font-family、>5 易視覺打架、可收斂至 ≤ 3');}
+  else if(sig.fontFamilies > 3) cohesion -= 1;
+  if(sig.distinctColors > 14) {cohesion -= 2; notes.push('協調性：偵測到 ' + sig.distinctColors + ' 種顏色 token、>14 易失系統感、可收斂');}
+  else if(sig.distinctColors > 10) cohesion -= 1;
+  if(sig.zIndexSpread > 200) {cohesion -= 1; notes.push('協調性：z-index 跨度 ' + sig.zIndexSpread + ' 過大、易出層級混亂');}
+  scores.cohesion = Math.max(1, Math.min(10, cohesion));
+
+  // 2. 風格一致 / Style Consistency
+  // signals: kit metadata, axis comments, repeated class prefixes
+  let consistency = 5; // baseline
+  if(sig.hasKitMeta) consistency += 3;
+  if(sig.hasAxisComments) consistency += 1;
+  if(sig.classPrefixCohesion > 0.6) consistency += 1;
+  else if(sig.classPrefixCohesion < 0.3) {consistency -= 1; notes.push('風格一致：class 命名分散、無共同前綴、Kit grammar 不明顯');}
+  if(sig.fontFamilies > 5) consistency -= 2;
+  scores.consistency = Math.max(1, Math.min(10, consistency));
+  if(!sig.hasKitMeta) notes.push('風格一致：未偵測到 Kit metadata、可在 HTML 開頭註解標記 Kit 名稱以利追溯');
+
+  // 3. 2D 視覺力 / 2D Visual Strength
+  // signals: heading hierarchy, letter-spacing, font-weight variety, grid/flex
+  let visual2d = 4;
+  if(sig.headingDepth >= 3) visual2d += 2;
+  if(sig.hasLetterSpacing) visual2d += 1;
+  if(sig.fontWeightVariety >= 3) visual2d += 1;
+  if(sig.usesGrid || sig.usesFlex) visual2d += 1;
+  if(sig.hasClampType) visual2d += 1; // fluid type
+  if(sig.hasCustomTypeClasses) visual2d += 1;
+  scores.visual2d = Math.max(1, Math.min(10, visual2d));
+  if(visual2d < 7) notes.push('2D 視覺力：可加強字體層次（h1/h2/h3 區隔）、字距、流體尺寸（clamp）');
+
+  // 4. 3D 視覺力 / 3D Visual Strength
+  // signals: Three.js, WebGL, camera, lights, materials, HDRI
+  let visual3d = null;
+  if(sig.hasThreeJs || sig.hasWebGL){
+    visual3d = 4;
+    if(sig.hasThreeJs) visual3d += 1;
+    if(sig.hasCamera) visual3d += 1;
+    if(sig.lightCount >= 2) visual3d += 1;
+    if(sig.hasMaterial) visual3d += 1;
+    if(sig.hasHDRI || sig.hasPMREM) visual3d += 1;
+    if(sig.hasFog) visual3d += 1;
+    visual3d = Math.max(1, Math.min(10, visual3d));
+    if(visual3d < 7) notes.push('3D 視覺力：可加 HDRI 環境光 / 多層光源 / fog 厚度增加大氣感');
+  } else {
+    notes.push('3D 視覺力：未偵測到 Three.js / WebGL、此維標記 N/A、不計入綜合分');
+  }
+  scores.visual3d = visual3d;
+
+  // 5. 獨創性 / Originality
+  // signals: custom shaders, custom animations, file size, unique class names, View Transition
+  let originality = 4;
+  if(sig.hasShader) originality += 2;
+  if(sig.keyframesCount >= 3) originality += 1;
+  if(sig.hasViewTransition) originality += 1;
+  if(sig.singleFileBytes > 50000) originality += 1; // crafted
+  if(sig.classCount > 30 && sig.classPrefixCohesion < 0.7) originality += 1; // many custom classes
+  if(sig.hasIcosa || sig.hasTorus || sig.hasVoronoi) originality += 1; // custom geometry
+  scores.originality = Math.max(1, Math.min(10, originality));
+  if(originality < 7) notes.push('獨創性：可加自訂 GLSL shader / 自訂 keyframes / View Transition / 跳脫 boilerplate 結構');
+
+  // Composite
+  const valid = Object.values(scores).filter(s => s != null);
+  const composite = (valid.reduce((a,b)=>a+b,0) / valid.length).toFixed(1);
+
+  return {scores, composite, notes, signals:sig};
+}
+
+function analyzeSignals(html){
+  const lower = html.toLowerCase();
+  const sig = {};
+  sig.bytes = html.length;
+  sig.singleFileBytes = html.length;
+
+  // font-family count
+  const ffMatches = [...lower.matchAll(/font-family\s*:\s*['"]?([^;}'"]+)/g)];
+  const ffSet = new Set();
+  ffMatches.forEach(m => {
+    m[1].split(',').forEach(f => ffSet.add(f.trim().replace(/['"]/g,'').toLowerCase()));
+  });
+  sig.fontFamilies = ffSet.size;
+
+  // distinct colors (hex + named css var refs)
+  const hexMatches = [...lower.matchAll(/#[0-9a-f]{3,8}\b/g)];
+  const cssVarMatches = [...lower.matchAll(/var\(\s*--([^)\s,]+)/g)];
+  const colorSet = new Set();
+  hexMatches.forEach(m => colorSet.add(m[0]));
+  cssVarMatches.forEach(m => {
+    const v = m[1];
+    if(/color|fg|bg|paper|ink|hue|tint|shade|iris|ochre|primary|accent|black|white|gray|grey/.test(v))
+      colorSet.add('var-'+v);
+  });
+  sig.distinctColors = colorSet.size;
+
+  // z-index spread
+  const zMatches = [...lower.matchAll(/z-index\s*:\s*(-?\d+)/g)];
+  if(zMatches.length){
+    const zs = zMatches.map(m => parseInt(m[1],10));
+    sig.zIndexSpread = Math.max(...zs) - Math.min(...zs);
+  } else sig.zIndexSpread = 0;
+
+  // kit metadata
+  sig.hasKitMeta = /kit\s*[:：]\s*\w/i.test(html) ||
+                   /aesthetic[-_]?kit/i.test(html) ||
+                   /climax\s*forest.*kit/i.test(html);
+  sig.hasAxisComments = /\b(2d|3d|bridge)\s*\/\s*[a-z\-]+/i.test(html);
+
+  // class prefix cohesion (proxy)
+  const classMatches = [...lower.matchAll(/class\s*=\s*"([^"]+)"/g)];
+  const allClasses = [];
+  classMatches.forEach(m => m[1].split(/\s+/).forEach(c => c && allClasses.push(c)));
+  sig.classCount = new Set(allClasses).size;
+  if(allClasses.length){
+    const prefixes = {};
+    allClasses.forEach(c => {
+      const p = c.split('-')[0] || c.split('_')[0] || c.slice(0,3);
+      prefixes[p] = (prefixes[p]||0)+1;
+    });
+    const top = Math.max(...Object.values(prefixes));
+    sig.classPrefixCohesion = top / allClasses.length;
+  } else sig.classPrefixCohesion = 0;
+
+  // heading depth
+  let depth = 0;
+  for(let i=1;i<=6;i++) if(new RegExp('<h'+i+'\\b','i').test(html)) depth = i;
+  sig.headingDepth = depth;
+
+  sig.hasLetterSpacing = /letter-spacing/i.test(html);
+  const fwMatches = [...lower.matchAll(/font-weight\s*:\s*(\d+|bold|normal|light|medium)/g)];
+  sig.fontWeightVariety = new Set(fwMatches.map(m=>m[1])).size;
+  sig.usesGrid = /display\s*:\s*grid/i.test(html);
+  sig.usesFlex = /display\s*:\s*flex/i.test(html);
+  sig.hasClampType = /font-size\s*:\s*clamp\(/i.test(html);
+  sig.hasCustomTypeClasses = /\.(title|heading|display|hero|h-|t-|type-)/i.test(html);
+
+  // 3D signals
+  sig.hasThreeJs = /three(\.module)?\.js|from\s+['"]three['"]|import.*three/i.test(html);
+  sig.hasWebGL = /webgl/i.test(html);
+  sig.hasCamera = /perspectivecamera|orthographiccamera/i.test(html);
+  const lightMatches = [...lower.matchAll(/(ambientlight|directionallight|spotlight|hemispherelight|pointlight|rectarealight)/g)];
+  sig.lightCount = new Set(lightMatches.map(m=>m[1])).size;
+  sig.hasMaterial = /meshstandardmaterial|meshphysicalmaterial|meshbasicmaterial|shadermaterial/i.test(html);
+  sig.hasHDRI = /rgbeloader|\.hdr['")]/i.test(html);
+  sig.hasPMREM = /pmremgenerator/i.test(html);
+  sig.hasFog = /fog\s*=|new\s+three\.fog/i.test(html);
+  sig.hasShader = /shadermaterial|fragmentshader|vertexshader|<script\s+type=['"]x-shader/i.test(html);
+  sig.hasIcosa = /icosahedrongeometry/i.test(html);
+  sig.hasTorus = /torusgeometry/i.test(html);
+  sig.hasVoronoi = /voronoi/i.test(html);
+
+  sig.keyframesCount = (html.match(/@keyframes\s+[\w-]+/gi) || []).length;
+  sig.hasViewTransition = /::view-transition|startviewtransition/i.test(html);
+
+  return sig;
+}
+
+// ─── UI wiring ────────────────────────────────────────
+const dropzone = $('dropzone');
+const fileInput = $('file-input');
+const fileName = $('file-name');
+const pasteInput = $('paste-input');
+const runBtn = $('run-btn');
+const clearBtn = $('clear-btn');
+const report = $('report');
+
+let currentSource = ''; // 'file' | 'paste'
+
+function readFile(file){
+  if(!file) return;
+  fileName.textContent = file.name + ' · ' + Math.round(file.size/1024) + ' KB';
+  const reader = new FileReader();
+  reader.onload = e => {
+    pasteInput.value = e.target.result;
+    currentSource = 'file';
+  };
+  reader.readAsText(file);
+}
+
+fileInput.addEventListener('change', e => readFile(e.target.files[0]));
+
+['dragenter','dragover'].forEach(evt =>
+  dropzone.addEventListener(evt, e => {e.preventDefault();dropzone.classList.add('dragover');}));
+['dragleave','drop'].forEach(evt =>
+  dropzone.addEventListener(evt, e => {e.preventDefault();dropzone.classList.remove('dragover');}));
+dropzone.addEventListener('drop', e => {
+  const file = e.dataTransfer.files[0];
+  if(file) readFile(file);
+});
+
+pasteInput.addEventListener('input', () => {currentSource = 'paste';});
+
+runBtn.addEventListener('click', () => {
+  const html = pasteInput.value.trim();
+  if(!html.length){
+    alert('請先拖入檔案或貼 HTML 原始碼');
+    return;
+  }
+  const result = scoreHTML(html);
+  renderReport(result, currentSource);
+});
+
+clearBtn.addEventListener('click', () => {
+  pasteInput.value = '';
+  fileInput.value = '';
+  fileName.textContent = '尚未選檔';
+  report.classList.remove('show');
+});
+
+function renderReport(r, source){
+  const stamp = new Date().toLocaleString('zh-TW',{hour12:false});
+  $('report-meta').textContent = stamp + ' · ' + (source==='file'?'from file':'from paste');
+
+  const dimsEl = $('dims');
+  dimsEl.innerHTML = '';
+  dimensions.forEach(d => {
+    const score = r.scores[d.key];
+    const isNa = score == null;
+    const row = document.createElement('div');
+    row.className = 'dim-row' + (isNa ? ' na' : '');
+    row.innerHTML =
+      '<div class="dim-name">'+d.zh+'<span class="en">'+d.en+'</span></div>' +
+      '<div class="stars">'+ makeStars(score, 10) +'</div>' +
+      '<div class="score">'+ (isNa ? 'N / A' : score) +'<span class="max">'+(isNa?'':' / 10')+'</span></div>';
+    dimsEl.appendChild(row);
+  });
+
+  $('composite-value').innerHTML = r.composite + '<span class="max"> / 10</span>';
+
+  const notesEl = $('notes-list');
+  notesEl.innerHTML = '';
+  if(r.notes.length === 0){
+    const li = document.createElement('li');
+    li.textContent = '無顯著改善建議 · 可進下一步。';
+    notesEl.appendChild(li);
+  } else {
+    r.notes.forEach(n => {
+      const li = document.createElement('li');
+      li.textContent = n;
+      notesEl.appendChild(li);
+    });
+  }
+
+  $('signals').textContent = JSON.stringify(r.signals, null, 2);
+  report.classList.add('show');
+  report.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+$('signals-toggle').addEventListener('click', e => {
+  e.preventDefault();
+  $('signals').classList.toggle('show');
+  e.target.textContent = $('signals').classList.contains('show')
+    ? '▾ 收合原始 signals' : '▸ 顯示原始 signals（debug）';
+});
+</script>
+
+</body>
+</html>

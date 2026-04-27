@@ -1,7 +1,19 @@
-# Climax Forest · 極相林
+<p align="center">
+  <img src="docs/screenshots/01-splash.png" alt="Climax Forest" width="720">
+</p>
 
-**A tool, not a brand.**
-**A forest, not a workflow.**
+<h1 align="center">Climax Forest · 極相林</h1>
+
+<p align="center">
+  <strong>A tool, not a brand.</strong> &nbsp;·&nbsp;
+  <strong>A forest, not a workflow.</strong>
+</p>
+
+<p align="center">
+  <a href="https://lost-maxi-climax-forest.vercel.app">Live →</a> &nbsp;·&nbsp;
+  <a href="https://lost-maxi-climax-forest.vercel.app/pool.html">森林對話池 →</a> &nbsp;·&nbsp;
+  <a href="https://claude.ai/design">Claude Design ↗</a>
+</p>
 
 這不是另一把工具的說明書 · 是一片林的目錄。
 
@@ -62,6 +74,8 @@ For slow hands in a fast world · materials have their own voice.
 
 ## 凝相與帶走
 
+![Operation page hero](docs/screenshots/02-hero.png)
+
 1. 開門 [lost-maxi-climax-forest.vercel.app](https://lost-maxi-climax-forest.vercel.app)
 2. 回答六題 · 或讓**風吹一回**替你選
 3. 挑(或不挑)孢子
@@ -100,7 +114,9 @@ For slow hands in a fast world · materials have their own voice.
 
 ## 森林對話池
 
-如果你願意分享你的林相 · 來 [森林對話池](pool.html)——
+![Forest pool](docs/screenshots/03-pool.png)
+
+如果你願意分享你的林相 · 來 [森林對話池](https://lost-maxi-climax-forest.vercel.app/pool.html)——
 那是訪客留下種子的地方 · 一片林教另一片林怎麼長。
 
 純自願 · 匿名 · 連同你的 DNA（光、土壤、品牌名、字型、六軸選擇）一起送。
